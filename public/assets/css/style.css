@@ -1,0 +1,174 @@
+@font-face {
+    font-family: 'CQ Mono';
+    src: url('../fonts/CQ Mono.otf');
+}
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/raleway_thin-webfont.ttf');
+}
+body{
+    font-family: "Lato", serif;
+}
+
+
+.all-content{
+    margin-top: 120px;
+}
+
+.top-line {
+    padding: 15px 0;
+    background: #eee;
+    border-bottom: 1px solid #f3f3f3;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    overflow: hidden;
+}
+.top-line ul.info-list {
+    margin: 0;
+    padding: 0;
+}
+.top-line ul.info-list li {
+    display: inline-block;
+    margin-right: 25px;
+    color: #333333;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+}
+.top-line ul.info-list li i {
+    color: #0a287e;
+    font-size: 14px;
+    margin-right: 10px;
+}
+.top-line ul.social-icons {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+.top-line ul.social-icons li {
+    display: inline-block;
+    margin-left: 9px;
+}
+.top-line ul.social-icons li a {
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    font-size: 13px;
+    color: #333333;
+}
+.top-line ul.social-icons li a:hover {
+    color: #0a287e;
+}
+
+.event-image{
+    width: 400px;
+    height: 300px;
+}
+
+.event-video{
+    width: 400px;
+    height: 300px;
+}
+
+.event-description{
+    margin-top: 2em;
+}
+
+.button, .form-control{
+    border-radius: 3px;
+}
+
+.page-header{
+    font-family: Raleway, fantasy;
+}
+
+.error-class {
+    color:red;  z-index:0; position:relative; display:block; text-align: left;
+}
+
+/*-------------------------------------------------*/
+/* =  Footer
+/*-------------------------------------------------*/
+footer{
+    margin-top: 200px;
+}
+
+footer {
+    background: #e8e8e8;
+    padding: 50px 0;
+    width: 100%;
+}
+footer .contact-info h2 {
+    font-size: 15px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    margin: 0 0 15px;
+    color: rgba(9, 41, 25, 0.97);
+}
+footer .contact-info h2 i {
+    margin-right: 12px;
+}
+footer .contact-info p {
+    color: #131313;
+    font-family: Lato , monospace, 'Raleway', sans-serif;
+    font-weight: 500;
+    margin-left: 30px;
+    margin-bottom: 0;
+}
+
+/*-------------------------------------------------*/
+/* =  Event
+/*-------------------------------------------------*/
+
+#event {
+    margin-bottom: 50px;
+}
+
+.navbar-brand{
+    font-family: "CQ Mono", mononoki, "Lato Light", fantasy;
+}
+
+.navbar-default{
+    background-color: white;
+}
+.navbar-brand{
+    display: flex;
+    align-items: center;
+    color: #3c9eee !important;
+}
+
+.navbar-brand>img {
+    padding: 7px 14px;
+}
+
+ .navbar-right > li > a{
+    background-color: #fff;
+    color: #3c9eee !important;
+}
+
+/*hr {*/
+    /*color: #c5d5cb;*/
+    /*background-color: #c5d5cb;*/
+/*}*/
+
+.badge-info {
+    background-color: #269abc;
+}
+
+body{
+    background-color: #fbfbfb;
+    /*background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23eeeeee' fill-opacity='0.17' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");*/
+}
+
+.small{
+    font-size: 15px;
+}
+
+
+.search_input_height{
+    height: 50px;
+}
