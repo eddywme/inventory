@@ -107,35 +107,73 @@
 
                         @else
 
-                            <li>
-                                @if( Auth::user()->role->name == "organizer")
-                                    <a href="">
-                                        <i class="fa fa-user"></i> {{ Auth::user()->company_name }}
+
+                                @if(\App\Utility\Utils::isAdmin())
+
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            <i class="fa fa-user-circle"> </i>  {{ Auth::user()->first_name."  ". Auth::user()->last_name }} <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="{{ route('users.edit', Auth::user()->slug) }}"><i class="fa fa-user"></i> User Profile</a>
+
+                                            </li>
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <a href="{{ url('/admin') }}">
+                                                    <i class="fa fa-server"></i>  Dashboard
+                                                </a>
+                                            </li>
+
+                                            <li class="divider"></li>
+
+                                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                    <i class="fa fa-sign-out"></i> Logout
+                                                </a>
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    {{ csrf_field() }}
+                                                </form>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+
+
+                                @elseif(\App\Utility\Utils::isSimpleUser())
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <i class="fa fa-user-circle"> </i>  {{ Auth::user()->first_name."  ". Auth::user()->last_name }} <span class="caret"></span>
                                     </a>
-                                @elseif( Auth::user()->role->name == "admin")
-                                    <a href="">
-                                       <i class="fa fa-dashboard"></i>  {{ Auth::user()->first_name."  ". Auth::user()->last_name }}
-                                    </a>
-                                @elseif( Auth::user()->role->name == "simple-user")
-                                    <a href="#">
-                                        {{ Auth::user()->first_name."  ". Auth::user()->last_name }}
-                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ route('users.edit', Auth::user()->slug) }}"><i class="fa fa-user"></i> User Profile</a>
+                                        </li>
+
+                                        <li class="divider"></li>
+
+                                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                <i class="fa fa-sign-out"></i> Logout
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+
+
+                                    </ul>
+                                </li>
                                 @endif
 
 
-                            </li>
-                            <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-sign-out"></i> Logout
-                                        </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
 
-                            </li>
                         @endif
                     </ul>
                 </div>

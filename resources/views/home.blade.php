@@ -4,6 +4,12 @@
    <div class="row">
        <div class="col-md-12">
 
+           @if (session('status'))
+               <div class="alert alert-success">
+                   <h5>{{ session('status') }}</h5>
+               </div>
+           @endif
+
            <h4>WELCOME TO THE INVENTORY CONTROL SYSTEM</h4>
            <br>
            <h4 class="time"><script type="text/javascript">

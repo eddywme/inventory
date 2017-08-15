@@ -11,16 +11,22 @@
 |
 */
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('home');
 });
 
 Auth::routes();
 
-/* Super Admin routes*/
-
-Route::group(['prefix'	=>	'admin', 'middleware' => 'auth'],	function	()	{
+/*  Admin routes*/
+Route::group(['prefix'	=>	'admin', 'middleware' => 'auth'], function()	{
     Route::get('/', 'AdminController@index');
 
-
 });
+
+Route::resource('users', 'UserController');
+
+
