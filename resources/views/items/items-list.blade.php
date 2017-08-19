@@ -47,7 +47,7 @@
 
                             <div class="col-md-4">
 
-                                <img src="{{ isset($item->photo_url)? url('storage/app/'.$item->photo_url) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail">
+                                <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail">
 
                             </div>
 

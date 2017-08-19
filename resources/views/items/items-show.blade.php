@@ -41,7 +41,7 @@
                             <h2>{{ $item->name }}</h2><br>
 
 
-                            <img src="{{ isset($item->photo_url)? url('storage/app/'.$item->photo_url) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item_img">
+                            <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item_img">
 
                         </div>
 

@@ -41,23 +41,23 @@ Route::resource('items', 'ItemController');
 
 
 //Serving Images
-Route::get('storage/app/public/items-images/{filename}', function ($filename)
-{
-
-    $path = storage_path('app/public/items-images/' . $filename);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-
-});
+//Route::get('storage/app/public/items-images/{filename}', function ($filename)
+//{
+//
+//    $path = storage_path('app/public/items-images/' . $filename);
+//
+//    if (!File::exists($path)) {
+//        abort(404);
+//    }
+//
+//    $file = File::get($path);
+//    $type = File::mimeType($path);
+//
+//    $response = Response::make($file, 200);
+//    $response->header("Content-Type", $type);
+//
+//    return $response;
+//
+//});
 
 
