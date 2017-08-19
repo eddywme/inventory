@@ -6,8 +6,14 @@
     font-family: 'Raleway';
     src: url('../fonts/raleway_thin-webfont.ttf');
 }
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
 body{
-    font-family: "Lato", serif;
+    font-family: Roboto, "Lato", serif;
 }
 
 
@@ -64,22 +70,10 @@ body{
     color: #0a287e;
 }
 
-.event-image{
-    width: 400px;
-    height: 300px;
-}
 
-.event-video{
-    width: 400px;
-    height: 300px;
-}
-
-.event-description{
-    margin-top: 2em;
-}
 
 .button, .form-control{
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .page-header{
@@ -114,19 +108,13 @@ footer .contact-info h2 i {
 }
 footer .contact-info p {
     color: #131313;
-    font-family: Lato , monospace, 'Raleway', sans-serif;
+    font-family: Roboto, Lato ,'Raleway', monospace,  sans-serif;
     font-weight: 500;
     margin-left: 30px;
     margin-bottom: 0;
 }
 
-/*-------------------------------------------------*/
-/* =  Event
-/*-------------------------------------------------*/
 
-#event {
-    margin-bottom: 50px;
-}
 
 .navbar-brand{
     font-family: "CQ Mono", mononoki, "Lato Light", fantasy;
@@ -172,3 +160,7 @@ body{
 .search_input_height{
     height: 50px;
 }
+
+/* Validation error classes */
+.error-class {
+    color:red;  z-index:0; position:relative; display:block; text-align: left; font-style: italic; font-size: 12px}

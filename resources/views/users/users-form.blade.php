@@ -8,6 +8,8 @@
 
         .error-class {
             color:red;  z-index:0; position:relative; display:block; text-align: left; font-style: italic; font-size: 12px}
+
+
     </style>
 @endsection
 @section('content')

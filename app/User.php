@@ -32,9 +32,15 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role', 'role_id');
     }
 
+
+
     public function items()
     {
         return $this->hasMany('App\Item', 'owned_by');
+    }
+
+    public function name(){
+        return $this->first_name." ".$this->last_name;
     }
 
 

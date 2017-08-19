@@ -72,7 +72,7 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-plus fa-fw"></i> Add Item</a>
+                            <a href="{{ route("items.create") }}"><i class="fa fa-plus fa-fw"></i> Add Item</a>
                         </li>
 
                         <li>

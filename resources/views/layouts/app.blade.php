@@ -83,7 +83,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('assets/images/logos/inventory.png') }}" style="width: 80px; height: 60px">
+                        <img src="{{ asset('assets/images/logos/invt.png') }}" style="width: 80px; height: 60px">
                         {{ config('app.name') }}
                     </a>
                 </div>
@@ -96,7 +96,41 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
+
+                        <li><a href="{{ route("items.index") }}"><i class="fa fa-ticket"></i> Items</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fa fa-filter"> </i>  Categories <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="">PHONE</a>
+
+                                </li>
+
+                                <li>
+                                    <a href="">CAMERA</a>
+
+                                </li>
+
+                                <li>
+                                    <a href="">TABLETS</a>
+
+                                </li>
+
+                                <li>
+                                    <a href="">CAMERA</a>
+
+                                </li>
+
+
+
+
+                            </ul>
+                        </li>
+
+
 
                         @if (Auth::guest())
 
@@ -113,7 +147,7 @@
 
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                            <i class="fa fa-user-circle"> </i>  {{ Auth::user()->first_name."  ". Auth::user()->last_name }} <span class="caret"></span>
+                                            <i class="fa fa-user-circle"> </i>  {{ Auth::user()->name() }} <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
@@ -148,7 +182,7 @@
                                 @elseif(\App\Utility\Utils::isSimpleUser())
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        <i class="fa fa-user-circle"> </i>  {{ Auth::user()->first_name."  ". Auth::user()->last_name }} <span class="caret"></span>
+                                        <i class="fa fa-user-circle"> </i>  {{ Auth::user()->name() }} <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
@@ -175,6 +209,7 @@
 
 
                         @endif
+
                     </ul>
                 </div>
             </div>
@@ -227,11 +262,24 @@
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.autocomplete.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/pace.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
+    <script src="{{ asset('assets/js/jquery.autocomplete.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#search_auto_complete').autocomplete({
+                serviceUrl: '/search_data'
+            });
+        });
+
+    </script>
+
+
     @yield('scripts')
+
 
 </body>
 </html>

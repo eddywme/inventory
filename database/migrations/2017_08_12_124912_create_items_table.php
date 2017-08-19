@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('photo_url')->nullable();
             $table->string('serial_number')->unique();
             $table->string('identifier');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('location');
             $table->decimal('price',11,2);
             $table->boolean('is_available')->default(true);

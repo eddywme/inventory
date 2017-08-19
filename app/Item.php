@@ -23,11 +23,23 @@ class Item extends Model
 
     public function itemCondition()
     {
-        return $this->belongsTo('App\Condition', 'condition_id');
+        return $this->belongsTo('App\ItemCondition', 'condition_id');
     }
 
     public function itemCategory()
     {
-        return $this->belongsTo('App\Category', 'category_id');
+        return $this->belongsTo('App\ItemCategory', 'category_id');
     }
+
+    public  function timeSpanObject(){
+        /**/
+        return Utility\Utils::secondsToTime($this->time_span * 60 * 60);
+    }
+
+
+    protected $casts = [
+        'is_available' => 'boolean',
+    ];
+
+
 }

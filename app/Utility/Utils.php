@@ -11,11 +11,15 @@ Description : Code written for ........
 
 namespace App\Utility;
 
+use App\ItemCategory;
 use Illuminate\Support\Facades\Auth;
 
 class Utils
 {
 
+    public static function authUserId(){
+        return Auth::user()->id;
+    }
 
     private static function authHasRole($role_name){
         return Auth::user()->role->name === $role_name;
@@ -38,5 +42,47 @@ class Utils
     public static function canUpdateUser($user){
         return Auth::user()->id === $user->id;
     }
+
+    public function getCategoryNameFromId($id){
+        return ItemCategory::all()->where('id', $id)->first()->name;
+    }
+
+    #returns an associative array
+    public static function secondsToTime($inputSeconds) {
+        $secondsInAMinute = 60;
+        $secondsInAnHour  = 60 * $secondsInAMinute;
+        $secondsInADay    = 24 * $secondsInAnHour;
+        $secondsInAMonth = 30 * $secondsInADay;
+        $secondsInAYear = 12 * $secondsInAMonth;
+
+        $years = floor($inputSeconds / $secondsInAYear);
+
+        $monthSeconds = $inputSeconds % $secondsInAYear;
+        $months = floor($monthSeconds / $secondsInAMonth);
+
+        $daySeconds = $monthSeconds % $secondsInAMonth;
+        $days = floor($daySeconds / $secondsInADay);
+
+        $hourSeconds = $daySeconds % $secondsInADay;
+        $hours = floor($hourSeconds / $secondsInAnHour);
+
+        $minuteSeconds = $hourSeconds % $secondsInAnHour;
+        $minutes = floor($minuteSeconds / $secondsInAMinute);
+
+        $remainingSeconds = $minuteSeconds % $secondsInAMinute;
+        $seconds = ceil($remainingSeconds);
+
+        $obj = array(
+            'years' => (int) $years,
+            'months' => (int) $months,
+            'days' => (int) $days,
+            'hours' => (int) $hours,
+            'minutes' => (int) $minutes,
+            'seconds' => (int) $seconds
+        );
+        return $obj;
+    }
+
+
 
 }
