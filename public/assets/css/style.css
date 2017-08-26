@@ -164,3 +164,18 @@ body{
 /* Validation error classes */
 .error-class {
     color:red;  z-index:0; position:relative; display:block; text-align: left; font-style: italic; font-size: 12px}
+
+.search-key, .search-key-category {
+    font-family: "Lato Medium", Roboto;
+    font-style: italic;
+}
+
+.img-listing{
+    height:200px;
+    width:350px;
+}
+
+.item-img-show {
+    width: 450px;
+    height: 280px;
+}

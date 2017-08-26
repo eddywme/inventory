@@ -19,7 +19,7 @@
 
         .btn-request{
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
         }
     </style>
 @endsection
@@ -33,6 +33,7 @@
             <div class="col-md-12">
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
+                    <h5> <strong>{{ $itemQ }}</strong>  Items Founds For  Category <strong>{{ $itemCategory->name }}</strong> </h5>
                     @foreach($items as $item)
 
                         <div class="row  item-element">
@@ -40,7 +41,7 @@
 
                             <div class="col-md-4">
 
-                                <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail img-listing">
+                                <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail">
 
                             </div>
 
@@ -53,7 +54,7 @@
                                 </p>
                                 @if($item->is_available())
                                     <a class="btn btn-default btn-request">REQUEST THIS ITEM</a>
-                                @else
+                                    @else
                                     <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                                 @endif
 
@@ -72,7 +73,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="list-group">
-                                    @foreach($item_categories as $item_category )
+                                    @foreach($itemCategories as $item_category )
                                         <a href="" class="list-group-item">
                                             {{ ($item_category->name)}}<span class="badge badge-info"></span>
                                         </a>

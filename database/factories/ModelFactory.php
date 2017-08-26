@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'last_name' => $lastName,
         'email' => $faker->unique()->safeEmail,
         'phone_number' => $faker->phoneNumber,
-        'role_id' => $faker->numberBetween(2,3),
+        'role_id' => $faker->numberBetween(1,3),
         'slug' => $user_slug,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -45,11 +45,11 @@ $factory->define(App\ItemCategory::class, function (Faker\Generator $faker) {
 $factory->define(App\ItemCondition::class, function (Faker\Generator $faker) {
 
 
-
+    $name = $faker->name;
     return [
-        'name' => $faker->name,
+        'name' => $name,
         'description' => $faker->paragraph,
-        'slug' => str_slug($faker->name)
+        'slug' => str_slug($name)
     ];
 });
 
@@ -71,16 +71,34 @@ $factory->define(App\Item::class, function (Faker\Generator $faker) {
         'slug' => str_slug($name ." ".$identifier),
         'location' => $faker->city,
         'price' => $faker->numberBetween(100,50000),
-        'is_available' => $faker->numberBetween(0,1),
+        'status' => $faker->numberBetween(0,2),
         'model_number' => strtoupper(str_random(6)).$faker->numberBetween(100,200),
         'date_acquired' => $faker->dateTime,
-        'lastly_edited_by' => $faker->numberBetween(40,50),
-        'recorded_by' => $faker->numberBetween(40,50),
-        'owned_by' => $faker->numberBetween(1,50),
+        'lastly_edited_by' => $faker->numberBetween(18,20),
+        'recorded_by' => $faker->numberBetween(18,20),
+        'owned_by' => $faker->numberBetween(1,20),
         'category_id' => $faker->numberBetween(1,10),
         'condition_id' => $faker->numberBetween(1,4),
     ];
 });
+
+
+$factory->define(App\ItemAccessory::class, function (Faker\Generator $faker) {
+
+
+    $name = $faker->name;
+    return [
+        'name' => $name,
+        'description' => $faker->paragraph,
+        'slug' => str_slug($name." ".$faker->randomNumber(6)),
+        'item_id' => $faker->numberBetween(1,50)
+    ];
+});
+
+
+
+
+
 
 
 

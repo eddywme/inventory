@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ isset($item)? 'Edit Item' : 'Registering an Item' }}
+    {{ isset($item)? 'Edit Item '.$item->slug : 'Registering an Item' }}
 @endsection
 @section('styles')
     <link href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
@@ -34,7 +34,7 @@
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="_method" value="{{ isset($user)? 'PUT' : 'POST' }}" required>
+                        <input type="hidden" name="_method" value="{{ isset($item)? 'PUT' : 'POST' }}" required>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name">Item Name</label>
@@ -55,7 +55,7 @@
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label for="description">Item Description </label>
 
-                                <textarea class="form-control" name="description" id="description" required></textarea>
+                                <textarea class="form-control" name="description" id="description" required>{{  isset($item)? $item->description : old('description') }}</textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -74,6 +74,9 @@
                                 <label>
                                     <select name="num_hours"  id="num_hours" class="form-control" required>
 
+                                        @if(isset($item))
+                                            <option value="{{ $array_time_span['hours'] }}" selected>{{ $array_time_span['hours'] }}</option>
+                                        @endif
                                         <?php for($i = 1; $i<24; $i++): ?>
                                         <option value="<?=$i?>"><?=$i?></option>
                                         <?php endfor;?>
@@ -83,6 +86,9 @@
                                 <label>
                                     <select name="num_days"  id="num_days" class="form-control" required>
 
+                                        @if(isset($item))
+                                            <option value="{{ $array_time_span['days'] }}" selected>{{ $array_time_span['days'] }}</option>
+                                        @endif
                                         <?php for($i = 0; $i<30; $i++): ?>
                                         <option value="<?=$i?>"><?=$i?></option>
                                         <?php endfor;?>
@@ -92,6 +98,9 @@
                                 <label>
                                     <select name="num_months" id="num_months" class="form-control" required>
 
+                                        @if(isset($item))
+                                            <option value="{{ $array_time_span['months'] }}" selected>{{ $array_time_span['months'] }}</option>
+                                        @endif
                                         <?php for($i = 0; $i<12; $i++): ?>
                                         <option value="<?=$i?>"><?=$i?></option>
                                         <?php endfor;?>
@@ -101,6 +110,9 @@
                                 <label>
                                     <select name="num_years" id="num_years" class="form-control" required>
 
+                                        @if(isset($item))
+                                            <option value="{{ $array_time_span['years'] }}" selected>{{ $array_time_span['years'] }}</option>
+                                        @endif
                                         <?php for($i = 0; $i<6; $i++): ?>
                                         <option value="<?=$i?>"><?=$i?></option>
                                         <?php endfor;?>

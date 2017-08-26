@@ -99,36 +99,36 @@
 
                         <li><a href="{{ route("items.index") }}"><i class="fa fa-ticket"></i> Items</a></li>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <i class="fa fa-filter"> </i>  Categories <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="">PHONE</a>
+                        {{--<li class="dropdown">--}}
+                            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">--}}
+                                {{--<i class="fa fa-filter"> </i>  Categories <span class="caret"></span>--}}
+                            {{--</a>--}}
+                            {{--<ul class="dropdown-menu" role="menu">--}}
+                                {{--<li>--}}
+                                    {{--<a href="">PHONE</a>--}}
 
-                                </li>
+                                {{--</li>--}}
 
-                                <li>
-                                    <a href="">CAMERA</a>
+                                {{--<li>--}}
+                                    {{--<a href="">CAMERA</a>--}}
 
-                                </li>
+                                {{--</li>--}}
 
-                                <li>
-                                    <a href="">TABLETS</a>
+                                {{--<li>--}}
+                                    {{--<a href="">TABLETS</a>--}}
 
-                                </li>
+                                {{--</li>--}}
 
-                                <li>
-                                    <a href="">CAMERA</a>
+                                {{--<li>--}}
+                                    {{--<a href="">CAMERA</a>--}}
 
-                                </li>
-
-
+                                {{--</li>--}}
 
 
-                            </ul>
-                        </li>
+
+
+                            {{--</ul>--}}
+                        {{--</li>--}}
 
 
 

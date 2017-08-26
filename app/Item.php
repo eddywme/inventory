@@ -31,15 +31,32 @@ class Item extends Model
         return $this->belongsTo('App\ItemCategory', 'category_id');
     }
 
+    public function itemAccessories()
+    {
+        return $this->hasMany('App\ItemAccessory', 'item_id');
+    }
+
     public  function timeSpanObject(){
         /**/
         return Utility\Utils::secondsToTime($this->time_span * 60 * 60);
     }
 
 
-    protected $casts = [
-        'is_available' => 'boolean',
-    ];
+    public function is_available(){
+        return $this->status === 2;
+    }
+
+    public function showStatusName(){
+        if($this->status === 1){
+            return "RESERVED";
+        }elseif ($this->status === 0){
+            return "TAKEN";
+        }elseif ($this->status === 2){
+            return "AVAILABLE";
+        }
+
+        return null;
+    }
 
 
 }

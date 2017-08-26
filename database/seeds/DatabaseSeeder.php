@@ -11,6 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Item::class, 100)->create();
+        factory(App\ItemCategory::class, 10)->create();
+        factory(App\ItemCondition::class, 5)->create();
+
+        $this->call(RolesTableSeeder::class);
+
+        factory(App\User::class, 20)->create();
+
+        factory(App\Item::class, 50)->create();
+
+        factory(App\ItemAccessory::class, 100)->create();
+
+
     }
 }

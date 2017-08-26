@@ -1,10 +1,11 @@
 @extends('layouts.app')
-@section('title', 'Registered Items')
+@section('title', 'Items Categories')
 @section('styles')
     <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
+            padding-top: 10px;
         }
     </style>
 @endsection
@@ -16,16 +17,18 @@
         <div class="row main-content">
             <div class="col-md-12">
 
+
+
+                <h1 class="page-header"> <strong>REGISTERED ITEM CATEGORIES</strong> </h1>
+
                 @if (session('status'))
-                    <div class="alert alert-success" style="margin-top: 10px">
+                    <div class="alert alert-success">
                         <h5>{{ session('status') }}</h5>
                     </div>
                 @endif
 
-                <h1 class="page-header"> <strong>REGISTERED ITEMS</strong> </h1>
-
-                <a class="btn btn-primary" href="{{ route('items.create') }}" style="margin: 10px;">
-                    <i class="fa fa-plus-circle"></i> Add Item
+                <a class="btn btn-primary" href="{{ route('item-categories.create') }}" style="margin: 10px;">
+                    <i class="fa fa-plus-circle"></i> Add Item Category
                 </a>
 
                 <div class="table-responsive">
@@ -33,56 +36,47 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Names</th><th>Category</th><th>TimeSpan</th><th>Serial Number</th><th>Availability</th>
-                        <th>Edit</th><th>Delete</th>
+                        <th>Names</th><th>No Of Items</th><th>Description</th><th>Added On</th><th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($items as $item)
+                    @foreach($itemCategories as $itemCategory)
 
                         <tr>
                             <td>
-                               <a href="{{ route("items.show", $item->slug) }}">{{ $item->name }}</a>
+                               <a href="{{ route("item-categories.edit", $itemCategory->slug) }}">{{ $itemCategory->name }}</a>
                             </td>
 
                             <td>
-                                {{  $item->itemCategory->name }}
+                                @php
+                                $itemCategoryCount = \App\Item::all()->where('category_id', $itemCategory->id)->count();
+                                @endphp
+                                {{  $itemCategoryCount }} Items
                             </td>
 
                             <td>
-                                {{  $item->timeSpanObject()['hours']." hrs ".$item->timeSpanObject()['days']." days ".$item->timeSpanObject()['months']." months "
-                                 .$item->timeSpanObject()['years']." years" }}
+                                {{ substr($itemCategory->description, 0, 20)  }} ...
                             </td>
 
                             <td>
-                                {{  $item->serial_number }}
-                            </td>
-
-                            <td>
-                                {{  $item->showStatusName() }}
-                            </td>
-
-                            <td>
-                                <a href="{{ route('items.edit', $item->slug) }}"><i class="fa fa-pencil-square-o"></i></a>
+                                {{   date("F jS, Y H:i:s",strtotime( $itemCategory->created_at)) }}
                             </td>
 
 
                             <td>
-                                <form  action="{{ route('users.destroy', $item->slug) }}" method="POST">
+                                <form  action="{{ route('item-categories.destroy', $itemCategory->slug) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
                                     <button class="btn btn-default"
                                             data-toggle="confirm"
-                                            data-title="Item deletion"
-                                            data-message="Do you really want to delete the Item? <br>
-                                                 Once the Item is deleted all its data are deleted and the action cannot be reverted back."
+                                            data-title="Item Category deletion"
+                                            data-message="Do you really want to delete the Item Category ? <br>
+                                                 Once the Item Category is deleted all its related data are deleted and the action cannot be reverted back.<br>"
                                             data-type="danger">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </form>
                             </td>
-
-
 
 
                         </tr>
@@ -114,7 +108,7 @@
             $('#organizers_table').DataTable({
                 "bInfo" : false,
                 "language": {
-                    "search": "Search Item :"
+                    "search": "Search Item Category:"
                 }
             });
 

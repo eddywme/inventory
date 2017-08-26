@@ -38,26 +38,30 @@ Route::group(['prefix'	=>	'admin', 'middleware' => 'auth'], function()	{
 Route::resource('users', 'UserController');
 
 Route::resource('items', 'ItemController');
+Route::get('items-admin', 'ItemController@adminIndex')
+->name('items-admin');
+
+Route::resource('item-categories', 'ItemCategoryController');
+Route::get('item-categories/{slug}/items', 'ItemCategoryController@showCategoryItems')
+->name('item-categories.showCategoryItems');
+
+/* Item Accessory Related Routes */
+Route::get('accessories', 'ItemAccessoryController@index')
+    ->name('item-accessories');
+
+Route::get('accessories/{slug}', 'ItemAccessoryController@show')
+    ->name('item-accessories.show');
+
+Route::get('items/{itemSlug}/accessories/create', 'ItemAccessoryController@create')
+->name('item-accessories.create');
+
+Route::post('items/{itemSlug}/accessories/', 'ItemAccessoryController@store')
+    ->name('item-accessories.store');
 
 
-//Serving Images
-//Route::get('storage/app/public/items-images/{filename}', function ($filename)
-//{
-//
-//    $path = storage_path('app/public/items-images/' . $filename);
-//
-//    if (!File::exists($path)) {
-//        abort(404);
-//    }
-//
-//    $file = File::get($path);
-//    $type = File::mimeType($path);
-//
-//    $response = Response::make($file, 200);
-//    $response->header("Content-Type", $type);
-//
-//    return $response;
-//
-//});
+Route::get('item', [
+    'uses' => 'ItemController@search',
+    'as' => 'items.search',
+]);
 
 

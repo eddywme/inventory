@@ -76,7 +76,7 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-plus-circle fa-fw"></i> Add Category</a>
+                            <a href="{{ route('item-categories.create') }}"><i class="fa fa-plus-circle fa-fw"></i> Add Category</a>
                         </li>
 
 
@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ route('items-admin') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -175,7 +175,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ route('item-categories.index') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

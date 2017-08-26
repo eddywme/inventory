@@ -33,6 +33,21 @@
             <div class="col-md-12">
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
+                    <h2 class="page-header">
+                        @if($items->count() < 1)
+                            Not Result(s) found for <span class="search-key">{{ $search_key }}</span>
+                            @if($itemCategory !== null)
+                                for  Category <span class="search-key-category">{{ $itemCategory->name }}</span>
+                            @endif
+                            Please Try Again.
+                        @else
+                            {{ $items->count() }} .  Result(s) found for <strong>{{ $search_key }}</strong>
+                            @if($itemCategory !== null)
+                                for  Category <span class="search-key-category">{{ $itemCategory->name }}</span>
+                            @endif
+                        @endif
+
+                    </h2>
                     @foreach($items as $item)
 
                         <div class="row  item-element">
@@ -47,13 +62,12 @@
                             <div class="col-md-8">
                                 <h3><a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a></h3> <h4>Item Serial Number : {{ $item->serial_number }}</h4>
                                 <h5>Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>     Condition : {{ $item->itemCondition->name }}</h5>
-                                <h5>Category : <a href="{{ route('item-categories.showCategoryItems', $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
                                 <p class="">
                                     {{ substr($item->description,0,400) }} ...
                                 </p>
                                 @if($item->is_available())
                                     <a class="btn btn-default btn-request">REQUEST THIS ITEM</a>
-                                @else
+                                    @else
                                     <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                                 @endif
 

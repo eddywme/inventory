@@ -11,6 +11,15 @@
         .item-search-form{
             margin: 50px;
         }
+        .item-info{
+            margin: 20px;
+        }
+
+        .btn-request{
+            width: 100%;
+            margin-top: 20px;
+        }
+
     </style>
 @endsection
 @section('content')
@@ -21,27 +30,22 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                <form action="" method="get" class="item-search-form">
-                    <div class="form-group search-box">
-                        <div class="input-group custom_font">
-
-                            <input type="text" name="s" id="search_auto_complete" placeholder="Search Item " class="form-control search_input_height" autofocus
-                                   style="font-size: large"
-                            />
-                            <span class="input-group-addon" ><button class="btn"><span class="glyphicon glyphicon-search"></span></button></span>
-
-                        </div>
-                    </div>
-                </form>
+                @include('layouts.search-box-partial')
 
 
-                    <div class="row">
+                    <div class="row item-info">
                         <hr>
                         <div class="col-md-4">
-                            <h2>{{ $item->name }}</h2><br>
+                            <h2>{{ $item->name }}   <h4>Serial Number: {{ $item->serial_number }}</h4></h2><br>
 
 
-                            <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item_img">
+                            <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
+
+                            @if($item->is_available())
+                                <a class="btn btn-default btn-request">REQUEST</a>
+                            @else
+                                <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
+                            @endif
 
                         </div>
 
@@ -69,7 +73,8 @@
 
 
                                     <tr>
-                                        <td> TIME SPAN </td> <td class="item_value_column"></td>
+                                        <td> TIME SPAN </td> <td class="item_value_column"> {{  $item->timeSpanObject()['hours']." hrs ".$item->timeSpanObject()['days']." days ".$item->timeSpanObject()['months']." months "
+                                 .$item->timeSpanObject()['years']." years" }}</td>
                                     </tr>
 
                                     <tr>
@@ -91,7 +96,7 @@
 
 
                                     <tr>
-                                        <td> AVAILABLE</td> <td> {{ $item->is_available? "ITEM AVAILABLE" : "ITEM NOT AVAILABLE" }}</td>
+                                        <td> STATUS</td> <td> {{ $item->showStatusName() }}</td>
                                     </tr>
 
                                     <tr>
@@ -140,7 +145,7 @@
                                         <tr>
 
 
-                                            @if(!$item->is_available)
+                                            @if(!$item->is_available())
                                             <th>
                                                 <a href="" class="btn btn-info disabled"><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -157,7 +162,7 @@
                                             @endif
 
                                             <th>
-                                                <a href="{{ route('items.create') }}" class="btn btn-success"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ITEM</strong></a>
+                                                <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
 
                                             </th>
                                             <th>
@@ -165,7 +170,7 @@
                                             </th>
 
 
-                                            @if(!$item->is_available)
+                                            @if(!$item->is_available())
 
                                             <th>
                                                 <a href="" class="btn btn-danger disabled"><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -173,7 +178,7 @@
 
                                             @else
                                             <th>
-                                                <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                             </th>
 
                                             @endif

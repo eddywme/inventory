@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
+use App\ItemCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,15 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         return view('home');
     }
 
     public function search_data(Request $request){
 
         $items = DB::table('items')
-            ->where('is_available', '=', 1)
+//            ->where('is_available', '=', 1)
+
             ->where('name','like', '%'.$request->get('query').'%')
-            ->orWhere('description', 'like', '%'.$request->get('query').'%')
+//            ->orWhere('description', 'like', '%'.$request->get('query').'%')
             ->get();
 
 
@@ -53,4 +57,7 @@ class HomeController extends Controller
 
         return response()->json($array_response);
     }
+
+
+
 }

@@ -24,7 +24,10 @@ class CreateItemsTable extends Migration
             $table->string('slug')->unique();
             $table->string('location');
             $table->decimal('price',11,2);
-            $table->boolean('is_available')->default(true);
+
+            /* Item status : 0 = Taken, 1 = Reserved, 2 = Available*/
+            $table->tinyInteger('status')->default(1);
+
             $table->string('model_number');
             $table->dateTime('date_acquired');
 
