@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemAccessory;
+use App\Utility\ItemStatus;
 use App\Utility\Utils;
+use Carbon\Carbon;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +29,8 @@ class ItemAssignmentController extends Controller
 
     public function assignPost(Request $request, $itemSlug){
 
+        $item = Utils::findItemBySlug($itemSlug);
+
 
 
         $user = DB::table('users')->where([
@@ -36,13 +41,51 @@ class ItemAssignmentController extends Controller
 
         if($user === null){
             return redirect()->back()->with('error-status', 'Assignment Failed. That person does not exist in the system');
-        }else{
-            // Create Assignment object persist
-            return redirect()->back()->with('success-status', 'The item was assigned successfully to '.$user->first_name.' '.$user->last_name);
+        }elseif ($item === null){
+            return redirect()->back()->with('error-status', 'Assignment Failed. That Item does not exist in the system');
+        }
+        elseif ($item->status){
+            if($item->status === ItemStatus::$ITEM_TAKEN || $item->status == ItemStatus::$ITEM_RESERVED){
+                return redirect()->back()->with('error-status', 'Assignment Failed. That Item is not available');
+            }
         }
 
 
 
+            /* Change the status state of the item */
+            $item->status = ItemStatus::$ITEM_TAKEN;
+            $item->save();
+
+
+
+        $now = Carbon::now();
+        DB::table('item_assignments')->insert([
+            [
+                'item_id' => $item->id,
+                'user_id' => $user->id,
+                'assigned_at' => $now->toDateTimeString(),
+                'supposed_returned_at' => ($now->addHours($item->time_span))->toDateTimeString(),
+                'assigned_by' => Utils::authUserId(),
+                'assigned_condition' => $item->condition_id,
+                'assigned_comment' => $request->get('comment'),
+
+            ]
+        ]);
+
+            return redirect()->back()->with('success-status', 'The item was assigned successfully to '.$user->first_name.' '.$user->last_name);
+
+
+
+
+    }
+
+    public function assignmentList(){
+
+        $itemAssignments = DB::table('item_assignments')->get();
+
+        return view('items-assignment.assignment-list', [
+            'itemAssignments' => $itemAssignments
+        ]);
     }
 
 

@@ -93,5 +93,9 @@ class Utils
         return Item::all()->where('slug', $slug)->first();
     }
 
+    public static function getReadableDateTime($time){
+        return (date("F jS, Y H:i:s",strtotime($time)));
+    }
+
 
 }

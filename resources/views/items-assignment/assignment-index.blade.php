@@ -6,8 +6,8 @@
         .main-content{
             background: #fff;
         }
-        .top-line{
-            display: none;
+        footer{
+            margin-top: 0px;
         }
     </style>
 @endsection
@@ -102,22 +102,24 @@
                         </div>
                         <div class="panel-footer">
 
+                            <div class="panel panel-info">
+                                <div class="panel-heading">TERMS AND CONDITIONS FOR ITEM ASSIGNMENT</div>
+                                <div class="panel-body">
+                                    <p class="bg-info" style="padding: 15px;">
+                                        User has accepted terms and rights stuffs  bla bla Responsive design is a method for taking all of the existing content that is on the page
+                                        and optimizing it for the device that is viewing it. For example, the desktop not only
+                                        gets the normal version of the website, but it might also get a widescreen layout, opti‐
+                                        mized for the larger displays that many people have attached to their computers. Tablets
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     </div>
                     <div class="col-md-6">
 
-                        <div class="panel panel-info">
-                            <div class="panel-heading">TERMS AND CONDITIONS FOR ITEM ASSIGNMENT</div>
-                            <div class="panel-body">
-                                <p class="bg-info" style="padding: 15px;">
-                                    User has accepted terms and rights stuffs  bla bla Responsive design is a method for taking all of the existing content that is on the page
-                                    and optimizing it for the device that is viewing it. For example, the desktop not only
-                                    gets the normal version of the website, but it might also get a widescreen layout, opti‐
-                                    mized for the larger displays that many people have attached to their computers. Tablets
-                                </p>
-                            </div>
-                        </div>
+
 
                         @if (session('error-status'))
                             <div class="alert alert-danger" style="padding: 5px">
@@ -157,7 +159,15 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" class="form-control" placeholder="E-mail" id="email_" name="email" required>
+
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="E-mail" id="email_" name="email" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <textarea name="comment" id="comment"  rows="8" class="form-control" placeholder="Comment [ Optional ]"></textarea>
+                                    </div>
 
 
                             </div>

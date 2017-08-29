@@ -68,7 +68,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('users.index') }}"><i class="fa fa-book fa-fw"></i>  Assigned Items</a>
+                            <a href="{{ route('assign.list') }}"><i class="fa fa-book fa-fw"></i>  Assigned Items</a>
                         </li>
 
                         <li>

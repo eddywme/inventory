@@ -97,6 +97,8 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
 
+
+
                         <li><a href="{{ route("items.index") }}"><i class="fa fa-ticket"></i> Items</a></li>
 
                         {{--<li class="dropdown">--}}
@@ -143,6 +145,8 @@
 
 
                                 @if(\App\Utility\Utils::isAdmin())
+
+                                <li><a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a></li>
 
 
                                     <li class="dropdown">

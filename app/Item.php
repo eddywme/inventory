@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Utility\ItemStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+
     public function ownedBy()
     {
         return $this->belongsTo('App\User', 'owned_by');
@@ -47,11 +49,11 @@ class Item extends Model
     }
 
     public function showStatusName(){
-        if($this->status === 1){
+        if($this->status === ItemStatus::$ITEM_RESERVED){
             return "RESERVED";
-        }elseif ($this->status === 0){
+        }elseif ($this->status === ItemStatus::$ITEM_TAKEN){
             return "TAKEN";
-        }elseif ($this->status === 2){
+        }elseif ($this->status === ItemStatus::$ITEM_AVAILABLE){
             return "AVAILABLE";
         }
 
