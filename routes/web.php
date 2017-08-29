@@ -37,7 +37,10 @@ Route::group(['prefix'	=>	'admin', 'middleware' => 'auth'], function()	{
 
 Route::resource('users', 'UserController');
 
+/**/
 Route::resource('items', 'ItemController');
+
+
 Route::get('items-admin', 'ItemController@adminIndex')
 ->name('items-admin');
 
@@ -64,4 +67,17 @@ Route::get('item', [
     'as' => 'items.search',
 ]);
 
+
+/* Item Assignment */
+Route::get('/items/{slug}/assign', 'ItemAssignmentController@assignIndex')
+    ->name('assign.index');
+
+Route::post('/items/{slug}/assign', 'ItemAssignmentController@assignPost')
+    ->name('assign.post');
+
+Route::get('/assignment/firstNamesEndPoint', 'ItemAssignmentController@firstNamesEndPoint');
+
+Route::get('/assignment/lastNamesEndPoint', 'ItemAssignmentController@lastNamesEndPoint');
+
+Route::get('/assignment/emailsEndPoint', 'ItemAssignmentController@emailsEndPoint');
 

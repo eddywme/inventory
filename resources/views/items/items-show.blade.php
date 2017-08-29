@@ -154,7 +154,7 @@
 
                                            @else
                                             <th>
-                                                <a href="" class="btn btn-info "><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="{{ route('assign.index', $item->slug) }}" class="btn btn-info "><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
                                             </th>
 

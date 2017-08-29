@@ -4,7 +4,6 @@
 @endsection
 @section('styles')
     <link href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/simplemde.min.css') }}" rel="stylesheet">
     <style>
         .register-panel{
             margin-top: 40px;

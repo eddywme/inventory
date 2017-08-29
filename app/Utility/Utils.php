@@ -11,6 +11,7 @@ Description : Code written for ........
 
 namespace App\Utility;
 
+use App\Item;
 use App\ItemCategory;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,6 +84,14 @@ class Utils
         return $obj;
     }
 
+    /**
+     * @param $slug
+     * @return Item
+     */
+    public static function findItemBySlug($slug)
+    {
+        return Item::all()->where('slug', $slug)->first();
+    }
 
 
 }

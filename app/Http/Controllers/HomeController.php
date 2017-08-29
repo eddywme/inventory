@@ -55,7 +55,7 @@ class HomeController extends Controller
         $array_response['query'] = "Unit";
         $array_response['suggestions'] = $items_names;
 
-        return response()->json($array_response);
+        return response()->json($array_response,200);
     }
 
 

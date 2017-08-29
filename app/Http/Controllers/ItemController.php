@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\ItemAccessory;
 use App\ItemCategory;
 use App\ItemCondition;
 use App\User;
@@ -70,6 +71,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $this->validate($request, [
             'name' => 'required|string|unique:items|max:255',
             'serial_number' => 'required|string|unique:items|max:255',
@@ -356,4 +358,5 @@ class ItemController extends Controller
     {
         return Item::all()->where('slug', $slug)->first();
     }
+
 }

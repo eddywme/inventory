@@ -53,6 +53,7 @@ class ItemAccessoryController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'description' => 'required',
+            'photo_url' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $pathToImage = null;
@@ -63,7 +64,7 @@ class ItemAccessoryController extends Controller
             $pathToImage = Storage::putFileAs(
                 'public/items-accessories-images',
                 $uploadedFileImage,
-                str_replace(".", "", $clientOriginalName)."_".str_random(10).".".$uploadedFileImage->getClientOriginalExtension()
+                str_replace([".", " "], "", $clientOriginalName)."_".str_random(10).".".$uploadedFileImage->getClientOriginalExtension()
             );
 
         }

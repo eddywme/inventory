@@ -72,6 +72,10 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories</a>
+                        </li>
+
+                        <li>
                             <a href="{{ route("items.create") }}"><i class="fa fa-plus fa-fw"></i> Add Item</a>
                         </li>
 

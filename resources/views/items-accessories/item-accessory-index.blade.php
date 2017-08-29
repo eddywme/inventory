@@ -31,7 +31,7 @@
                 @endif
 
                 <a class="btn btn-primary" href="{{ route('item-categories.create') }}" style="margin: 10px;">
-                    <i class="fa fa-plus-circle"></i> Add Item Category
+                    <i class="fa fa-plus-circle"></i> Add Item Accessory
                 </a>
 
                 <div class="table-responsive">
@@ -39,7 +39,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Accessory Name</th><th>Item Info</th><th>Description</th><th>Delete</th>
+                        <th>Accessory Name</th><th>From Item</th><th>Description</th><th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
