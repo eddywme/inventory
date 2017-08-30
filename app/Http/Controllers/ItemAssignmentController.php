@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemAccessory;
+use App\ItemAssignment;
+use App\ItemCondition;
+use App\User;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
 use Carbon\Carbon;
@@ -88,6 +91,61 @@ class ItemAssignmentController extends Controller
         ]);
     }
 
+    public function assignReturnGet($assignmentId){
+
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+        $item = Item::all()->where('id', $itemAssignment->item_id)->first();
+        if($item == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+        $itemConditions = ItemCondition::all();
+        $user = User::all()->where('id', $itemAssignment->user_id)->first();
+        $admin = User::all()->where('id', $itemAssignment->assigned_by)->first();
+
+        return view('items-assignment.assignment-return', [
+            'item' => $item,
+            'itemAccessories' => $itemAccessories,
+            'user' => $user,
+            'admin' => $admin,
+            'itemAssignment' => $itemAssignment,
+            'itemConditions' => $itemConditions
+        ]);
+    }
+
+    public function assignReturnPost(Request $request, $assignmentId){
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+
+        }
+        $item = Item::all()->where('id', $itemAssignment->item_id)->first();
+
+        if($item == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        $now = Carbon::now();
+
+        DB::table('item_assignments')
+            ->where('id', $itemAssignment->id)
+            ->update([
+                'returned_at' => $now->toDateTimeString(),
+                'marked_returned_by' => Utils::authUserId(),
+                'returned_condition' => $request->get('returned_condition'),
+                'returned_comment' => $request->get('returned_comment'),
+            ]);
+
+        $item->status = ItemStatus::$ITEM_AVAILABLE;
+        $item->save();
+
+        return redirect()->back()->with('success-status', 'The item return process was done successfully ');
+
+    }
 
 
 
@@ -140,6 +198,15 @@ class ItemAssignmentController extends Controller
         $array_response['suggestions'] = $users_emails;
 
         return response()->json($array_response,200);
+    }
+
+    /**
+     * @param $assignmentId
+     * @return mixed
+     */
+    protected function findAssignmentFromId($assignmentId)
+    {
+        return ItemAssignment::all()->where('id', $assignmentId)->first();
     }
 
 

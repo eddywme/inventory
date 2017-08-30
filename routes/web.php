@@ -75,6 +75,12 @@ Route::get('/items/{slug}/assign', 'ItemAssignmentController@assignIndex')
 Route::post('/items/{slug}/assign', 'ItemAssignmentController@assignPost')
     ->name('assign.post');
 
+Route::get('/items-assignments/{assignmentId}/return-item', 'ItemAssignmentController@assignReturnGet')
+    ->name('assign.return.get');
+
+Route::post('/items-assignments/{assignmentId}/return-item', 'ItemAssignmentController@assignReturnPost')
+    ->name('assign.return.post');
+
 Route::get('/item-assignments', 'ItemAssignmentController@assignmentList')
     ->name('assign.list');
 

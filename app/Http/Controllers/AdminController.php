@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\ItemAccessory;
+use App\ItemAssignment;
 use App\ItemCategory;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,11 +22,15 @@ class AdminController extends Controller
         $numberOfUsers = User::all()->count();
         $numberOfItems = Item::all()->count();
         $numberOfItemCategories = ItemCategory::all()->count();
+        $numberOfItemAccessories = ItemAccessory::all()->count();
+        $numberOfItemAssigned = ItemAssignment::all()->count();
 
         return view('admin.admin-index', [
             'numberOfUsers' => $numberOfUsers,
             'numberOfItems' => $numberOfItems,
             'numberOfItemCategories' => $numberOfItemCategories,
+            'numberOfItemAccessories' => $numberOfItemAccessories,
+            'numberOfItemAssigned' => $numberOfItemAssigned,
         ]);
     }
 

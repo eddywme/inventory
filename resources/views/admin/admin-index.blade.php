@@ -64,15 +64,15 @@
                     <ul class="nav" id="side-menu">
 
                         <li>
-                            <a href="{{ route('users.index') }}"><i class="fa fa-user fa-fw"></i>  Users</a>
+                            <a href="{{ route('users.index') }}"><i class="fa fa-user fa-fw"></i>  Users <span class="badge pull-right">{{ $numberOfUsers }}</span></a>
                         </li>
 
                         <li>
-                            <a href="{{ route('assign.list') }}"><i class="fa fa-book fa-fw"></i>  Assigned Items</a>
+                            <a href="{{ route('assign.list') }}"><i class="fa fa-book fa-fw"></i>  Assigned Items <span class="badge pull-right">{{ $numberOfItemAssigned }}</span></a>
                         </li>
 
                         <li>
-                            <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories</a>
+                            <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories <span class="badge pull-right">{{ $numberOfItemAccessories }}</span> </a>
                         </li>
 
                         <li>
@@ -152,12 +152,12 @@
                                     <i class="fa fa-book fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge">{{ $numberOfItemAssigned }}</div>
                                     <div>Assigned Items</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="{{ route('assign.list') }}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

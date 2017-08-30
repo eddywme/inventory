@@ -16,9 +16,9 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                @if (session('status'))
-                    <div class="alert alert-success" style="margin-top: 10px">
-                        <h5>{{ session('status') }}</h5>
+                @if (session('error-status'))
+                    <div class="alert alert-danger" style="margin-top: 10px">
+                        <h5>{{ session('error-status') }}</h5>
                     </div>
                 @endif
 
@@ -70,10 +70,17 @@
                                 </td>
 
                                 <td>
-                                    <div class="btn btn-success">
-                                        <i class="fa fa-arrow-up"></i>
-                                        Mark Returned
-                                    </div>
+                                    @if(!isset($itemAssignment->returned_at))
+                                        <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
+                                            <i class="fa fa-arrow-up"></i>
+                                            Mark Returned
+                                        </a>
+                                        @else
+                                        <span class="label label-success">RETURNED</span>
+                                    @endif
+
+
+
                                 </td>
 
                             </tr>
