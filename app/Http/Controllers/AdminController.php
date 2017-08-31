@@ -6,6 +6,7 @@ use App\Item;
 use App\ItemAccessory;
 use App\ItemAssignment;
 use App\ItemCategory;
+use App\ItemRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ class AdminController extends Controller
         $numberOfItemCategories = ItemCategory::all()->count();
         $numberOfItemAccessories = ItemAccessory::all()->count();
         $numberOfItemAssigned = ItemAssignment::all()->count();
+        $numberOfItemRequests = ItemRequest::all()->count();
 
         return view('admin.admin-index', [
             'numberOfUsers' => $numberOfUsers,
@@ -31,6 +33,7 @@ class AdminController extends Controller
             'numberOfItemCategories' => $numberOfItemCategories,
             'numberOfItemAccessories' => $numberOfItemAccessories,
             'numberOfItemAssigned' => $numberOfItemAssigned,
+            'numberOfItemRequests' => $numberOfItemRequests,
         ]);
     }
 

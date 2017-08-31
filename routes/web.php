@@ -91,3 +91,11 @@ Route::get('/assignment/lastNamesEndPoint', 'ItemAssignmentController@lastNamesE
 
 Route::get('/assignment/emailsEndPoint', 'ItemAssignmentController@emailsEndPoint');
 
+
+/* Item Requests */
+Route::get('/items/{slug}/request', 'ItemRequestController@requestIndex')
+    ->name('request.index');
+Route::post('/items/{slug}/request', 'ItemRequestController@requestPost')
+    ->name('request.post');
+Route::get('/item-requests', 'ItemRequestController@requestList')
+    ->name('request.list');

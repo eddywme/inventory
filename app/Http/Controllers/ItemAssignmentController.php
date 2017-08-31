@@ -21,7 +21,13 @@ class ItemAssignmentController extends Controller
 
     public function assignIndex($slug){
         $item = Utils::findItemBySlug($slug);
+
+        if ($item === null){
+            return redirect()->back()->with('error-status', 'That Item does not exist in the system');
+        }
+
         $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+
 
         return view('items-assignment.assignment-index',[
             'item' => $item,

@@ -71,7 +71,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+       
         $this->validate($request, [
             'name' => 'required|string|unique:items|max:255',
             'serial_number' => 'required|string|unique:items|max:255',
