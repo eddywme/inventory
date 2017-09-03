@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\ItemAccessory;
 use App\ItemRequest;
+use App\Mail\ItemRequestAccepted;
+use App\User;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ItemRequestController extends Controller
 {
@@ -55,6 +58,30 @@ class ItemRequestController extends Controller
         return view('items-requests.request-list', [
             'itemRequests' => $itemRequests
         ]);
+
+    }
+
+
+    public function requestResponseAccepted($itemRequestId){
+        $itemRequest  = ItemRequest::all()->where('id', $itemRequestId)->first();
+        if ($itemRequest === null){
+            return redirect()->back()->with('error-status', 'That Item Request does not exist in the system');
+        }
+        $user = User::all()->where('id', $itemRequest->user_id)->first();
+        if ($user === null){
+            return redirect()->back()->with('error-status', 'That User does not exist in the system');
+        }
+
+        $itemRequest->is_accepted = 1;
+        $itemRequest->approved_by = Utils::authUserId();
+        $itemRequest->save();
+
+        $h = Mail::to($user)
+            ->send(new ItemRequestAccepted($itemRequest));
+
+
+
+        return redirect()->back()->with('success-status', 'That User has received the e-mail request accepted notification');
 
     }
 }

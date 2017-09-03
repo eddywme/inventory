@@ -84,11 +84,18 @@ Route::post('/items-assignments/{assignmentId}/return-item', 'ItemAssignmentCont
 Route::get('/item-assignments', 'ItemAssignmentController@assignmentList')
     ->name('assign.list');
 
+/* Prepare an e-mail to send to the user */
+Route::get('/item-assignments/{assignmentId}/mail', 'ItemAssignmentController@sendMailToAssignedGet')
+    ->name('assign.email.get');
+/* send E-mail to the user */
+Route::post('/item-assignments/{assignmentId}/send-mail', 'ItemAssignmentController@sendMailToAssignedPost')
+    ->name('send.email.toAssigned');
+
+
+
 
 Route::get('/assignment/firstNamesEndPoint', 'ItemAssignmentController@firstNamesEndPoint');
-
 Route::get('/assignment/lastNamesEndPoint', 'ItemAssignmentController@lastNamesEndPoint');
-
 Route::get('/assignment/emailsEndPoint', 'ItemAssignmentController@emailsEndPoint');
 
 
@@ -99,3 +106,8 @@ Route::post('/items/{slug}/request', 'ItemRequestController@requestPost')
     ->name('request.post');
 Route::get('/item-requests', 'ItemRequestController@requestList')
     ->name('request.list');
+
+/* Prepare an e-mail to send to the user when the request is approved  */
+Route::get('/item-request/{requestId}/accept', 'ItemRequestController@requestResponseAccepted')
+    ->name('request-response-accepted');
+

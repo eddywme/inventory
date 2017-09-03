@@ -6,6 +6,7 @@ use App\Item;
 use App\ItemAccessory;
 use App\ItemAssignment;
 use App\ItemCondition;
+use App\Mail\MailToAssignedUser;
 use App\User;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
@@ -13,6 +14,8 @@ use Carbon\Carbon;
 use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ItemAssignmentController extends Controller
 {
@@ -152,6 +155,66 @@ class ItemAssignmentController extends Controller
         return redirect()->back()->with('success-status', 'The item return process was done successfully ');
 
     }
+
+    public function sendMailToAssignedGet($assignmentId){
+
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+
+        }
+        $item = Item::all()->where('id', $itemAssignment->item_id)->first();
+
+        if($item == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        $user = User::all()->where('id', $itemAssignment->user_id)->first();
+
+        if($user == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        return view('items-assignment.send-mail-assigned', [
+            'item' => $item,
+            'user' => $user,
+            'itemAssignment' => $itemAssignment
+        ]);
+    }
+
+    public function sendMailToAssignedPost(Request $request, $assignmentId){
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+
+        }
+
+        $this->validate($request, [
+            'message' => 'string'
+        ]);
+
+        $message =  $request->get('message');
+        $user = User::all()->where('id', $itemAssignment->user_id)->first();
+
+        //        dd($message);
+
+
+
+        $h = Mail::to($user)
+            ->send(new MailToAssignedUser($message, $user));
+
+
+
+        return redirect()->back()->with('success-status', 'That email was sent successfully');
+
+
+
+
+
+    }
+
+
 
 
 

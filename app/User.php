@@ -39,7 +39,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Item', 'owned_by');
     }
 
-    public function name(){
+    public function getName(){
         return $this->first_name." ".$this->last_name;
     }
 

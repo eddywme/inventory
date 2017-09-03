@@ -102,7 +102,7 @@ class ItemCategoryController extends Controller
 
         $itemCategory->name = $request->input('name');
         $itemCategory->description = $request->input('description');
-        $itemCategory->slug = str_slug( $request->input('name'));
+//        $itemCategory->slug = str_slug( $request->input('name'));
         $itemCategory->save();
         return redirect('item-categories')->with('status', 'The Item Category has been updated .');
     }

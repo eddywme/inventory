@@ -256,7 +256,7 @@ class ItemController extends Controller
         $item->price = $request->input("price");
         $item->category_id = $request->input("category_id");
 
-        /* If the event has already a image :  update its image if and only if a new video has been uploaded */
+        /* If the event has already a image :  update its image if and only if a new image has been uploaded */
         if($item->photo_url){
             if($pathToImage !== null){
                 /* Remove the replaced image*/
@@ -277,7 +277,7 @@ class ItemController extends Controller
         $item->recorded_by = Utils::authUserId();
         $item->time_span = $total_hours_time_span;
         $item->lastly_edited_by = Utils::authUserId();
-        $item->slug = str_slug($request->input("name")." ".$request->input("serial_number"));
+//        $item->slug = str_slug($request->input("name")." ".$request->input("serial_number"));
 
         $item->save();
 

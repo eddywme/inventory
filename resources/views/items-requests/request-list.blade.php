@@ -22,6 +22,12 @@
                     </div>
                 @endif
 
+                    @if (session('success-status'))
+                        <div class="alert alert-info" style="margin-top: 10px">
+                            <h5>{{ session('success-status') }}</h5>
+                        </div>
+                    @endif
+
                 <h1 class="page-header"> <strong>REQUESTED ITEMS</strong> </h1>
 
 
@@ -30,7 +36,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Item Info</th><th>Requester Info</th><th>Time Info</th><th>Action</th>
+                        <th>Item Info</th><th>Requester Info</th><th>Time Info</th><th>Action</th> <th>Info</th> <th>State</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,17 +56,36 @@
                                 </td>
 
                                 <td>
-                                    Name: {{ $user->name() }} <br>
+                                    Name: {{ $user->getName() }} <br>
                                     Phone: {{ $user->phone_number }} <br>
                                     E-mail : {{ $user->email }} <br>
                                 </td>
 
                                 <td>
-                                    Pick-Up time : {{ $itemRequest->pickup_time}}
+                                    Request Sent On : {{ \App\Utility\Utils::getReadableDateTime($itemRequest->created_at)}} <br>
+                                    Pick-Up time : {{ App\Utility\Utils::getReadableDateTime($itemRequest->pickup_time)}}
                                 </td>
 
                                 <td>
-                                    <a href="" class="btn btn-success">Accept</a>
+                                    <a href="{{ route('request-response-accepted', $itemRequest->id) }}" class="btn btn-success {{  $itemRequest->is_accepted? 'disabled':'' }}">Accept</a>
+                                </td>
+
+                                <td>
+                                    @if( $itemRequest->is_accepted)
+                                        Approved By:  @php echo \App\User::all()->where('id', $itemRequest->approved_by)->first()->getName(); @endphp <br>
+                                        Approved On : {{ App\Utility\Utils::getReadableDateTime($itemRequest->approved_on)}}
+                                    @else
+                                         ...
+                                    @endif
+                                </td>
+
+                                <td>
+
+                                    @if( $itemRequest->is_accepted)
+                                         <span class="label label-success">APPROVED</span>
+                                        @else
+                                        <span class="label label-danger">PENDING</span>
+                                    @endif
                                 </td>
 
 

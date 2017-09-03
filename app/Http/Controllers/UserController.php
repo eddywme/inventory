@@ -100,7 +100,7 @@ class UserController extends Controller
         $user->email = $request['email'];
         $user->phone_number = $request['phone_number'];
         $user->password = bcrypt($request['password']);
-        $user->slug = str_slug($request['first_name']." ". $request['last_name']." ".random_int(1000,9000));
+//        $user->slug = str_slug($request['first_name']." ". $request['last_name']." ".random_int(1000,9000));
 
         $user->save();
 

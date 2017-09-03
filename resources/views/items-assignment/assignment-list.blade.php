@@ -30,7 +30,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th><th>Mark Returned</th>
+                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th><th>State</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,9 +51,9 @@
                                 </td>
 
                                 <td>
-                                    Name: {{ $user->name() }} <br>
+                                    Name: {{ $user->getName() }} <br>
                                     Phone: {{ $user->phone_number }} <br>
-                                    E-mail : {{ $user->email }} <br>
+                                    E-mail : <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>  <br>
                                 </td>
 
                                 <td>
@@ -64,7 +64,7 @@
                                 </td>
 
                                 <td>
-                                    Name: {{ $assigner->name() }} <br>
+                                    Name: {{ $assigner->getName() }} <br>
                                     Phone: {{ $assigner->phone_number }} <br>
                                     E-mail : {{ $assigner->email }} <br>
                                 </td>

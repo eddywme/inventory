@@ -42,7 +42,7 @@
                             <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
 
                             @if($item->is_available())
-                                <a class="btn btn-default btn-request">REQUEST</a>
+                                <a href="{{ route('request.index', $item->slug) }}" class="btn btn-default btn-request">REQUEST</a>
                             @else
                                 <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                             @endif
@@ -109,7 +109,7 @@
 
                                         <tr>
                                             <td>ITEM OWNED BY</td>
-                                            <td>{{ $item->ownedBy->name() }}</td>
+                                            <td>{{ $item->ownedBy->getName() }}</td>
                                         </tr>
 
                                         <tr>
@@ -119,7 +119,7 @@
 
                                         <tr>
                                             <td>RECORDED BY</td>
-                                            <td>{{ $item->recordedBy->name() }}</td>
+                                            <td>{{ $item->recordedBy->getName() }}</td>
                                         </tr>
 
                                         <tr>
