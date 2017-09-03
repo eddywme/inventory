@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemCategory;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,6 +57,18 @@ class HomeController extends Controller
         $array_response['suggestions'] = $items_names;
 
         return response()->json($array_response,200);
+    }
+
+    public function getConfirmationEmail(){
+
+        $item = Item::all()->first();
+        $user = User::all()->first();
+
+        return view('emails.request-accepted')
+            ->with([
+                'item' => $item,
+                'user' => $user
+            ]);
     }
 
 

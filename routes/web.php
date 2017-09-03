@@ -13,6 +13,8 @@
 */
 
 use App\Http\Controllers\UserController;
+use App\Item;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -110,4 +112,37 @@ Route::get('/item-requests', 'ItemRequestController@requestList')
 /* Prepare an e-mail to send to the user when the request is approved  */
 Route::get('/item-request/{requestId}/accept', 'ItemRequestController@requestResponseAccepted')
     ->name('request-response-accepted');
+
+/* Testing Mails */
+
+Route::get('/con-email', function (){
+
+    $item = Item::all()->first();
+    $user = User::all()->first();
+
+    return view('emails.request-accepted')
+        ->with([
+            'item' => $item,
+            'user' => $user
+        ]);
+
+});
+
+Route::get('/to-assigned', function(){
+
+    $user = User::all()->first();
+
+    return view('emails.to-assigned-user')
+        ->with([
+            'user'  => $user,
+            'message_text'  => "While the publisher and the author have used good faith efforts to ensure that the information
+            and instructions contained in this work are accurate, the publisher and the author disclaim all
+            responsibility for errors or omissions, including without limitation responsibility for
+            damages resulting from the use of or reliance on this work. Use of the information and
+            instructions contained in this work is at your own risk. If any code samples or other"
+        ]);
+});
+
+
+
 
