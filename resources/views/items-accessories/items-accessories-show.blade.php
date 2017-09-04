@@ -38,12 +38,12 @@
                     <div class="row item-info">
                         <hr>
                         <div class="col-md-4">
-                            <p> <h5>Accessory Name: <strong>{{ $itemAccessory->name }}</strong> </h5>   <h6>Item Name: <strong>{{ $itemAccessory->item->name }}</strong> </h6></p><br>
+                            <p> <h4>Accessory Name: <strong>{{ $itemAccessory->name }}</strong> </h4>   <h5>Item Name: <strong>  <a href="{{ route('items.show', $itemAccessory->item->slug) }}">{{ $itemAccessory->item->name }}</a></strong> </h5></p><br>
 
                             @php
                                 /*
 
-                                 The number7 is the convenience for the final url
+                                 The number 7 is the convenience for the final url
                                  Which will go look into the public folder 'public = 7 chars'
                                  The idea is to save the image into the public folder
                                  By respecting the changes done by the symlinks operation
@@ -97,9 +97,9 @@
                                         <tr>
 
 
-                                            @if(!$itemAccessory->item->is_available())
+                                            @if($itemAccessory->item->is_available())
                                                 <th>
-                                                    <a href="" class="btn btn-info"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ACCESSORY</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <a href="{{ route('item-accessories.edit', $itemAccessory->slug) }}" class="btn btn-info"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ACCESSORY</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </th>
                                                 <th>
                                                     <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;

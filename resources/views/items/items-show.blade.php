@@ -47,6 +47,20 @@
                                 <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                             @endif
 
+                            @if($itemAccessories)
+                                <h4>Accessories <div class="badge">{{ $itemAccessories->count() }}</div></h4>
+                                @foreach($itemAccessories->chunk(3) as $itemAccessoryChunk)
+                                    <div class="row">
+                                        @foreach ($itemAccessoryChunk as $itemAccessory)
+                                            <div class="col-md-4">
+                                                <img src="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-accessory-sm">
+                                                <h6><a href="{{ route('item-accessories.show', $itemAccessory->slug) }}">{{ $itemAccessory->name }}</a> </h6>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            @endif
+
                         </div>
 
                         <div class="col-md-8 "><br>
@@ -59,7 +73,7 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td> NAME</td> <td class="item_value_column">{{ $item->name }}</td>
+                                        <td width="50%"> NAME</td> <td class="item_value_column">{{ $item->name }}</td>
                                     </tr>
                                     <tr>
                                         <td> SERIAL NUMBER</td> <td class="item_value_column">{{ $item->serial_number }}</td>
@@ -87,7 +101,7 @@
 
                                     <tr>
                                         <td> DESCRIPTION</td>
-                                        <td class="item_value_column">{{ $item->description }}</td>
+                                        <td class="item_value_column">{{ substr($item->description, 0, 200)  }} ... </td>
                                     </tr>
 
                                     <tr>

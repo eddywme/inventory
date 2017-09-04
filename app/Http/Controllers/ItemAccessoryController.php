@@ -79,7 +79,7 @@ class ItemAccessoryController extends Controller
 
         $itemAccessory->save();
 
-        return redirect('items/item-accessories')->with('status', 'A new Item Accessory has been created.');
+        return redirect()->back()->with('status', 'A new Item Accessory has been created for the item '.$item->name);
     }
 
     /**
@@ -90,7 +90,7 @@ class ItemAccessoryController extends Controller
      */
     public function show($slug)
     {
-        $itemAccessory = ItemAccessory::all()->where('slug', $slug)->first();
+        $itemAccessory = $this->findItemAccessoryBySlug($slug);
 
         return view('items-accessories.items-accessories-show', [
             'itemAccessory' => $itemAccessory
@@ -103,9 +103,20 @@ class ItemAccessoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $itemAccessory = $this->findItemAccessoryBySlug($slug);
+        if(!$itemAccessory){
+            return redirect('/');
+        }
+        $item = $itemAccessory->item;
+        if(!$item){
+            return redirect('/');
+        }
+        return view('items-accessories.item-accessory-form', [
+            'itemAccessory' => $itemAccessory,
+            'item' => $item
+           ]);
     }
 
     /**
@@ -115,9 +126,59 @@ class ItemAccessoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+
+        $itemAccessory = $this->findItemAccessoryBySlug($slug);
+
+        if($itemAccessory == null){
+            return redirect('/');
+        }
+
+        $item = $itemAccessory->item;
+        if(!$item){
+            return redirect()->back()->with('error-status', 'Could not find the item of this accessory !');
+        }
+
+        $this->validate($request, [
+        'name' => 'required|string',
+        'description' => 'required',
+        'photo_url' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $pathToImage = null;
+
+        if(($request->file('photo_url')) !== null){
+            $uploadedFileImage = $request->file('photo_url');
+            $clientOriginalName = $uploadedFileImage->getClientOriginalName();
+            $pathToImage = Storage::putFileAs(
+                'public/items-accessories-images',
+                $uploadedFileImage,
+                str_replace([".", " "], "", $clientOriginalName)."_".str_random(10).".".$uploadedFileImage->getClientOriginalExtension()
+            );
+
+        }
+
+        /* If the item accessory has already a image :  update its image if and only if a new image has been uploaded */
+        if ($itemAccessory->photo_url) {
+
+            if($pathToImage !== null) {
+                /* Remove the replaced image*/
+                Storage::delete($itemAccessory->photo_url);
+
+                $itemAccessory->photo_url = $pathToImage;
+            }
+
+        } else {
+            $itemAccessory->photo_url = $pathToImage;
+        }
+
+        $itemAccessory->name = $request->input('name');
+        $itemAccessory->description = $request->input('description');
+        $itemAccessory->save();
+
+        return redirect()->back()->with('status', 'The  Accessory has been updated successfully !');
+
     }
 
     /**
@@ -139,4 +200,14 @@ class ItemAccessoryController extends Controller
     {
         return Item::all()->where('slug', $slug)->first();
     }
+
+    /**
+     * @param $slug
+     * @return mixed
+     */
+    protected function findItemAccessoryBySlug($slug)
+    {
+        return ItemAccessory::all()->where('slug', $slug)->first();
+    }
 }
+

@@ -47,10 +47,14 @@ Route::get('items-admin', 'ItemController@adminIndex')
 ->name('items-admin');
 
 Route::resource('item-categories', 'ItemCategoryController');
+
 Route::get('item-categories/{slug}/items', 'ItemCategoryController@showCategoryItems')
+
 ->name('item-categories.showCategoryItems');
 
+
 /* Item Accessory Related Routes */
+
 Route::get('accessories', 'ItemAccessoryController@index')
     ->name('item-accessories');
 
@@ -59,6 +63,12 @@ Route::get('accessories/{slug}', 'ItemAccessoryController@show')
 
 Route::get('items/{itemSlug}/accessories/create', 'ItemAccessoryController@create')
 ->name('item-accessories.create');
+
+Route::get('items/accessories/{itemAccessorySlug}/edit', 'ItemAccessoryController@edit')
+    ->name('item-accessories.edit');
+
+Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')
+    ->name('item-accessories.update');
 
 Route::post('items/{itemSlug}/accessories/', 'ItemAccessoryController@store')
     ->name('item-accessories.store');

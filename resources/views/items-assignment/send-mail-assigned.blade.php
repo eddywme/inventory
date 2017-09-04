@@ -49,7 +49,7 @@
                         <div class="panel panel-info">
 
                             <div class="panel-heading">
-                              Message will be sent to: <strong>{{ $user->getName() }}</strong>  via his e-mail  <strong>{{ $user->email  }}</strong>
+                              Message will be sent to: <strong>{{ $user->getName() }}</strong>  via his/her e-mail address <strong>{{ $user->email  }}</strong>
                             </div>
 
                             <form action="{{ route('send.email.toAssigned', $itemAssignment->id) }}" class="form" method="post">

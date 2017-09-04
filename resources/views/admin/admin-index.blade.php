@@ -253,24 +253,24 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-ticket fa-fw"></i> New Item Was Assigned
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                <a href="{{ route('assign.list') }}" class="list-group-item">
+                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Assigned
+                                    <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAssignment->assigned_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="{{ route('items.show', $lastItem->slug) }}" class="list-group-item">
                                     <i class="fa fa-phone fa-fw"></i> New Item Was Added
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                                    <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItem->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
                                 <a href="#" class="list-group-item">
                                     <i class="fa fa-user fa-fw"></i> New User Was Registered
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                                    <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastUser->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tablet fa-fw"></i> New Item Category Was Added
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                                <a href="{{ route('item-accessories.show', $lastItemAccessory->slug) }}" class="list-group-item">
+                                    <i class="fa fa-tablet fa-fw"></i> Last Item Accessory Was Registered
+                                    <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAccessory->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
 

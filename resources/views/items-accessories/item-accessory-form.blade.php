@@ -27,6 +27,11 @@
                     <h5>{{ session('status') }}</h5>
                 </div>
             @endif
+                @if (session('error-status'))
+                    <div class="alert alert-success">
+                        <h5>{{ session('error-status') }}</h5>
+                    </div>
+                @endif
             <div class="panel panel-default register-panel">
                 <div class="panel-heading"><h3 align="center">{{ isset($itemAccessory)?  'EDIT ITEM ACCESSORY' : 'REGISTERING AN ITEM ACCESSORY' }}</h3>
                 <h6 align="center">All The Fields Are Required Unless Specified Optional.</h6></div>
@@ -35,10 +40,11 @@
                     <div class="col-md-8 col-md-offset-2">
 
                         <p>
-                            You are {{ isset($itemAccessory)? 'editing' : 'adding' }} an accessory for the item :[ <strong>{{ $item->name }}</strong>  |  Serial Number: <strong>{{ $item->serial_number }}</strong> ]
+                            You are {{ isset($itemAccessory)? 'editing' : 'adding' }} an accessory for the item :[ <strong>
+                                <a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a> </strong>  |  Serial Number: <strong>{{ $item->serial_number }}</strong> ]
                         </p>
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($itemAccessory)? '' : route('item-accessories.store', $item->slug) }}" id="item_accessory_registration_form"
+                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($itemAccessory)? route('item-accessories.update', $itemAccessory->slug) : route('item-accessories.store', $item->slug) }}" id="item_accessory_registration_form"
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
 

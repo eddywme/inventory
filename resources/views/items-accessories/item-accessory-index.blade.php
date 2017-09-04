@@ -30,9 +30,9 @@
                     </div>
                 @endif
 
-                <a class="btn btn-primary" href="{{ route('item-categories.create') }}" style="margin: 10px;">
-                    <i class="fa fa-plus-circle"></i> Add Item Accessory
-                </a>
+                {{--<a class="btn btn-primary" href="{{ route('item-categories.create') }}" style="margin: 10px;">--}}
+                    {{--<i class="fa fa-plus-circle"></i> Add Item Accessory--}}
+                {{--</a>--}}
 
                 <div class="table-responsive">
 

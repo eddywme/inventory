@@ -157,10 +157,13 @@ class ItemController extends Controller
         if(!$item) {
             return redirect('/');
         }
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id);
+
         $itemQ = Item::all()->where('category_id', $item->category_id)->count();
         return view("items.items-show", [
             'item' => $item,
-            'itemQ' => $itemQ
+            'itemQ' => $itemQ,
+            'itemAccessories' => $itemAccessories
         ]);
     }
 
@@ -256,16 +259,16 @@ class ItemController extends Controller
         $item->price = $request->input("price");
         $item->category_id = $request->input("category_id");
 
-        /* If the event has already a image :  update its image if and only if a new image has been uploaded */
-        if($item->photo_url){
-            if($pathToImage !== null){
-                /* Remove the replaced image*/
-                Storage::delete($item->photo_url);
+        /* If the item has already a image :  update its image if and only if a new image has been uploaded */
+        if ($item->photo_url) {
 
-                $item->photo_url = $pathToImage;
+                if($pathToImage !== null){
+                    /* Remove the replaced image*/
+                    Storage::delete($item->photo_url);
+                    $item->photo_url = $pathToImage;
+                }
 
-            }
-        }else{
+        } else {
             $item->photo_url = $pathToImage;
         }
 
