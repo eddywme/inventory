@@ -67,7 +67,7 @@
                                 <form  action="{{ route('item-categories.destroy', $itemCategory->slug) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
-                                    <button class="btn btn-default"
+                                    <button class="btn btn-warning"
                                             data-toggle="confirm"
                                             data-title="Item Category deletion"
                                             data-message="Do you really want to delete the Item Category ? <br>

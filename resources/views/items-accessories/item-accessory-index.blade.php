@@ -39,7 +39,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Accessory Name</th><th>From Item</th><th>Description</th><th>Delete</th>
+                        <th>Accessory Name</th><th>From Item</th><th>Description</th><th>Edit</th><th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,10 +56,15 @@
                                 Item Serial Number : {{ $itemAccessory->item->serial_number }}
                             </td>
 
-                            <td>
+                            <td width="30%">
                                 {{ substr($itemAccessory->description, 0, 100)  }} ...
                             </td>
 
+                            <td>
+                                <a href="{{ route('item-accessories.edit', $itemAccessory->slug) }}">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+                            </td>
 
 
                             <td>

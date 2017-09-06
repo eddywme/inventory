@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\ItemAssignment;
 use App\User;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
@@ -63,6 +64,7 @@ class UserController extends Controller
     {
         $user  = User::all()->where('slug', $slug)->first();
 
+
 //        dd($user);
         return view('users.users-form',
             [
@@ -83,28 +85,32 @@ class UserController extends Controller
 
         $user = User::all()->where('slug', $slug)->first();
 
+
         if(!Utils::canUpdateUser($user)){
-           return redirect('/')->with('status', 'Not allowed !');;
+           return redirect('/')->with('status', 'Not allowed !');
         }
+
+
 
         $this->validate($request, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'phone_number' => 'required|string|unique:users',
+            'phone_number' => 'required|string|unique:users,phone_number,'.$user->id,
             'password' => 'required|string|min:6|confirmed',
         ]);
+
+
 
         $user->first_name = $request['first_name'];
         $user->last_name = $request['last_name'];
         $user->email = $request['email'];
         $user->phone_number = $request['phone_number'];
         $user->password = bcrypt($request['password']);
-//        $user->slug = str_slug($request['first_name']." ". $request['last_name']." ".random_int(1000,9000));
 
         $user->save();
 
-        return redirect('/')->with('status', 'The profile has been updated successfully !');
+        return redirect()->back()->with('success-status', 'The profile has been updated successfully !');
     }
 
     /**

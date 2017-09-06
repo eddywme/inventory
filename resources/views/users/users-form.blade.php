@@ -21,112 +21,176 @@
                     <h5>{{ session('status') }}</h5>
                 </div>
             @endif
-            <div class="panel panel-default register-panel">
-                <div class="panel-heading">{{ isset($user)?  'EDIT PROFILE' : 'CREATING AN ACCOUNT' }}</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($user)? route('users.update', $user->slug) : route('register') }}" id="user_registration_form">
-                        {{ csrf_field() }}
 
-                        <input type="hidden" name="_method" value="{{ isset($user)? 'PUT' : 'POST' }}" required>
+                @if (session('success-status'))
+                    <div class="alert alert-success">
+                        <h5>{{ session('success-status') }}</h5>
+                    </div>
+                @endif
 
-                        <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                            <label for="first_name" class="col-md-4 control-label">First Name</label>
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    @if($user)
+                        <li class="active"><a href="#tab1" data-toggle="tab">CURRENT PROFILE</a></li>
+                    @endif
 
-                            <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control" name="first_name"
-                                       value="{{ isset($user)? $user->first_name : old('first_name') }}"
-                                       required autofocus>
+                    <li><a href="#tab2" data-toggle="tab">{{ isset($user)?  'EDIT PROFILE' : 'CREATING AN ACCOUNT' }}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
 
-                                @if ($errors->has('first_name'))
-                                    <span class="help-block">
+
+                            <div class="panel panel-primary" style="margin: 35px 0 0 20px ">
+                                <div class="panel-heading">
+                                    DETAILS OF THE CURRENT PROFILE
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive" >
+                                        <table class="table table-bordered table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <td> FIRST NAME</td> <td class="item_value_column">{{ $user->first_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> LAST NAME</td> <td class="item_value_column">{{ $user->last_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>E-MAIL</td> <td class="item_value_column">{{ $user->email  }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>PHONE NUMBER</td> <td class="item_value_column">{{ $user->phone_number  }}</td>
+                                            </tr>
+
+
+
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div> <!--table responsive-->
+
+                                </div>
+                                <div class="panel-footer">
+
+                                </div>
+                            </div>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div class="panel panel-default register-panel">
+                            <div class="panel-heading">{{ isset($user)?  'EDIT PROFILE' : 'CREATING AN ACCOUNT' }}</div>
+                            <div class="panel-body">
+                                <form class="form-horizontal" role="form" method="POST" action="{{ isset($user)? route('users.update', $user->slug) : route('register') }}" id="user_registration_form">
+                                    {{ csrf_field() }}
+
+                                    <input type="hidden" name="_method" value="{{ isset($user)? 'PUT' : 'POST' }}" required>
+
+                                    <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                        <label for="first_name" class="col-md-4 control-label">First Name</label>
+
+                                        <div class="col-md-6">
+                                            <input id="first_name" type="text" class="form-control" name="first_name"
+                                                   value="{{ isset($user)? $user->first_name : old('first_name') }}"
+                                                   required autofocus>
+
+                                            @if ($errors->has('first_name'))
+                                                <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                        <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                            <label for="last_name" class="col-md-4 control-label">Last Name</label>
+                                    <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                        <label for="last_name" class="col-md-4 control-label">Last Name</label>
 
-                            <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control" name="last_name"
-                                       value="{{ isset($user)? $user->last_name : old('first_name') }}"
-                                       required autofocus>
+                                        <div class="col-md-6">
+                                            <input id="last_name" type="text" class="form-control" name="last_name"
+                                                   value="{{ isset($user)? $user->last_name : old('first_name') }}"
+                                                   required autofocus>
 
-                                @if ($errors->has('last_name'))
-                                    <span class="help-block">
+                                            @if ($errors->has('last_name'))
+                                                <span class="help-block">
                                         <strong>{{ $errors->first('last_name') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email"
-                                       value="{{ isset($user)? $user->email : old('first_name') }}"
-                                       required>
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control" name="email"
+                                                   value="{{ isset($user)? $user->email : old('first_name') }}"
+                                                   required>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
+                                            @if ($errors->has('email'))
+                                                <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
 
-                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                            <label for="phone_number" class="col-md-4 control-label">Phone Number</label>
+                                    <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                                        <label for="phone_number" class="col-md-4 control-label">Phone Number</label>
 
-                            <div class="col-md-6">
-                                <input id="phone_number" type="tel" class="form-control" name="phone_number"
-                                       value="{{ isset($user)? $user->phone_number : old('first_name') }}"
-                                       required>
+                                        <div class="col-md-6">
+                                            <input id="phone_number" type="tel" class="form-control" name="phone_number"
+                                                   value="{{ isset($user)? $user->phone_number : old('first_name') }}"
+                                                   required>
 
-                                @if ($errors->has('phone_number'))
-                                    <span class="help-block">
+                                            @if ($errors->has('phone_number'))
+                                                <span class="help-block">
                                         <strong>{{ $errors->first('phone_number') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <label for="password" class="col-md-4 control-label">Password</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control" name="password" required>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password_confirmation" class="col-md-4 control-label">Confirm Password</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-floppy-o"></i>
+                                                {{ isset($user)? 'UPDATE PROFILE' : 'SAVE ACCOUNT' }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password_confirmation" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-floppy-o"></i>
-                                    {{ isset($user)? 'UPDATE PROFILE' : 'SAVE ACCOUNT' }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>

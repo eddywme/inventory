@@ -73,9 +73,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="list-group">
-                                    @foreach($itemCategories as $item_category )
-                                        <a href="" class="list-group-item">
-                                            {{ ($item_category->name)}}<span class="badge badge-info"></span>
+                                    @foreach( $itemCategories as $item_category )
+                                        @php
+                                            $itemCategoryCount = \App\Item::all()->where('category_id', $item_category->id)->count();
+                                        @endphp
+                                        <a href="{{ route('item-categories.showCategoryItems', $item_category->slug) }}" class="list-group-item">
+                                            {{ ($item_category->name)}}<span class="badge badge-info">{{ $itemCategoryCount }}</span>
                                         </a>
                                     @endforeach
                                 </div>
