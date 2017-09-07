@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ItemRequestAccepted extends Mailable
+class ItemRequestAcceptedMD extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,11 +31,12 @@ class ItemRequestAccepted extends Mailable
      */
     public function build()
     {
+
         $item = \App\Item::where('id', $this->itemRequest->item_id)->first();
         $user = \App\User::where('id', $this->itemRequest->user_id)->first();
 
 
-        return $this->view('emails.request-accepted')
+        return $this->markdown('emails.item-request-accpted-md')
             ->with([
                 'item' => $item,
                 'user' => $user

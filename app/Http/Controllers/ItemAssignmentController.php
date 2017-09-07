@@ -6,6 +6,7 @@ use App\Item;
 use App\ItemAccessory;
 use App\ItemAssignment;
 use App\ItemCondition;
+use App\Mail\MailToAssignedMD;
 use App\Mail\MailToAssignedUser;
 use App\User;
 use App\Utility\ItemStatus;
@@ -202,7 +203,7 @@ class ItemAssignmentController extends Controller
 
 
         $h = Mail::to($user)
-            ->send(new MailToAssignedUser($message, $user));
+            ->send(new MailToAssignedMD($message, $user));
 
 
 

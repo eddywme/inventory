@@ -27,7 +27,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Names</th><th>E-mail</th><th>Phone</th><th>Edit</th><th>Delete</th>
+                        <th>Names</th><th>E-mail</th><th>Phone</th> <th>Role</th> <th>Edit</th><th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,6 +47,10 @@
                             </td>
 
                             <td>
+                                {{ $user->role->name }}
+                            </td>
+
+                            <td>
                                 <a href="{{ route('users.edit',$user->slug) }}">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </a>
@@ -60,7 +64,7 @@
                                             data-toggle="confirm"
                                             data-title="User deletion"
                                             data-message="Do you really want to delete the User? <br>
-                                                 Once the User is deleted all its data are deleted and the action cannot be reverted back."
+                                                 Once the User is deleted all his data are deleted and the action cannot be reverted back."
                                             data-type="danger">
                                         <span class="fa fa-trash"></span>
                                     </button>

@@ -33,7 +33,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Names</th><th>Category</th><th>TimeSpan</th><th>Serial Number</th><th>Availability</th>
+                        <th>Names</th><th>Category</th><th>TimeSpan</th><th>Serial Number</th><th>Status</th>
                         <th>Edit</th><th>Delete</th>
                     </tr>
                     </thead>
@@ -59,15 +59,27 @@
                             </td>
 
                             <td>
-                                {{  $item->showStatusName() }}
+                                @if($item->status === \App\Utility\ItemStatus::$ITEM_TAKEN)
+                                    <span class="label label-danger"> {{  $item->showStatusName() }}</span>
+                                @elseif($item->status === \App\Utility\ItemStatus::$ITEM_RESERVED)
+                                    <span class="label label-warning"> {{  $item->showStatusName() }}</span>
+                                @elseif($item->status === \App\Utility\ItemStatus::$ITEM_AVAILABLE)
+                                    <span class="label label-success"> {{  $item->showStatusName() }}</span>
+                                @endif
+
                             </td>
 
                             <td>
-                                <a href="{{ route('items.edit', $item->slug) }}"><i class="fa fa-pencil-square-o"></i></a>
+                                @if($item->is_available())
+                                    <a href="{{ route('items.edit', $item->slug) }}"><i class="fa fa-pencil-square-o"></i></a>
+                                @else
+                                    <span class="label label-warning">NOT AVAILABLE</span>
+                                @endif
                             </td>
 
 
                             <td>
+                                @if($item->is_available())
                                 <form  action="{{ route('users.destroy', $item->slug) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
@@ -80,6 +92,9 @@
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </form>
+                                @else
+                                    <span class="label label-warning">NOT AVAILABLE</span>
+                                @endif
                             </td>
 
 

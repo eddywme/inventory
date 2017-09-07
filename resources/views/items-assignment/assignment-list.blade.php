@@ -53,7 +53,8 @@
                                 <td>
                                     Name: {{ $user->getName() }} <br>
                                     Phone: {{ $user->phone_number }} <br>
-                                    E-mail : <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>  <br>
+                                     E-mail : <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>  <br>
+                                    {{--E-mail : <a href="mailto:{{ $user->email }}">{{ $user->email }} </a>  <br>--}}
                                 </td>
 
                                 <td>

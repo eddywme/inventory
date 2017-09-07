@@ -51,7 +51,7 @@ class ItemCategoryController extends Controller
         $itemCategory->slug = str_slug( $request->input('name'));
         $itemCategory->save();
 
-        return redirect('item-categories')->with('status', 'A new Item Category has been created.');
+        return redirect()->back()->with('status', 'A new Item Category has been created.');
     }
 
     /**

@@ -26,12 +26,12 @@ class CreateItemsTable extends Migration
             $table->decimal('price',11,2);
 
             /* Item status : 0 = Taken, 1 = Reserved, 2 = Available*/
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(2);
 
             $table->string('model_number');
             $table->dateTime('date_acquired');
 
-            $table->integer('lastly_edited_by')->nullabe();
+            $table->integer('lastly_edited_by')->nullable();
             $table->integer('recorded_by');
 
             $table->integer('owned_by');

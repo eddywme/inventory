@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MailToAssignedUser extends Mailable
+class MailToAssignedMD extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,10 +32,10 @@ class MailToAssignedUser extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.to-assigned-user')
-        ->with([
-          'user'  => $this->user,
-          'message_text'  => $this->message,
-    ]);
+        return $this->markdown('emails.mail-to-assigned-md')
+            ->with([
+                'user'  => $this->user,
+                'message_text'  => $this->message,
+            ]);
     }
 }

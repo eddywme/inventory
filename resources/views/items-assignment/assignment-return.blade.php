@@ -117,7 +117,7 @@
                                     <tbody>
                                     <tr>
                                         <td>User :</td>
-                                        <td>{{ $user->name() }}</td>
+                                        <td>{{ $user->getName() }}</td>
                                     </tr>
 
 
@@ -133,7 +133,7 @@
 
                                     <tr>
                                         <td> Was Assigned By: </td>
-                                        <td> {{ $admin->name() }}</td>
+                                        <td> {{ $admin->getName() }}</td>
                                     </tr>
 
 

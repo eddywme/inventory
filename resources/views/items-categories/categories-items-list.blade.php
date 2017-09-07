@@ -33,7 +33,7 @@
             <div class="col-md-12">
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
-                    <h5> <strong>{{ $itemQ }}</strong>  Items Founds For  Category <strong>{{ $itemCategory->name }}</strong> </h5>
+                    <h5> <strong>{{ $itemQ }}</strong>  Item(s) Found(s) For  Category <strong>{{ $itemCategory->name }}</strong> </h5>
                     @foreach($items as $item)
 
                         <div class="row  item-element">

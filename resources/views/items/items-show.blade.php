@@ -36,7 +36,8 @@
                     <div class="row item-info">
                         <hr>
                         <div class="col-md-4">
-                            <h2>{{ $item->name }}   <h4>Serial Number: {{ $item->serial_number }}</h4></h2><br>
+                            <h3>{{ $item->name }} <h4>Serial Number: {{ $item->serial_number }}</h4></h3>
+                            <h5>Category : <a href="{{ route('item-categories.showCategoryItems',  $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
 
 
                             <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
@@ -105,7 +106,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td> QUANTITY</td> <td class="item_value_column"> {{ $itemQ }} Remaining [{{ $item->itemCondition->name }}]</td>
+                                        <td> QUANTITY</td> <td class="item_value_column"> {{ $itemQ }} Remaining  <span class="label label-info"> {{ $item->itemCategory->name }}</span>  </td>
                                     </tr>
 
 

@@ -21,6 +21,7 @@ class ItemController extends Controller
      */
     public function index()
     {
+
         $items = Item::where('time_span', '>', 0)
             ->orderByDesc('status')
             ->paginate(6);
@@ -35,6 +36,9 @@ class ItemController extends Controller
 
     public function adminIndex()
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $items = Item::where('time_span', '>', 0)
             ->orderByDesc('status')
             ->get();
@@ -53,6 +57,9 @@ class ItemController extends Controller
      */
     public function create()
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $categories = ItemCategory::all();
         $conditions = ItemCondition::all();
         $users = User::all(); // Item owners
@@ -71,7 +78,9 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-       
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $this->validate($request, [
             'name' => 'required|string|unique:items|max:255',
             'serial_number' => 'required|string|unique:items|max:255',
@@ -175,6 +184,9 @@ class ItemController extends Controller
      */
     public function edit($slug)
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $item = $this->findItemBySlug($slug);
 
         $conditions = ItemCondition::all();
@@ -201,6 +213,9 @@ class ItemController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $item = $this->findItemBySlug($slug);
 
         if($item == null){
@@ -301,8 +316,18 @@ class ItemController extends Controller
      */
     public function destroy($slug)
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
         $item = $this->findItemBySlug($slug);
 
+        if(!$item){
+            return redirect('/');
+        }
+
+        if(!$item->is_available()){
+            return redirect('/');
+        }
         Storage::delete($item->photo_url);
 
         $item->delete();

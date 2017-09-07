@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+/* Temp Work-around */
+Route::get('/home', function () {
+    return redirect('/');
+});
 
 Auth::routes();
 

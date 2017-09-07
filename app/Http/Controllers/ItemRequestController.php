@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ItemAccessory;
 use App\ItemRequest;
 use App\Mail\ItemRequestAccepted;
+use App\Mail\ItemRequestAcceptedMD;
 use App\User;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
@@ -77,7 +78,7 @@ class ItemRequestController extends Controller
         $itemRequest->save();
 
         $h = Mail::to($user)
-            ->send(new ItemRequestAccepted($itemRequest));
+            ->send(new ItemRequestAcceptedMD($itemRequest));
 
 
 

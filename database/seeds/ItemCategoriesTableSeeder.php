@@ -23,6 +23,24 @@ class ItemCategoriesTableSeeder extends Seeder
                     'name' => 'Tablets',
                     'description' => 'tablets',
                     'slug' => str_slug('tablets'),
+                ],
+
+                [
+                    'name' => 'Projectors',
+                    'description' => 'projectors',
+                    'slug' => str_slug('projectors'),
+                ],
+
+                [
+                    'name' => 'Laptops',
+                    'description' => 'Laptops',
+                    'slug' => str_slug('laptops'),
+                ],
+
+                [
+                    'name' => 'Cameras',
+                    'description' => 'Cameras',
+                    'slug' => str_slug('Cameras'),
                 ]
 
             ]
