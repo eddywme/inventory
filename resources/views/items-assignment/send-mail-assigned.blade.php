@@ -19,11 +19,9 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                @if (session('status'))
-                    <div class="alert alert-success" style="margin-top: 10px">
-                        <h5>{{ session('status') }}</h5>
+                    <div class="on-success" style="margin-top: 10px">
+
                     </div>
-                @endif
 
                 <h1 class="page-header" align="center"> <strong>SEND E-MAIL TO ASSIGNED USER : </strong>
                 <span>{{ $user->getName() }}</span></h1>
@@ -52,7 +50,7 @@
                               Message will be sent to: <strong>{{ $user->getName() }}</strong>  via his/her e-mail address <strong>{{ $user->email  }}</strong>
                             </div>
 
-                            <form action="{{ route('send.email.toAssigned', $itemAssignment->id) }}" class="form" method="post">
+                            <form action="{{ route('send.email.toAssigned', $itemAssignment->id) }}" class="form" method="post" id="sendMailToAssigned">
 
                                 {{ csrf_field() }}
 
@@ -73,7 +71,7 @@
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-primary" type="submit">
+                                    <button class="btn btn-primary" type="submit" id="sendMailButton">
                                         <i class="fa fa-envelope-o"></i>
                                         SEND MESSAGE
                                     </button>
@@ -94,5 +92,39 @@
 
 @endsection
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            var $sendMailButton = $('#sendMailButton');
+
+            $('#sendMailToAssigned').submit(function(e) {
+                e.preventDefault();
+
+                $sendMailButton.addClass('disabled');
+                $sendMailButton.html('SENDING ...');
+                $.ajax({
+                    method: "POST",
+
+                    url: '{{ route('send.email.toAssigned', $itemAssignment->id) }}',
+                    data: {
+                        message:  $('textarea#message').val(),
+                        _token: "{{ csrf_token() }}"
+                    }
+                })
+                    .done(function( response ) {
+                        $sendMailButton.removeClass('disabled');
+                        $sendMailButton.html('SEND MESSAGE');
+                        $('.on-success').replaceWith('<h5 class="alert alert-success">'+ response.message +'</h5>')
+                        console.log(response.message)
+                    })
+                    .fail(function (e) {
+                        $('.on-success').replaceWith('<h5 >'+ e+'</h5>')
+                    });
+            });
+
+
+        });
+
+
+    </script>
 @endsection
 

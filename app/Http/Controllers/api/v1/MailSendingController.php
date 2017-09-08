@@ -19,6 +19,8 @@ class MailSendingController extends Controller
             'email_from' => 'required|email',
             'email_to' => 'required|email',
 
+            'token' => 'required|string',
+
             'footer_text' => 'nullable|string',
             'header_text' => 'nullable|string'
         ]);

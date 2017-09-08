@@ -29,7 +29,14 @@ class RolesTableSeeder extends Seeder
                     'name' => 'super-admin',
                     'description' => 'super-admin',
                     'slug' => str_slug('super-admin'),
+                ],
+
+                [
+                    'name' => 'api-user',
+                    'description' => 'api-user',
+                    'slug' => str_slug('api-user'),
                 ]
+
 
             ]
 

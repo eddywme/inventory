@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => '/v1/'], function () {
+Route::group(['prefix' => '/v1/', 'middleware' => 'api'], function () {
     Route::post('/sendEmail', 'api\v1\MailSendingController@sendMail');
 });
 

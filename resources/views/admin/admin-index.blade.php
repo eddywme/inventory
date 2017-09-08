@@ -12,12 +12,30 @@
             color: white;
             background-color: #1883ee;
         }
-        .panel-blue > a {
+        .panel-sky-blue > a {
             color: #1883ee;
         }
-        .panel-blue > a:hover {
+        .panel-sky-blue > a:hover {
             color: #3b6268;
         }
+
+        .panel-sky-blue {
+            border-color: #15c8ee;
+        }
+        .panel-sky-blue > .panel-heading {
+            border-color: #16c5ee;
+            color: white;
+            background-color: #1abaee;
+        }
+        .panel-sky-blue > a {
+            color: #16a3ee;
+        }
+        .panel-sky-blue > a:hover {
+            color: #3b6268;
+        }
+
+
+
         .admin-main{
             margin-bottom: 100px;
         }
@@ -74,6 +92,13 @@
                         <li>
                             <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories <span class="badge pull-right">{{ $numberOfItemAccessories }}</span> </a>
                         </li>
+
+                        @if(App\Utility\Utils::isSuperAdmin())
+                            <li>
+                                <a href="{{ route("assignToken.get") }}"><i class="fa fa-key fa-fw"></i> Assign API Token</a>
+                            </li>
+                        @endif
+
 
                         <li>
                             <a href="{{ route("items.create") }}"><i class="fa fa-plus fa-fw"></i> Add Item</a>
@@ -238,6 +263,32 @@
                         </a>
                     </div>
                 </div>
+
+                @if(\App\Utility\Utils::isSuperAdmin())
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-sky-blue">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-cloud fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">5</div>
+                                        <div>Api Users</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
 
 
             </div>

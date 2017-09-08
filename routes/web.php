@@ -119,6 +119,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => ['admin']], function(){
 
 
+
         /* Item accessories*/
         Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')
             ->name('item-accessories.update');
@@ -183,6 +184,15 @@ Route::group(['middleware' => ['auth']], function(){
             /* send E-mail to the user */
             Route::post('/item-assignments/{assignmentId}/send-mail', 'ItemAssignmentController@sendMailToAssignedPost')
                 ->name('send.email.toAssigned');
+
+
+            /* Token Assignment & API users management */
+            Route::get('/api', 'TokenAssignmentController@index')
+                ->name('api.index');
+
+            Route::get('/token-assignment', 'TokenAssignmentController@assignTokenGet')
+                ->name('assignToken.get');
+
 
         });
     });

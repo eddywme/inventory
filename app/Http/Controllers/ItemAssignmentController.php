@@ -155,6 +155,7 @@ class ItemAssignmentController extends Controller
 
         return redirect()->back()->with('success-status', 'The item return process was done successfully ');
 
+
     }
 
     public function sendMailToAssignedGet($assignmentId){
@@ -192,7 +193,7 @@ class ItemAssignmentController extends Controller
         }
 
         $this->validate($request, [
-            'message' => 'string'
+            'message' => 'required|string'
         ]);
 
         $message =  $request->get('message');
@@ -205,9 +206,10 @@ class ItemAssignmentController extends Controller
         $h = Mail::to($user)
             ->send(new MailToAssignedMD($message, $user));
 
-
-
-        return redirect()->back()->with('success-status', 'That email was sent successfully');
+//        sleep(5);
+        return response()->json([
+            'message' => 'The email was sent successfully'
+        ], 200) ;
 
 
 
