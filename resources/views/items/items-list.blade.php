@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Items')
 @section('styles')
-    <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+
+
     <style>
         .item-element{
             background: #fff;
@@ -25,12 +26,22 @@
 @endsection
 @section('content')
     <div class="container main-content">
-
-
-
         <div class="row">
 
             <div class="col-md-12">
+
+                @if (session('error-status'))
+                    <div class="alert alert-info" style="margin-top: 10px">
+                        <h5>{{ session('error-status') }}</h5>
+                    </div>
+                @endif
+
+                    @if (session('success-status'))
+                        <div class="alert alert-info" style="margin-top: 10px">
+                            <h5>{{ session('success-status') }}</h5>
+                        </div>
+                    @endif
+
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
                     @foreach($items as $item)
@@ -40,7 +51,12 @@
 
                             <div class="col-md-4">
 
-                                <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail img-listing">
+
+                            <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                 class="img-thumbnail img-listing">
+
+
+
 
                             </div>
 
@@ -102,7 +118,5 @@
         </div>
 
 @endsection
-@section('scripts')
 
-@endsection
 

@@ -21,8 +21,8 @@ class MailSendingController extends Controller
 
             'token' => 'required|string',
 
-            'footer_text' => 'nullable|string',
-            'header_text' => 'nullable|string'
+            'footer' => 'nullable|string',
+            'header' => 'nullable|string'
         ]);
 
 
@@ -39,13 +39,16 @@ class MailSendingController extends Controller
         $origin_address = $request->get('email_from');
         $destination_address = $request->get('email_to');
 
-        $header_text = $request->get('footer_text');
-        $footer_text = $request->get('header_text');
+        $header_text = $request->get('footer');
+        $footer_text = $request->get('header');
 
         Mail::to($destination_address)->queue(
             new RestServiceMail($subject, $message_text, $origin_address, $destination_address, $header_text, $footer_text ));
 
 
+        return response()->json([
+            'message' => 'E-mail sent successfully'
+        ], 200) ;
 
 
     }

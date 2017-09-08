@@ -44,6 +44,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof \Swift_SwiftException) {
+           return response()->json([
+                'message' => 'An error occurred when trying to send the mail, Try again later.',
+                'meta' => [
+                    'status' => 'UNABLE_TO_SEND_MAIL'
+                ]
+            ], 500) ;
+        }
+
+
         return parent::render($request, $exception);
     }
 

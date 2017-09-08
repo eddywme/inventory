@@ -110,8 +110,13 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/items/{slug}/request', 'ItemRequestController@requestIndex')
         ->name('request.index');
 
+
     Route::post('/items/{slug}/request', 'ItemRequestController@requestPost')
         ->name('request.post');
+
+    /* Make the item available */
+    Route::get('/items/{itemSlug}/release', 'ItemRequestController@releaseItem')
+        ->name('item.release');
 
 
 
@@ -163,6 +168,9 @@ Route::group(['middleware' => ['auth']], function(){
             /* The List Of Item Requests*/
             Route::get('/item-requests', 'ItemRequestController@requestList')
                 ->name('request.list');
+
+            Route::get('/item-requests/{itemRequestId}', 'ItemRequestController@show')
+                ->name('request.show');
 
 
             /* Item Assignment */

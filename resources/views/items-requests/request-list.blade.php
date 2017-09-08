@@ -36,7 +36,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Item Info</th><th>Requester Info</th><th>Time Info</th><th>Action</th> <th>Info</th> <th>State</th>
+                        <th>Item Info</th><th>Requester Info</th><th>Time Info</th><th>Details</th> <th>State</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,16 +67,8 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('request-response-accepted', $itemRequest->id) }}" class="btn btn-success {{  $itemRequest->is_accepted? 'disabled':'' }}">Accept</a>
-                                </td>
-
-                                <td>
-                                    @if( $itemRequest->is_accepted)
-                                        Approved By:  @php echo \App\User::all()->where('id', $itemRequest->approved_by)->first()->getName(); @endphp <br>
-                                        Approved On : {{ App\Utility\Utils::getReadableDateTime($itemRequest->approved_on)}}
-                                    @else
-                                         ...
-                                    @endif
+                                    {{--<a href="{{ route('request-response-accepted', $itemRequest->id) }}" class="btn btn-success {{  $itemRequest->is_accepted? 'disabled':'' }}">Accept</a>--}}
+                                    <a  class="btn btn-primary" href="{{ route('request.show', $itemRequest->id) }}">More ...</a>
                                 </td>
 
                                 <td>

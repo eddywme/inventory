@@ -146,9 +146,7 @@
 
                                 @if(\App\Utility\Utils::isAdmin())
 
-                                <li><a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a></li>
 
-                                 <li><a href="{{ route("request.list") }}"><i class="fa fa-envelope-o"></i> Requested Items</a></li>
 
 
                                     <li class="dropdown">
@@ -168,6 +166,12 @@
                                                     <i class="fa fa-server"></i>  Dashboard
                                                 </a>
                                             </li>
+
+                                            <li class="divider"></li>
+
+                                            <li><a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a></li>
+
+                                            <li><a href="{{ route("request.list") }}"><i class="fa fa-envelope-o"></i> Requested Items</a></li>
 
                                             <li class="divider"></li>
 

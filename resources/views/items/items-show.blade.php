@@ -3,7 +3,7 @@
     {{ $item->name  }}
 @endsection
 @section('styles')
-    <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/lightbox.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
@@ -40,7 +40,16 @@
                             <h5>Category : <a href="{{ route('item-categories.showCategoryItems',  $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
 
 
-                            <img src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
+
+                            <a
+                                    class="example-image-link"
+                                    href="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                    data-lightbox="example-1">
+
+                                <img
+                                        src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                        class="img-thumbnail item-img-show example-image" alt="{{ $item->name }}" />
+                            </a>
 
                             @if($item->is_available())
                                 <a href="{{ route('request.index', $item->slug) }}" class="btn btn-default btn-request">REQUEST</a>
@@ -222,5 +231,6 @@
 
 @endsection
 @section('scripts')
+    <script src="{{ asset('assets/js/lightbox.min.js') }}"></script>
 @endsection
 

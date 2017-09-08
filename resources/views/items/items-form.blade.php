@@ -126,7 +126,20 @@
 
 
                         <div class="form-group{{ $errors->has('photo_url') ? ' has-error' : '' }}">
-                            <label for="photo_url" >Upload Photo [MAX 2MB] (Optional)</label>
+
+
+                            @if(isset($item))
+                                <h5>Current Item Image</h5>
+                                <input type="hidden" id="event_exits" value="true">
+                                <p>
+                                    <img
+                                            src="{{ isset($item->photo_url)? asset('storage/'.substr($item->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                            class="img-thumbnail item-img-show example-image" alt="Current Image" />
+                                </p>
+                                <label for="photo_url" >Update Photo [MAX 2MB] (Optional)</label>
+                            @else
+                                <label for="photo_url" >Upload Photo [MAX 2MB] (Optional)</label>
+                            @endif
 
                                 <input type="file" class="form-control" name="photo_url" id="photo_url" data-max-size="2048" accept="image/*" />
                                 @if ($errors->has('photo_url'))

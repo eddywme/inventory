@@ -37,6 +37,7 @@ class ItemRequestAcceptedMD extends Mailable
 
 
         return $this->markdown('emails.item-request-accpted-md')
+            ->subject("Item Request Accepted")
             ->with([
                 'item' => $item,
                 'user' => $user
