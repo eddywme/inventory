@@ -192,7 +192,7 @@
 
                                     </ul>
 
-                                    @if($itemRequest->pickup_time < \Carbon\Carbon::now()) && $item->status === \App\Utility\ItemStatus::$ITEM_RESERVED && $itemRequest->is_accepted)
+                                    @if($itemRequest->pickup_time < \Carbon\Carbon::now()->addDay(1)) && $item->status === \App\Utility\ItemStatus::$ITEM_RESERVED && $itemRequest->is_accepted)
 
                                         <div class="panel panel-warning">
                                             <div class="panel-heading">USER HAS DELAYED TO PICK UP THE ITME</div>
@@ -253,19 +253,29 @@
 
                 })
                     .done(function( response ) {
-                        $buttonApproved.removeClass('disabled');
-                        $buttonApproved.html('APPROVE THE REQUEST');
                         $('.on-success').replaceWith('<h5 class="alert alert-success"  style="margin-top: 20px"> '+ response.message +'</h5>')
 //                        console.log(response.message)
                     })
                     .fail(function (e) {
+
+                        console.log(e);
+//                        $('.on-error').replaceWith('<h5 class="alert alert-warning" style="margin-top: 20px" > Something went wrong when trying to send the notification to the user. Try again later.</h5>');
+                        if(e.responseJSON){
+                            $('.on-error').replaceWith(
+                                '<h5 class="alert alert-warning" style="margin-top: 20px" >'+e.responseJSON.message+'</h5>'
+                            )
+                        }
+
+                        if(e.statusText === "timeout"){
+                            $('.on-error').replaceWith(
+                                '<h5 class="alert alert-warning" style="margin-top: 20px" > The request took long than expected. Try again later.</h5>'
+                            )
+                        }
+
+                    })
+                    .always(function () {
                         $buttonApproved.removeClass('disabled');
                         $buttonApproved.html('APPROVE THE REQUEST');
-//                        console.log(e);
-//                        $('.on-error').replaceWith('<h5 class="alert alert-warning" style="margin-top: 20px" > Something went wrong when trying to send the notification to the user. Try again later.</h5>');
-                        $('.on-error').replaceWith(
-                            '<h5 class="alert alert-warning" style="margin-top: 20px" >'+e.responseJSON.message+'</h5>'
-                        )
                     });
             });
 

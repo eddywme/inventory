@@ -7,7 +7,7 @@
             background: #fff;
         }
         footer{
-            margin-top: 0px;
+            margin-top: 0;
         }
     </style>
 @endsection
@@ -19,12 +19,16 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                    <div style="margin-top: 20px">
-                        <span class="on-success" ></span>
-                        <span class="on-error" ></span>
+                    <div style="margin-top: 30px">
+                        <div class="on-success" >
+                        <div class="on-error">
                     </div>
 
-                <h1 class="page-header" align="center"> <strong>SEND E-MAIL TO ASSIGNED USER : </strong>
+
+
+                    </div>
+
+                <h1 class="page-header" align="center"> <strong>SEND SMS TO ASSIGNED USER : </strong>
                 <span>{{ $user->getName() }}</span></h1>
 
                 <div class="row">
@@ -48,10 +52,10 @@
                         <div class="panel panel-info">
 
                             <div class="panel-heading">
-                              Message will be sent to: <strong>{{ $user->getName() }}</strong>  via his/her e-mail address <strong>{{ $user->email  }}</strong>
+                              Message will be sent to: <strong>{{ $user->getName() }}</strong>  via his/her phone number  <strong>{{ $user->phone_number  }}</strong>
                             </div>
 
-                            <form action="{{ route('send.email.toAssigned', $itemAssignment->id) }}" class="form" method="post" id="sendMailToAssigned">
+                            <form action="{{ route('send.sms.toAssigned', $itemAssignment->id) }}" class="form" method="post" id="sendMailToAssigned">
 
                                 {{ csrf_field() }}
 
@@ -60,7 +64,7 @@
 
 
                                     <div class="form-group">
-                                        <textarea name="message" id="message"  rows="12" class="form-control" placeholder="Enter Message Text" required></textarea>
+                                        <textarea name="message" id="message"  rows="5" class="form-control" placeholder="Enter Message Text" required></textarea>
 
                                         @if ($errors->has('message'))
                                             <span class="help-block">
@@ -85,6 +89,8 @@
 
             </div>
 
+            </div>
+
 
 
 
@@ -105,37 +111,27 @@
                 $.ajax({
                     method: "POST",
                     timeout: 7000,
-                    url: '{{ route('send.email.toAssigned', $itemAssignment->id) }}',
+                    url: '{{ route('send.sms.toAssigned', $itemAssignment->id) }}',
                     data: {
                         message:  $('textarea#message').val(),
                         _token: "{{ csrf_token() }}"
                     }
                 })
                     .done(function( response ) {
-                        if(response.message) {
-                            $('.on-success').replaceWith('<h5 class="alert alert-success">'+ response.message +'</h5>')
-                            console.log(response.message)
-                        }
-
-                    })
-                    .fail(function (e) {
-
-                        if(e.responseJSON){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" >'+e.responseJSON.message+'</h5>'
-                            )
-                        }
-
-                        if(e.statusText === "timeout"){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" > The request took long than expected. Try again later.</h5>'
-                            )
-                        }
-
-                    })
-                    .always(function () {
                         $sendMailButton.removeClass('disabled');
                         $sendMailButton.html('SEND MESSAGE');
+                        if( response.message !== null){
+                            $('.on-success').replaceWith('<h5 class="alert alert-success on-success">'+ response.message +'</h5>');
+                        }
+                    })
+                    .fail(function (e) {
+                        $sendMailButton.removeClass('disabled');
+                        $sendMailButton.html('SEND MESSAGE');
+                        if(e.status === 500){
+                            $('.on-error').replaceWith('<h5 class="alert alert-danger on-error">An error occurred when trying to send the SMS, Please Try Again Later. </h5>')
+                        }
+
+//                        console.log(e)
                     });
             });
 

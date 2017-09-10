@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ApiSubscription;
 use App\Item;
 use App\ItemAccessory;
 use App\ItemAssignment;
@@ -27,6 +28,7 @@ class AdminController extends Controller
         $numberOfItemAccessories = ItemAccessory::all()->count();
         $numberOfItemAssigned = ItemAssignment::all()->count();
         $numberOfItemRequests = ItemRequest::all()->count();
+        $numberOfApiSubscriptions = ApiSubscription::all()->count();
 
         $lastItem = Item::all()->sortBy('created_at')->last();
         $lastItemAccessory = ItemAccessory::all()->sortBy('created_at')->last();
@@ -44,6 +46,7 @@ class AdminController extends Controller
             'numberOfItemAccessories' => $numberOfItemAccessories,
             'numberOfItemAssigned' => $numberOfItemAssigned,
             'numberOfItemRequests' => $numberOfItemRequests,
+            'numberOfApiSubscriptions' => $numberOfApiSubscriptions,
 
             /* Notification related vars*/
 

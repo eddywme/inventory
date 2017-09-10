@@ -113,7 +113,7 @@ class ItemRequestController extends Controller
         if ($user === null){
             return redirect()->back()->with('error-status', 'That User does not exist in the system');
         }
-
+//        sleep(8);
         Mail::to($user)
             ->send(new ItemRequestAcceptedMD($itemRequest));
 
@@ -124,7 +124,7 @@ class ItemRequestController extends Controller
 
 
 
-//        sleep(1);
+
         return response()->json([
             'message' => 'The Item was approved ! A notification was sent to the user : '.$user->getName()
         ], 200) ;

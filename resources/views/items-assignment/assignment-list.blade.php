@@ -52,7 +52,7 @@
 
                                 <td>
                                     Name: {{ $user->getName() }} <br>
-                                    Phone: {{ $user->phone_number }} <br>
+                                    Phone: <a href="{{ route('assign.sms.get', $itemAssignment->id) }}">{{ $user->phone_number }}</a>  <br>
                                      E-mail : <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>  <br>
                                     {{--E-mail : <a href="mailto:{{ $user->email }}">{{ $user->email }} </a>  <br>--}}
                                 </td>

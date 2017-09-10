@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\ApiSubscription;
 use App\Mail\MailToAssignedMD;
 use App\Mail\RestServiceMail;
 use Illuminate\Http\Request;
@@ -30,6 +31,17 @@ class MailSendingController extends Controller
 
             $errors['errors'] = $validator->errors()->all();
             return response()->json($errors, 400) ;
+        }
+
+        $user = ApiSubscription::all()->where('token', $request->get('token'))->first();
+
+        if(!$user) {
+            return response()->json([
+                'message' => 'Invalid Token',
+                'meta' => [
+                    'status' => 'INVALID_TOKEN'
+                ]
+            ], 403) ;
         }
 
 

@@ -16,6 +16,7 @@ use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ItemAssignmentController extends Controller
@@ -216,6 +217,79 @@ class ItemAssignmentController extends Controller
 
 
     }
+
+
+    public function sendSMSToAssignedGet($assignmentId){
+
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+
+        }
+        $item = Item::all()->where('id', $itemAssignment->item_id)->first();
+
+        if($item == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        $user = User::all()->where('id', $itemAssignment->user_id)->first();
+
+        if($user == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+        }
+
+        return view('items-assignment.send-sms-assigned', [
+            'item' => $item,
+            'user' => $user,
+            'itemAssignment' => $itemAssignment
+        ]);
+    }
+
+    public function sendSMSToAssignedPost(Request $request, $assignmentId){
+        $itemAssignment = $this->findAssignmentFromId($assignmentId);
+
+        if($itemAssignment == null) {
+            return redirect()->back()->with('error-status', 'An error occurred !');
+
+        }
+
+        $validator = Validator::make($request->all(), [
+            'message' => 'required|string|max:255'
+
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors['errors'] = $validator->errors()->all();
+            return response()->json($errors, 400) ;
+        }
+
+        $message =  $request->get('message');
+        $user = User::all()->where('id', $itemAssignment->user_id)->first();
+
+        //        dd($message);
+
+
+
+        $nexmo = app('Nexmo\Client');
+        $nexmo->message()->send([
+            'to' => $user->phone_number,
+            'from' => env('PHONE_NUMBER', 'NEXMO'),
+            'text' => $message
+        ]);
+
+        return response()->json([
+            'message' => 'SMS sent successfully'
+        ], 200) ;
+//        sleep(5);
+
+
+
+
+
+
+    }
+
 
 
 

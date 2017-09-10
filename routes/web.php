@@ -142,7 +142,8 @@ Route::group(['middleware' => ['auth']], function(){
         /* Rest Routes End-points*/
         Route::get('/assignment/firstNamesEndPoint', 'ItemAssignmentController@firstNamesEndPoint');
         Route::get('/assignment/lastNamesEndPoint', 'ItemAssignmentController@lastNamesEndPoint');
-        Route::get('/assignment/emailsEndPoint', 'ItemAssignmentController@emailsEndPoint');
+        Route::get('/assignment/emailsEndPoint', 'ItemAssignmentController@emailsEndPoint')
+        ->name('emails.endpoint');
 
 
         /*  Admin routes*/
@@ -193,13 +194,25 @@ Route::group(['middleware' => ['auth']], function(){
             Route::post('/item-assignments/{assignmentId}/send-mail', 'ItemAssignmentController@sendMailToAssignedPost')
                 ->name('send.email.toAssigned');
 
+            /* Prepare an SMS to send to the user */
+            Route::get('/item-assignments/{assignmentId}/sms', 'ItemAssignmentController@sendSMSToAssignedGet')
+                ->name('assign.sms.get');
+
+            /* send SMS to the user */
+            Route::post('/item-assignments/{assignmentId}/send-sms', 'ItemAssignmentController@sendSMSToAssignedPost')
+                ->name('send.sms.toAssigned');
+
+
 
             /* Token Assignment & API users management */
-            Route::get('/api', 'TokenAssignmentController@index')
+            Route::get('/api', 'ApiSubscriptionController@index')
                 ->name('api.index');
 
-            Route::get('/token-assignment', 'TokenAssignmentController@assignTokenGet')
+            Route::get('/token-assignment', 'ApiSubscriptionController@assignTokenGet')
                 ->name('assignToken.get');
+
+            Route::post('/token-assignment', 'ApiSubscriptionController@sendTokenPost')
+                ->name('sendToken.post');
 
 
         });

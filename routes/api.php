@@ -15,7 +15,10 @@ use Illuminate\Http\Request;
 
 
 Route::group(['prefix' => '/v1/', 'middleware' => 'api'], function () {
+
     Route::post('/sendEmail', 'api\v1\MailSendingController@sendMail');
     Route::post('/sendSMS', 'api\v1\SMSendingController@sendSMS');
+    Route::get('/hello', 'api\v1\SMSendingController@sayHello');
+
 });
 

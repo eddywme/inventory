@@ -16,8 +16,9 @@ class CreateApiSubscriptionsTable extends Migration
         Schema::create('api_subscriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('issued_by');
             $table->string('token');
-            $table->boolean('state');
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
     }

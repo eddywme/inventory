@@ -273,12 +273,12 @@
                                         <i class="fa fa-cloud fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">5</div>
+                                        <div class="huge">{{ $numberOfApiSubscriptions }}</div>
                                         <div>Api Users</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="{{ route('api.index') }}">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
