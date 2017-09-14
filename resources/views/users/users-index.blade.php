@@ -24,6 +24,13 @@
 
                 <h1 class="page-header"> <strong>REGISTERED USERS</strong> </h1>
 
+                @if(App\Utility\Utils::isSuperAdmin())
+                    <a href="{{ route('manage.roles.index') }}" class="btn btn-primary" style="margin-bottom: 20px">
+                        <i class="fa fa-users"></i>
+                        Manage Roles
+                    </a>
+                @endif
+
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>

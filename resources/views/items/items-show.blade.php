@@ -126,10 +126,12 @@
                                     <tr>
                                         <td> IDENTIFIER TAG</td> <td class="item_value_column">{{ $item->identifier }}</td>
                                     </tr>
+                                    @if(\Illuminate\Support\Facades\Auth::check())
                                     @if(\App\Utility\Utils::isAdmin())
                                     <tr>
                                         <td> PRICE</td> <td class="item_value_column">{{ "USD ".number_format( $item->price,2,'.',',') }}</td>
                                     </tr>
+                                    @endif
                                     @endif
 
 

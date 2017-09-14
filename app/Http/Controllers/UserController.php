@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 
+use App\Role;
 use App\User;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
@@ -101,6 +102,52 @@ class UserController extends Controller {
 
 		$user->delete();
 
-		return redirect('/users')->with('status', 'User was deleted successfully !');
+		return redirect(route('items.index'))->with('status', 'User was deleted successfully !');
 	}
+
+	public function manageRolesIndex () {
+        if (!Utils::isSuperAdmin()) {
+            return redirect('/')->with('status', 'Not Allowed ');
+        }
+        $users = User::all();
+
+        $roles = Role::all();
+
+        return view("users.manage-roles-index", [
+            "users" => $users,
+            "roles" => $roles,
+        ]);
+    }
+
+    public function assignRole (Request $request) {
+        if (!Utils::isSuperAdmin()) {
+            return redirect('/')->with('status', 'Not Allowed ');
+        }
+
+        $this->validate($request, [
+            'role'   => 'required|integer',
+            'email'   => 'required|email',
+        ]);
+
+        $user = User::all()->where('email', $request->get('email'))->first();
+
+        if($user === null) {
+            return redirect()->back()->with('error-status', 'The User does not exist in the System !');
+        }
+
+	    $roleId = $request->get('role');
+
+        $role = Role::where('id', $roleId)->first();
+
+        if($role === null) {
+            return redirect()->back()->with('error-status', 'The Role does not exist in the System !');
+        }
+
+
+        $user->role_id = $roleId;
+        $user->save();
+        return redirect(route('users.index'))->with('success-status', 'The role was assigned successfully to the user !');
+
+
+    }
 }

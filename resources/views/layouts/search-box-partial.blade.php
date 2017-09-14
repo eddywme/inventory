@@ -7,8 +7,7 @@ $itemCategories = App\ItemCategory::all();
 
 
             <input type="text" name="s" id="search_auto_complete" placeholder="Search Item " class="form-control search_input_height" autofocus
-                   style="font-size: large"
-            required/>
+                   style="font-size: large" required/>
             <span class="input-group-addon" ><button class="btn"><span class="glyphicon glyphicon-search"></span></button></span>
 
         </div>

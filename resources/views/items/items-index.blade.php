@@ -86,7 +86,7 @@
 
                             <td>
                                 @if($item->is_available())
-                                <form  action="{{ route('users.destroy', $item->slug) }}" method="POST">
+                                <form  action="{{ route('items.destroy', $item->slug) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
                                     <button class="btn btn-default"

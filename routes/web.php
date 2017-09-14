@@ -92,7 +92,14 @@ Route::group(['middleware' => ['auth']], function () {
 		/* Users related routes */
 		Route::resource('users', 'UserController');
 
-		Route::group(['middleware' => ['admin']], function () {
+		Route::get('/manage-roles', 'UserController@manageRolesIndex')
+            ->name('manage.roles.index');
+
+    Route::post('/assign-role', 'UserController@assignRole')
+        ->name('assign.role.post');
+
+
+    Route::group(['middleware' => ['admin']], function () {
 
 				/* Item accessories*/
 				Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')
