@@ -27,8 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        return view('home');
+        $itemCategories = ItemCategory::all();
+        return view('home', [
+            'itemCategories' => $itemCategories
+        ]);
     }
 
     public function search_data(Request $request){

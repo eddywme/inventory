@@ -89,10 +89,10 @@
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-item-heading list-group-item-info">
                                                 <span class="badge">{{  count( $itemAccessories) }}</span>
-                                                Number of Acccessories
+                                                Accessories Assigned
                                             </li>
                                             @foreach($itemAccessories as $itemAccessory)
-                                                <li class="list-group-item">{{ $itemAccessory->name }}</li>
+                                                <a  href="{{ route('item-accessories.show', $itemAccessory->slug) }}" class="list-group-item">{{ $itemAccessory->name }}</a>
                                             @endforeach
                                         </ul>
 

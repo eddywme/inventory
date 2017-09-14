@@ -105,6 +105,7 @@ class ItemRequestController extends Controller
 
 
     public function requestResponseAccepted($itemRequestId){
+
         $itemRequest  = ItemRequest::all()->where('id', $itemRequestId)->first();
         if ($itemRequest === null){
             return redirect()->back()->with('error-status', 'That Item Request does not exist in the system');
@@ -139,10 +140,13 @@ class ItemRequestController extends Controller
             return redirect()->back()->with('error-status', 'That Item does not exist in the system');
         }
 
+        $itemRequest  = ItemRequest::all()->where('item_id', $item->id)->last();
+        $itemRequest->delete();
+
         $item->status = ItemStatus::$ITEM_AVAILABLE;
         $item->save();
 
-        return redirect(route('items-admin'))->with('success-status', 'The item was released successfully');
+        return redirect(route('request.list'))->with('success-status', 'The item was released successfully');
 
     }
 

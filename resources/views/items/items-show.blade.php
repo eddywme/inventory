@@ -63,13 +63,48 @@
                                     <div class="row">
                                         @foreach ($itemAccessoryChunk as $itemAccessory)
                                             <div class="col-md-4">
-                                                <img src="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-accessory-sm">
+
+                                                <a
+                                                        class="example-image-link"
+                                                        href="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                                        data-lightbox="example-1">
+                                                    <img src="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-accessory-sm">
+
+                                                </a>
+
                                                 <h6><a href="{{ route('item-accessories.show', $itemAccessory->slug) }}">{{ $itemAccessory->name }}</a> </h6>
                                             </div>
                                         @endforeach
                                     </div>
                                 @endforeach
                             @endif
+
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                                @if(\App\Utility\Utils::isAdmin())
+                                        @if($item->status === \App\Utility\ItemStatus::$ITEM_RESERVED)
+                                            @php
+                                                $itemReq = \App\ItemRequest::all()->where('item_id', $item->id)->last();
+                                            @endphp
+
+                                            @if($itemReq->is_approved)
+                                                <div class="bg bg-info">This item was requested and approved to {{ \App\Utility\Utils::getUserNameFromId($itemReq->user_id) }}</div>
+                                                @else
+                                                <div class="bg bg-info" style="padding: 3px; font-size: 12px">This item was requested by {{ \App\Utility\Utils::getUserNameFromId($itemReq->user_id) }}.<br>
+                                                The request is still pending. Which means the item cannot be assigned to the user unless the request is accepted.
+                                                But also it is not available to other users who might want to borrow it.<br><br>
+                                                Two options : <br>
+                                                    (1) Approve the request to the user. So that it can be further assigned to the user who requested it.<br><br>
+                                                    (2) Release by rejecting  the Request so that other users might able to see it.
+                                                </div>
+
+                                            @endif
+
+
+                                        @endif
+                                @endif
+                            @endif
+
+
 
                         </div>
 
@@ -91,9 +126,11 @@
                                     <tr>
                                         <td> IDENTIFIER TAG</td> <td class="item_value_column">{{ $item->identifier }}</td>
                                     </tr>
+                                    @if(\App\Utility\Utils::isAdmin())
                                     <tr>
                                         <td> PRICE</td> <td class="item_value_column">{{ "USD ".number_format( $item->price,2,'.',',') }}</td>
                                     </tr>
+                                    @endif
 
 
                                     <tr>
@@ -169,43 +206,96 @@
                                         <tr>
 
 
-                                            @if(!$item->is_available())
-                                            <th>
-                                                <a href="" class="btn btn-info disabled"><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @if($item->status === \App\Utility\ItemStatus::$ITEM_RESERVED)
 
-                                            </th>
+                                                @php
+                                                    $itemReq = \App\ItemRequest::all()->where('item_id', $item->id)->last();
+                                                @endphp
+
+                                                @if($itemReq->is_accepted)
+                                                    <th>
+                                                        <a href="{{ route('assign-to-reserved.index', [$item->slug, \App\Utility\Utils::getUserSlugFromId($itemReq->user_id)]) }}"  class="btn btn-info"><strong><span class="fa fa-user"> </span>&nbsp
+                                                                ASSIGN ITEM
+                                                            </strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                    </th>
+                                                @else
+
+                                                    <th>
+                                                        <a href="{{ route('request.show', $itemReq->id) }}" class="btn btn-success"><strong>
+                                                                <i class="fa fa-arrow-up"></i>&nbsp;REQUEST INFO</strong></a>
+
+                                                    </th>
+
+                                                    <th>
+                                                        <a class="btn btn-warning" href="{{ route('item.release', $item->slug) }}">
+                                                            <i class="fa fa-unlock"></i>
+                                                            REJECT REQUEST
+                                                        </a>
+                                                    </th>
+
+                                                @endif
 
 
-                                           @else
-                                            <th>
-                                                <a href="{{ route('assign.index', $item->slug) }}" class="btn btn-info "><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                            </th>
 
+                                                <th>
+                                                    <a href="{{ route('items.edit', $item->slug) }}" class="btn btn-info disabled"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+
+                                                <th>
+                                                    <a href="" class="btn btn-danger disabled"><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+
+
+
+                                            @elseif($item->status === \App\Utility\ItemStatus::$ITEM_TAKEN)
+
+                                                <th>
+                                                    <a href="" class="btn btn-info disabled"><strong><span class="fa fa-user"> </span>&nbsp
+                                                            ASSIGN ITEM
+                                                    </strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                </th>
+                                                <th>
+                                                    <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success disabled"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
+
+                                                </th>
+
+                                                <th>
+                                                    <a href="{{ route('items.edit', $item->slug) }}" class="btn btn-info disabled"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+
+                                                <th>
+                                                    <a href="" class="btn btn-danger disabled"><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+
+
+                                            @elseif($item->status === \App\Utility\ItemStatus::$ITEM_AVAILABLE)
+
+                                                <th>
+                                                    <a href="{{ route('assign.index', $item->slug) }}" class="btn btn-info "><strong><span class="fa fa-user"> </span>&nbsp;ASSIGN ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                </th>
+
+
+                                                <th>
+                                                    <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
+
+                                                </th>
+                                                <th>
+                                                    <a href="{{ route('items.edit', $item->slug) }}" class="btn btn-info"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
+
+                                                <th>
+                                                    <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </th>
 
                                             @endif
 
-                                            <th>
-                                                <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
-
-                                            </th>
-                                            <th>
-                                                <a href="{{ route('items.edit', $item->slug) }}" class="btn btn-info"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </th>
 
 
-                                            @if(!$item->is_available())
 
-                                            <th>
-                                                <a href="" class="btn btn-danger disabled"><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE ITEM</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </th>
-
-                                            @else
-                                            <th>
-                                                <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            </th>
-
-                                            @endif
                                         </tr>
 
                                         </thead>

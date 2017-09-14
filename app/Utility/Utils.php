@@ -13,6 +13,7 @@ namespace App\Utility;
 
 use App\Item;
 use App\ItemCategory;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class Utils
@@ -20,6 +21,14 @@ class Utils
 
     public static function authUserId(){
         return Auth::user()->id;
+    }
+
+    public static function getUserNameFromId($id){
+        return User::all()->where('id', $id)->first()->getName();
+    }
+
+    public static function getUserSlugFromId($id){
+        return User::all()->where('id', $id)->first()->slug;
     }
 
     private static function authHasRole($role_name){
@@ -91,6 +100,11 @@ class Utils
     public static function findItemBySlug($slug)
     {
         return Item::all()->where('slug', $slug)->first();
+    }
+
+    public static function findUserBySlug($slug)
+    {
+        return User::all()->where('slug', $slug)->first();
     }
 
     public static function getReadableDateTime($time){

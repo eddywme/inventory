@@ -40,6 +40,30 @@ class ItemAssignmentController extends Controller
         ]);
     }
 
+    /* Assign process when the item was reserved by the user */
+    public function assignIndexToReserved ($itemSlug, $userSlug) {
+//        dd($itemSlug, $userSlug);
+        $item = Utils::findItemBySlug($itemSlug);
+
+
+        if ($item === null){
+            return redirect()->back()->with('error-status', 'That Item does not exist in the system');
+        }
+
+        $user_requester = Utils::findUserBySlug($userSlug);
+
+//        dd($user_requester);
+
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+
+
+        return view('items-assignment.assignment-index',[
+            'item' => $item,
+            'user_requester' => $user_requester,
+            'itemAccessories' => $itemAccessories
+        ]);
+    }
+
 
     public function assignPost(Request $request, $itemSlug){
 
@@ -48,8 +72,6 @@ class ItemAssignmentController extends Controller
 
 
         $user = DB::table('users')->where([
-            ['first_name', '=', $request->get('first_name')],
-            ['last_name', '=', $request->get('last_name')],
             ['email', '=', $request->get('email')],
         ])->first();
 
@@ -59,34 +81,51 @@ class ItemAssignmentController extends Controller
             return redirect()->back()->with('error-status', 'Assignment Failed. That Item does not exist in the system');
         }
         elseif ($item->status){
-            if($item->status === ItemStatus::$ITEM_TAKEN || $item->status == ItemStatus::$ITEM_RESERVED){
+            if($item->status === ItemStatus::$ITEM_TAKEN ){
                 return redirect()->back()->with('error-status', 'Assignment Failed. That Item is not available');
             }
         }
 
 
 
-            /* Change the status state of the item */
-            $item->status = ItemStatus::$ITEM_TAKEN;
-            $item->save();
+
+        /* Change the status state of the item */
+        $item->status = ItemStatus::$ITEM_TAKEN;
+        $item->save();
 
 
 
         $now = Carbon::now();
-        DB::table('item_assignments')->insert([
-            [
-                'item_id' => $item->id,
-                'user_id' => $user->id,
-                'assigned_at' => $now->toDateTimeString(),
-                'supposed_returned_at' => ($now->addHours($item->time_span))->toDateTimeString(),
-                'assigned_by' => Utils::authUserId(),
-                'assigned_condition' => $item->condition_id,
-                'assigned_comment' => $request->get('comment'),
 
-            ]
-        ]);
+        $itemAssignment = new ItemAssignment();
+        $itemAssignment->item_id = $item->id;
+        $itemAssignment->user_id = $user->id;
+        $itemAssignment->assigned_at = $now->toDateTimeString();
+        $itemAssignment->supposed_returned_at = ($now->addHours($item->time_span))->toDateTimeString();
+        $itemAssignment->assigned_by = Utils::authUserId();
+        $itemAssignment->assigned_condition = $item->condition_id;
+        $itemAssignment->assigned_comment = $request->get('comment');
 
-            return redirect()->back()->with('success-status', 'The item was assigned successfully to '.$user->first_name.' '.$user->last_name);
+
+        $itemAssignment->save();
+
+        $selectedAccessoriesIds = $request->get('accessories');
+
+        if ($selectedAccessoriesIds) {
+            foreach ($selectedAccessoriesIds as $accessoryId) {
+                DB::table('accessories_assigned')->insert([
+                    [
+                        'assignment_id' => $itemAssignment->id,
+                        'accessory_id' => $accessoryId
+                    ]
+                ]);
+            }
+
+        }
+
+
+
+        return redirect(route('assign.list'))->with('success-status', 'The item was assigned successfully to '.$user->first_name.' '.$user->last_name);
 
 
 
@@ -102,18 +141,31 @@ class ItemAssignmentController extends Controller
         ]);
     }
 
-    public function assignReturnGet($assignmentId){
+    public function assignReturnGet ($assignmentId) {
 
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
+
         if($itemAssignment == null) {
             return redirect()->back()->with('error-status', 'An error occurred !');
         }
+
+        if ($itemAssignment->returned_at !== null) {
+            return redirect(route('assign.list'))->with('error-status', 'The Item was already marked returned !');
+        }
+
         $item = Item::all()->where('id', $itemAssignment->item_id)->first();
         if($item == null) {
             return redirect()->back()->with('error-status', 'An error occurred !');
         }
 
-        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+        $accessoriesAssigned = \App\AccessoryAssigned::all()->where('assignment_id', $itemAssignment->id)
+            ->all();
+
+        $itemAccessories = [];
+
+        foreach ($accessoriesAssigned as $acc) {
+            $itemAccessories[] = \App\ItemAccessory::all()->where('id',$acc->accessory_id)->first();
+        }
         $itemConditions = ItemCondition::all();
         $user = User::all()->where('id', $itemAssignment->user_id)->first();
         $admin = User::all()->where('id', $itemAssignment->assigned_by)->first();
@@ -130,8 +182,11 @@ class ItemAssignmentController extends Controller
 
     public function assignReturnPost(Request $request, $assignmentId){
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
+        if ($itemAssignment->returned_at !== null) {
+            return redirect(route('assign.list'))->with('error-status', 'The Item was already marked returned !');
+        }
         if($itemAssignment == null) {
-            return redirect()->back()->with('error-status', 'An error occurred !');
+            return redirect()->back()->with('error-status', 'That Item Assignment does not exist !');
 
         }
         $item = Item::all()->where('id', $itemAssignment->item_id)->first();
@@ -154,7 +209,7 @@ class ItemAssignmentController extends Controller
         $item->status = ItemStatus::$ITEM_AVAILABLE;
         $item->save();
 
-        return redirect()->back()->with('success-status', 'The item return process was done successfully ');
+        return redirect(route('assign.list'))->with('success-status', 'The item return process was done successfully ');
 
 
     }
@@ -246,6 +301,9 @@ class ItemAssignmentController extends Controller
     }
 
     public function sendSMSToAssignedPost(Request $request, $assignmentId){
+
+
+
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
 
         if($itemAssignment == null) {
@@ -279,7 +337,7 @@ class ItemAssignmentController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'SMS sent successfully'
+            'message' => 'The SMS was sent successfully'
         ], 200) ;
 //        sleep(5);
 

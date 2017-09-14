@@ -101,9 +101,17 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
+
+
+                                <button type="submit"
+                                        class="btn btn-primary"
+                                        id="register-button"
+                                        data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ..."
+                                >
+                                    <i class="fa fa-user"></i>
+                                    REGISTER
                                 </button>
+
                             </div>
                         </div>
                     </form>
@@ -117,6 +125,8 @@
     <script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
 
     <script>
+
+
         $('document').ready(function () {
 
             /*Validation codes*/
@@ -137,6 +147,7 @@
                         $(this).closest('.form-group').addClass('error-class').append($(this));
                     });
                 },
+
 
 
                 rules: {
@@ -208,14 +219,6 @@
 
 
             });
-
-            /* Date-time picker codes*/
-            $('#time').datetimepicker({
-                minDate : new Date(),
-                format: 'YYYY-MM-DD HH:mm:ss'
-            });
-
-
 
 
 

@@ -16,18 +16,24 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                @if (session('error-status'))
-                    <div class="alert alert-danger" style="margin-top: 10px">
-                        <h5>{{ session('error-status') }}</h5>
+                @if (session('success-status'))
+                    <div class="alert alert-info" style="margin-top: 10px">
+                        <h5>{{ session('success-status') }}</h5>
                     </div>
                 @endif
+
+                    @if (session('error-status'))
+                        <div class="alert alert-danger" style="margin-top: 10px">
+                            <h5>{{ session('error-status') }}</h5>
+                        </div>
+                    @endif
 
                 <h1 class="page-header"> <strong>ASSIGNED ITEMS</strong> </h1>
 
 
                 <div class="table-responsive">
 
-                <table class="table table-striped" id="organizers_table">
+                <table class="table table-striped" id="assigned_items_table">
                     <thead>
                     <tr>
                         <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th><th>State</th>
@@ -38,42 +44,78 @@
                             @php
                                 $item = \App\Item::where('id', $itemAssignment->item_id)->first();
                                 $user = \App\User::where('id', $itemAssignment->user_id)->first();
-                                $assigner = \App\User::where('id', $itemAssignment->assigned_by)->first()
+                                $assigner = \App\User::where('id', $itemAssignment->assigned_by)->first();
 
+                                $accessoriesAssigned = \App\AccessoryAssigned::all()->where('assignment_id', $itemAssignment->id)
+                                ->all();
+
+                                $accessories = [];
+
+                                foreach ($accessoriesAssigned as $acc) {
+                                   $accessories[] = \App\ItemAccessory::all()->where('id',$acc->accessory_id)->first();
+                                }
 
                             @endphp
 
                             <tr>
                                 <td>
-                                    Name: {{ $item->name }} <br>
-                                    Serial No: {{ $item->serial_number }} <br>
-                                    Category : {{ $item->itemCategory->name }} <br>
+                                    Name: <strong>{{ $item->name }}</strong>  <br>
+
+                                    Serial No: <strong>{{ $item->serial_number }}</strong>  <br>
+
+                                    Category : <strong>{{ $item->itemCategory->name }}</strong>  <br>
+
+                                    @if(count($accessories) > 0)
+                                        <div>
+                                            <h5>Accessories <span class="badge">{{ count($accessories) }}</span></h5>
+                                            @foreach($accessories as $accessory)
+                                                <small>{{ $accessory->name }}</small>  <br>
+                                            @endforeach
+                                        </div>
+
+                                    @endif
                                 </td>
 
                                 <td>
-                                    Name: {{ $user->getName() }} <br>
-                                    Phone: <a href="{{ route('assign.sms.get', $itemAssignment->id) }}">{{ $user->phone_number }}</a>  <br>
-                                     E-mail : <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>  <br>
+                                    Name:
+                                        <strong>{{ $user->getName() }} </strong>
+                                    <br>
+                                    Phone:
+                                        <strong>
+                                            <a href="{{ route('assign.sms.get', $itemAssignment->id) }}">{{ $user->phone_number }}</a>
+                                        </strong>   <br>
+
+                                     E-mail :
+                                        <strong>
+                                            <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>
+                                        </strong>  <br>
                                     {{--E-mail : <a href="mailto:{{ $user->email }}">{{ $user->email }} </a>  <br>--}}
                                 </td>
 
                                 <td>
-                                    Assigned On : {{ \App\Utility\Utils::getReadableDateTime($itemAssignment->assigned_at)  }} <br>
-                                    Suppoed Returned On:<br> {{ \App\Utility\Utils::getReadableDateTime($itemAssignment->supposed_returned_at)  }} <br>
-                                    Returned On: {{ $itemAssignment->returned_at ?  $itemAssignment->returned_at : 'Not Yet'}} <br>
+                                    Assigned On :
+                                    <strong style="color: #2ab27b">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->assigned_at)  }} </strong><br>
+
+                                    Suppoed Returned On:<br>
+                                    <strong style="color: #985f0d">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->supposed_returned_at)  }}</strong>
+                                    <br>
+
+                                    Returned On:  <strong style="color: #0a7ef4">{{ $itemAssignment->returned_at ?  \App\Utility\Utils::getReadableDateTime($itemAssignment->returned_at) : 'Not Yet'}}</strong>  <br>
 
                                 </td>
 
                                 <td>
-                                    Name: {{ $assigner->getName() }} <br>
-                                    Phone: {{ $assigner->phone_number }} <br>
-                                    E-mail : {{ $assigner->email }} <br>
+                                    Name: <strong>{{ $assigner->getName() }}</strong>  <br>
+
+                                    Phone: <strong>{{ $assigner->phone_number }}</strong>  <br>
+
+                                    E-mail : <strong>{{ $assigner->email }}</strong>  <br>
                                 </td>
 
                                 <td>
                                     @if(!isset($itemAssignment->returned_at))
                                         <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
-                                            <i class="fa fa-arrow-up"></i>
+                                            <i class="fa fa-repeat"></i>
                                             Mark Returned
                                         </a>
                                         @else
@@ -110,7 +152,7 @@
 
         $(document).ready(function () {
 
-            $('#organizers_table').DataTable({
+            $('#assigned_items_table').DataTable({
                 "bInfo" : false,
                 "language": {
                     "search": "Search Item :"

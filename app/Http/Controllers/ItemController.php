@@ -144,7 +144,7 @@ class ItemController extends Controller
         $item->recorded_by = Utils::authUserId();
         $item->time_span = $total_hours_time_span;
         $item->lastly_edited_by = Utils::authUserId();
-        $item->slug = str_slug($request->input("name")." ".$request->input("serial_number"));
+        $item->slug = str_slug($request->input("name")." ".$request->input("serial_number")."-".strtoupper(str_random(8)));
 
         $item->save();
 

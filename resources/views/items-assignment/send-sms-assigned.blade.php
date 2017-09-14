@@ -19,14 +19,7 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                    <div style="margin-top: 30px">
-                        <div class="on-success" >
-                        <div class="on-error">
-                    </div>
-
-
-
-                    </div>
+             </div>
 
                 <h1 class="page-header" align="center"> <strong>SEND SMS TO ASSIGNED USER : </strong>
                 <span>{{ $user->getName() }}</span></h1>
@@ -35,19 +28,7 @@
 
                     <div class="col-md-8 col-md-offset-2">
 
-
-
-                        @if (session('error-status'))
-                            <div class="alert alert-danger" style="padding: 5px">
-                                <h5>{{ session('error-status') }}</h5>
-                            </div>
-                        @endif
-
-                        @if (session('success-status'))
-                            <div class="alert alert-success" style="padding: 5px">
-                                <h5>{{ session('success-status') }}</h5>
-                            </div>
-                        @endif
+                        <div class="response-notification"></div>
 
                         <div class="panel panel-info">
 
@@ -76,9 +57,18 @@
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-primary" type="submit" id="sendMailButton">
-                                        <i class="fa fa-envelope-o"></i>
-                                        SEND MESSAGE
+                                    {{--<button class="btn btn-primary" type="submit" id="sendMailButton">--}}
+                                        {{--<i class="fa fa-envelope-o"></i>--}}
+                                        {{--SEND MESSAGE--}}
+                                    {{--</button>--}}
+
+                                    <button type="submit"
+                                            class="btn btn-success"
+                                            id="sendSMSButton"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ..."
+                                    >
+                                        <i class="fa fa-envelope-o"> </i>
+                                        SEND SMS MESSAGE
                                     </button>
                                 </div>
                             </form>
@@ -101,13 +91,12 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            var $sendMailButton = $('#sendMailButton');
+            var $sendSMSButton = $('#sendSMSButton');
 
             $('#sendMailToAssigned').submit(function(e) {
                 e.preventDefault();
 
-                $sendMailButton.addClass('disabled');
-                $sendMailButton.html('SENDING ...');
+                $sendSMSButton.button('loading');
                 $.ajax({
                     method: "POST",
                     timeout: 7000,
@@ -118,20 +107,23 @@
                     }
                 })
                     .done(function( response ) {
-                        $sendMailButton.removeClass('disabled');
-                        $sendMailButton.html('SEND MESSAGE');
+                        $sendSMSButton.removeClass('disabled');
+                        $sendSMSButton.html('SEND MESSAGE');
                         if( response.message !== null){
-                            $('.on-success').replaceWith('<h5 class="alert alert-success on-success">'+ response.message +'</h5>');
+                            $('.response-notification').replaceWith('<h5 class="alert alert-success response-notification">'+ response.message +'</h5>');
                         }
                     })
                     .fail(function (e) {
-                        $sendMailButton.removeClass('disabled');
-                        $sendMailButton.html('SEND MESSAGE');
+                        $sendSMSButton.removeClass('disabled');
+                        $sendSMSButton.html('SEND MESSAGE');
                         if(e.status === 500){
-                            $('.on-error').replaceWith('<h5 class="alert alert-danger on-error">An error occurred when trying to send the SMS, Please Try Again Later. </h5>')
+                            $('.response-notification').replaceWith('<h5 class="alert alert-danger response-notification">An error occurred when trying to send the SMS, Please Try Again Later. </h5>')
                         }
 
 //                        console.log(e)
+                    })
+                    .always(function () {
+                        $sendSMSButton.button('reset');
                     });
             });
 

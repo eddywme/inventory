@@ -16,11 +16,17 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                @if (session('status'))
-                    <div class="alert alert-success" style="margin-top: 10px">
-                        <h5>{{ session('status') }}</h5>
+                @if (session('success-status'))
+                    <div class="alert alert-info" style="margin-top: 10px">
+                        <h5>{{ session('success-status') }}</h5>
                     </div>
                 @endif
+
+                    @if (session('error-status'))
+                        <div class="alert alert-warning" style="margin-top: 10px">
+                            <h5>{{ session('error-status') }}</h5>
+                        </div>
+                    @endif
 
                 <h1 class="page-header"> <strong>REGISTERED ITEMS</strong> </h1>
 

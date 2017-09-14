@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Item Assignment')
 @section('styles')
-    <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
@@ -145,25 +146,54 @@
 
                             <div class="panel-body">
 
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="First Name" id="first_name_" name="first_name" required>
-                                            </div>
+                                    @if(isset($user_requester))
+                                        <div>
+                                            <p class="bg-info" style="padding: 10px;">
+                                                This is the assignment process to an item that was requested by the user ahead of time
+                                                and accepted by the inventory management.
+                                            </p>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Last Name" id="last_name_" name="last_name" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
                                     <div class="form-group">
+                                        <label for="email_">E-mail Address</label>
+                                        <input type="text" class="form-control" placeholder="E-mail" id="email_" name="email" required
+                                        value="{{ $user_requester->email }}" readonly>
+                                    </div>
+                                    @else
+                                    <div class="form-group">
+                                        <div>
+                                            <p class="bg-info" style="padding: 10px;">
+                                                Make sure to check whether you are assigning the Item to the correct user's email address.
+                                            </p>
+                                        </div>
+                                        <label for="email_">E-mail Address</label>
                                         <input type="text" class="form-control" placeholder="E-mail" id="email_" name="email" required>
                                     </div>
+
+                                    @endif
+
+
+                                    @if(count($itemAccessories) > 0)
+
+                                        <div class="form-group">
+                                            <label for="custom_accessories_selection">Custom Accessory Selection</label>
+                                            <div>
+                                                <p class="bg-info" style="padding: 10px;">
+                                                    Select the desired accessories.
+                                                </p>
+                                            </div>
+                                            <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
+                                                @foreach($itemAccessories as $accessory)
+                                                    <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
+
+
+
+
+
+
 
                                     <div class="form-group">
                                         <textarea name="comment" id="comment"  rows="8" class="form-control" placeholder="Comment [ Optional ]"></textarea>
@@ -193,24 +223,17 @@
 
 @endsection
 @section('scripts')
-    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.confirm.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
 
-            $('#first_name_').autocomplete({
-                serviceUrl: '/assignment/firstNamesEndPoint'
-            });
-
-            $('#last_name_').autocomplete({
-                serviceUrl: '/assignment/lastNamesEndPoint'
-            });
 
             $('#email_').autocomplete({
                 serviceUrl: '/assignment/emailsEndPoint'
             });
+
+            $("#custom_accessories_selection").select2();
 
         });
 

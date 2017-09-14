@@ -36,11 +36,11 @@
                     </div>
                 @endif
 
-                    @if (session('success-status'))
-                        <div class="alert alert-info" style="margin-top: 10px">
-                            <h5>{{ session('success-status') }}</h5>
-                        </div>
-                    @endif
+                @if (session('success-status'))
+                    <div class="alert alert-info" style="margin-top: 10px">
+                        <h5>{{ session('success-status') }}</h5>
+                    </div>
+                @endif
 
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
@@ -62,7 +62,14 @@
 
                             <div class="col-md-8">
                                 <h3><a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a></h3> <h4>Item Serial Number : {{ $item->serial_number }}</h4>
-                                <h5>Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>     Condition : {{ $item->itemCondition->name }}</h5>
+                                <h5>
+                                    @if(Auth::check())
+                                        @if(\App\Utility\Utils::isAdmin())
+                                            Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>
+                                        @endif
+                                    @endif
+
+                                    Condition : <strong class="label label-info"> {{ $item->itemCondition->name }} </strong></h5>
                                 <h5>Category : <a href="{{ route('item-categories.showCategoryItems', $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
                                 <p class="">
                                     {{ substr($item->description,0,400) }} ...

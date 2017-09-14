@@ -19,31 +19,19 @@
         <div class="row main-content">
             <div class="col-md-12">
 
-                    <div style="margin-top: 20px">
-                        <span class="on-success" ></span>
-                        <span class="on-error" ></span>
-                    </div>
+
 
                 <h1 class="page-header" align="center"> <strong>SEND E-MAIL TO ASSIGNED USER : </strong>
                 <span>{{ $user->getName() }}</span></h1>
 
+
                 <div class="row">
+
+
 
                     <div class="col-md-8 col-md-offset-2">
 
-
-
-                        @if (session('error-status'))
-                            <div class="alert alert-danger" style="padding: 5px">
-                                <h5>{{ session('error-status') }}</h5>
-                            </div>
-                        @endif
-
-                        @if (session('success-status'))
-                            <div class="alert alert-success" style="padding: 5px">
-                                <h5>{{ session('success-status') }}</h5>
-                            </div>
-                        @endif
+                        <div class="response-notification"></div>
 
                         <div class="panel panel-info">
 
@@ -72,9 +60,15 @@
 
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-primary" type="submit" id="sendMailButton">
-                                        <i class="fa fa-envelope-o"></i>
-                                        SEND MESSAGE
+
+
+                                    <button type="submit"
+                                            class="btn btn-success"
+                                            id="sendMailButton"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ..."
+                                    >
+                                        <i class="fa fa-envelope-o"> </i>
+                                        SEND MAIL
                                     </button>
                                 </div>
                             </form>
@@ -100,8 +94,8 @@
             $('#sendMailToAssigned').submit(function(e) {
                 e.preventDefault();
 
-                $sendMailButton.addClass('disabled');
-                $sendMailButton.html('SENDING ...');
+                $sendMailButton.button('loading');
+
                 $.ajax({
                     method: "POST",
                     timeout: 7000,
@@ -113,7 +107,7 @@
                 })
                     .done(function( response ) {
                         if(response.message) {
-                            $('.on-success').replaceWith('<h5 class="alert alert-success">'+ response.message +'</h5>')
+                            $('.response-notification').replaceWith('<h5 class="alert alert-success response-notification">'+ response.message +'</h5>')
                             console.log(response.message)
                         }
 
@@ -121,21 +115,20 @@
                     .fail(function (e) {
 
                         if(e.responseJSON){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" >'+e.responseJSON.message+'</h5>'
+                            $('.response-notification').replaceWith(
+                                '<h5 class="alert alert-warning response-notification" >'+e.responseJSON.message+'</h5>'
                             )
                         }
 
                         if(e.statusText === "timeout"){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" > The request took long than expected. Try again later.</h5>'
+                            $('.response-notification').replaceWith(
+                                '<h5 class="alert alert-warning response-notification" > The request took long than expected. Try again later.</h5>'
                             )
                         }
 
                     })
                     .always(function () {
-                        $sendMailButton.removeClass('disabled');
-                        $sendMailButton.html('SEND MESSAGE');
+                        $sendMailButton.button('reset');
                     });
             });
 

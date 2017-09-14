@@ -177,7 +177,7 @@ class ItemAccessoryController extends Controller
         $itemAccessory->description = $request->input('description');
         $itemAccessory->save();
 
-        return redirect()->back()->with('status', 'The  Accessory has been updated successfully !');
+        return redirect(route('item-accessories'))->with('status', 'The  Accessory has been updated successfully !');
 
     }
 

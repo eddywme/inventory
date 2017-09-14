@@ -4,6 +4,7 @@
 @endsection
 @section('styles')
     <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/lightbox.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
@@ -52,7 +53,16 @@
                                  */
                             @endphp
 
-                            <img src="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
+                            <a
+                                    class="example-image-link"
+                                    href="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}"
+                                    data-lightbox="example-1">
+
+                                <img src="{{ isset($itemAccessory->photo_url)? asset('storage/'.substr($itemAccessory->photo_url,7)) : asset('assets/images/No_image_available.png') }}" class="img-thumbnail item-img-show">
+
+
+                            </a>
+
 
 
 
@@ -132,5 +142,6 @@
 
 @endsection
 @section('scripts')
+    <script src="{{ asset('assets/js/lightbox.min.js') }}"></script>
 @endsection
 

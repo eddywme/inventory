@@ -25,7 +25,7 @@
             <div class="panel panel-default register-panel">
                 <div class="panel-heading"><h3 align="center">{{ isset($item)?  'EDIT ITEM' : 'REGISTERING AN ITEM' }}</h3>
                 <h6 align="center">All The Fields Are Required Unless Specified Optional.</h6></div>
-                <div class="panel-body">
+                <div class="panel-body" style="background-color: #f1f1f1">
 
                     <div class="col-md-8 col-md-offset-2">
 
@@ -76,11 +76,10 @@
                                         @if(isset($item))
                                             <option value="{{ $array_time_span['hours'] }}" selected>{{ $array_time_span['hours'] }}</option>
                                         @endif
-                                        <?php for($i = 1; $i<24; $i++): ?>
+<?php for ($i = 1; $i < 24; $i++):?>
                                         <option value="<?=$i?>"><?=$i?></option>
-                                        <?php endfor;?>
-
-                                    </select>Hours
+<?php endfor;?>
+</select>Hours
                                 </label>
                                 <label>
                                     <select name="num_days"  id="num_days" class="form-control" required>
@@ -88,11 +87,10 @@
                                         @if(isset($item))
                                             <option value="{{ $array_time_span['days'] }}" selected>{{ $array_time_span['days'] }}</option>
                                         @endif
-                                        <?php for($i = 0; $i<30; $i++): ?>
+<?php for ($i = 0; $i < 30; $i++):?>
                                         <option value="<?=$i?>"><?=$i?></option>
-                                        <?php endfor;?>
-
-                                    </select>Days
+<?php endfor;?>
+</select>Days
                                 </label>
                                 <label>
                                     <select name="num_months" id="num_months" class="form-control" required>
@@ -100,11 +98,10 @@
                                         @if(isset($item))
                                             <option value="{{ $array_time_span['months'] }}" selected>{{ $array_time_span['months'] }}</option>
                                         @endif
-                                        <?php for($i = 0; $i<12; $i++): ?>
+<?php for ($i = 0; $i < 12; $i++):?>
                                         <option value="<?=$i?>"><?=$i?></option>
-                                        <?php endfor;?>
-
-                                    </select>Months
+<?php endfor;?>
+</select>Months
                                 </label>
                                 <label>
                                     <select name="num_years" id="num_years" class="form-control" required>
@@ -112,11 +109,10 @@
                                         @if(isset($item))
                                             <option value="{{ $array_time_span['years'] }}" selected>{{ $array_time_span['years'] }}</option>
                                         @endif
-                                        <?php for($i = 0; $i<6; $i++): ?>
+<?php for ($i = 0; $i < 6; $i++):?>
                                         <option value="<?=$i?>"><?=$i?></option>
-                                        <?php endfor;?>
-
-                                    </select>Years
+<?php endfor;?>
+</select>Years
                                 </label>
 
 

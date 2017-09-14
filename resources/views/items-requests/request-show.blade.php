@@ -20,8 +20,6 @@
             <div class="col-md-12">
 
 
-                    <div class="on-success"></div>
-                    <div class="on-error"></div>
 
 
                 <h1 class="page-header" align="center"> <strong>ITEM REQUEST DETAILS</strong> </h1>
@@ -109,17 +107,9 @@
 
 
 
-                        @if (session('error-status'))
-                            <div class="alert alert-danger" style="padding: 5px">
-                                <h5>{{ session('error-status') }}</h5>
-                            </div>
-                        @endif
 
-                        @if (session('success-status'))
-                            <div class="alert alert-success" style="padding: 5px">
-                                <h5>{{ session('success-status') }}</h5>
-                            </div>
-                        @endif
+                        <div class="response-notification"></div>
+
 
                         <div class="panel panel-info">
 
@@ -153,12 +143,28 @@
 
                                     </ul>
 
-                                    <button href="" class="btn btn-success" id="buttonApproved">
+                                    <button type="button"
+                                            class="btn btn-success"
+                                            id="buttonApproved"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ..."
+                                    >
                                         <i class="fa fa-key"> </i>
                                         APPROVE THE REQUEST
                                     </button>
+
+
+                                        <a
+                                                class="btn btn-warning pull-right"
+                                                href="{{ route('item.release', $item->slug) }}"
+                                              >
+                                            <i class="fa fa-arrow-circle-down"></i>
+                                            REJECT THE REQUEST
+                                        </a>
+
+
                                     <div class="help-block" style="padding: 10px;">
-                                        An E-mail will be sent to the user, announcing that his request was approved.
+                                        An e-mail will be sent to the user, announcing that his request was approved if "APPROVE THE REQUEST" is clicked.<br>
+                                        The item will re-appear available if the "REJECT THE REQUEST" is clicked.
                                     </div>
                                 @else
                                     <ul class="list-group">
@@ -244,8 +250,8 @@
 
             $buttonApproved.on('click', function(e) {
 
-                $buttonApproved.addClass('disabled');
-                $buttonApproved.html(' PROCESSING ...');
+                $buttonApproved.button('loading');
+
                 $.ajax({
                     method: "GET",
                     timeout: 7000,
@@ -253,7 +259,7 @@
 
                 })
                     .done(function( response ) {
-                        $('.on-success').replaceWith('<h5 class="alert alert-success"  style="margin-top: 20px"> '+ response.message +'</h5>')
+                        $('.response-notification').replaceWith('<h5 class="alert alert-success response-notification"  style="margin-top: 20px"> '+ response.message +'</h5>')
 //                        console.log(response.message)
                     })
                     .fail(function (e) {
@@ -261,21 +267,20 @@
                         console.log(e);
 //                        $('.on-error').replaceWith('<h5 class="alert alert-warning" style="margin-top: 20px" > Something went wrong when trying to send the notification to the user. Try again later.</h5>');
                         if(e.responseJSON){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" style="margin-top: 20px" >'+e.responseJSON.message+'</h5>'
+                            $('.response-notification').replaceWith(
+                                '<h5 class="alert alert-warning response-notification" style="margin-top: 10px" >'+e.responseJSON.message+'</h5>'
                             )
                         }
 
                         if(e.statusText === "timeout"){
-                            $('.on-error').replaceWith(
-                                '<h5 class="alert alert-warning" style="margin-top: 20px" > The request took long than expected. Try again later.</h5>'
+                            $('.response-notification').replaceWith(
+                                '<h5 class="alert alert-warning response-notification" style="margin-top: 10px" > The request took long than expected. Try again later.</h5>'
                             )
                         }
 
                     })
                     .always(function () {
-                        $buttonApproved.removeClass('disabled');
-                        $buttonApproved.html('APPROVE THE REQUEST');
+                        $buttonApproved.button('reset');
                     });
             });
 
