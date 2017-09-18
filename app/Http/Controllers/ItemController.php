@@ -321,6 +321,7 @@ class ItemController extends Controller
         }
         $item = $this->findItemBySlug($slug);
 
+
         if(!$item){
             return redirect('/');
         }
@@ -328,11 +329,21 @@ class ItemController extends Controller
         if(!$item->is_available()){
             return redirect('/');
         }
+
+
+//        $accessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+        $accessories = ItemAccessory::with('item')->get();
+
+        foreach ($accessories as $accessory) {
+            $accessory->delete();
+            Storage::delete($accessory->photo_url);
+        }
+
         Storage::delete($item->photo_url);
 
         $item->delete();
 
-        return redirect(route('items-admin'))->with('status', 'You have successfully deleted the Item');
+        return redirect(route('items-admin'))->with('success-status', 'You have successfully deleted the Item');
 
     }
 

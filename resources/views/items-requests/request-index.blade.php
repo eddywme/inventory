@@ -132,7 +132,7 @@
 
                             <div class="panel-body">
 
-                                <p class="bg-info" style="padding: 15px;">
+                                <p class="bg-info" style="padding: 15px; margin-bottom: 50px">
                                     You have accepted terms and rights stuffs  bla bla Responsive design is a method for taking all of the existing content that is on the page
                                     and optimizing it for the device that is viewing it. For example, the desktop not only
                                     gets the normal version of the website, but it might also get a widescreen layout, opti‐

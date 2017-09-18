@@ -290,7 +290,20 @@
                                                 </th>
 
                                                 <th>
-                                                    <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    {{--<a href="{{ route('items.destroy', $item->slug) }}" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                                                    <form  action="{{ route('items.destroy', $item->slug) }}" method="POST">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        {{ csrf_field() }}
+                                                        <button class="btn btn-danger"
+                                                                data-toggle="confirm"
+                                                                data-title="Item deletion"
+                                                                data-message="Do you really want to delete the Item? <br>
+                                                 Once the Item is deleted all its data are deleted and the action cannot be reverted back."
+                                                                data-type="danger">
+                                                            <span class="fa fa-trash"></span>
+                                                            REMOVE
+                                                        </button>
+                                                    </form>
                                                 </th>
 
                                             @endif
@@ -324,5 +337,6 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('assets/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.confirm.js') }}"></script>
 @endsection
 

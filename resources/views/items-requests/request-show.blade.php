@@ -114,7 +114,7 @@
                         <div class="panel panel-info">
 
                             <div class="panel-heading">
-                                REQUEST INFO
+                                REQUESTER INFO
                             </div>
                             <div class="panel-body">
                                <ul class="list-group">
@@ -239,11 +239,7 @@
 
 @endsection
 @section('scripts')
-    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.confirm.js') }}"></script>
-
-    <script>
+       <script>
         $(document).ready(function () {
 
             var $buttonApproved = $('#buttonApproved');
@@ -254,7 +250,7 @@
 
                 $.ajax({
                     method: "GET",
-                    timeout: 7000,
+                    timeout: 8000,
                     url: '{{ route('request-response-accepted', $itemRequest->id) }}'
 
                 })
@@ -268,13 +264,13 @@
 //                        $('.on-error').replaceWith('<h5 class="alert alert-warning" style="margin-top: 20px" > Something went wrong when trying to send the notification to the user. Try again later.</h5>');
                         if(e.responseJSON){
                             $('.response-notification').replaceWith(
-                                '<h5 class="alert alert-warning response-notification" style="margin-top: 10px" >'+e.responseJSON.message+'</h5>'
+                                '<h4 class="alert alert-warning response-notification" style="margin-top: 10px" >'+e.responseJSON.message+'</h4>'
                             )
                         }
 
                         if(e.statusText === "timeout"){
                             $('.response-notification').replaceWith(
-                                '<h5 class="alert alert-warning response-notification" style="margin-top: 10px" > The request took long than expected. Try again later.</h5>'
+                                '<h4     class="alert alert-warning response-notification" style="margin-top: 10px" > The process took long than expected. Try again later.</h4>'
                             )
                         }
 

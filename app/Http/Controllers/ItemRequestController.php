@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Item;
 use App\ItemAccessory;
 use App\ItemRequest;
+use App\Log;
 use App\Mail\ItemRequestAccepted;
 use App\Mail\ItemRequestAcceptedMD;
 use App\User;
@@ -86,7 +88,6 @@ class ItemRequestController extends Controller
         $item_request->user_id = Utils::authUserId();
         $item_request->item_id = $item->id;
         $item_request->pickup_time = $request->get('pickup_date');
-        /* TODO transform the local-date time to UTC */
         $item_request->save();
 
         return redirect(route('items.index'))->with('success-status', 'Your request was sent successfully');
@@ -145,6 +146,13 @@ class ItemRequestController extends Controller
 
         $item->status = ItemStatus::$ITEM_AVAILABLE;
         $item->save();
+
+        $log = new Log();
+        $userAdmin = Utils::getAuthName();
+        $userRequester = User::all()->where('id', $itemRequest->user_id)->first();
+        $log->description ="Administrator : $userAdmin\nRejected the request from: {$userRequester->getName()} ( $userRequester->email )\n
+        Item Name: $item->name ($item->serial_number)";
+        $log->save();
 
         return redirect(route('request.list'))->with('success-status', 'The item was released successfully');
 

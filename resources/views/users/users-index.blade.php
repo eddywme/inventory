@@ -34,7 +34,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Names</th><th>E-mail</th><th>Phone</th> <th>Role</th> <th>Edit</th><th>Delete</th>
+                        <th>Names</th><th>E-mail</th><th>Phone</th> <th>Role</th> <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,14 +54,10 @@
                             </td>
 
                             <td>
-                                {{ $user->role->name }}
+                                {{ strtoupper($user->role->name)  }}
                             </td>
 
-                            <td>
-                                <a href="{{ route('users.edit',$user->slug) }}">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </a>
-                            </td>
+
 
                             <td>
                                 <form  action="{{ route('users.destroy', $user->slug) }}" method="POST">

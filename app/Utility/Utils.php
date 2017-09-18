@@ -111,5 +111,9 @@ class Utils
         return (date("F jS, Y H:i:s",strtotime($time)));
     }
 
+    public static function getAuthName () {
+        return Auth::user()->getName();
+    }
+
 
 }
