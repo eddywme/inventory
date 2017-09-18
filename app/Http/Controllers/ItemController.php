@@ -6,6 +6,7 @@ use App\Item;
 use App\ItemAccessory;
 use App\ItemCategory;
 use App\ItemCondition;
+use App\Log;
 use App\User;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
@@ -338,6 +339,12 @@ class ItemController extends Controller
             $accessory->delete();
             Storage::delete($accessory->photo_url);
         }
+
+        $log = new Log();
+        $userAdmin = Utils::getAuthName();
+        $log->description ="Administrator : $userAdmin\nDeleted the Item :
+        Item Name: $item->name ($item->serial_number)";
+        $log->save();
 
         Storage::delete($item->photo_url);
 
