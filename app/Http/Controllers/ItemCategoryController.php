@@ -119,10 +119,9 @@ class ItemCategoryController extends Controller
 
         $itemsRelated = Item::all()->where('category_id', $itemCategory->id);
 
-        dd('Items related that are about to be deleted ',$itemsRelated);
-
         foreach ($itemsRelated as $item){
             $item->delete();
+            Storage::delete($item->photo_url);
         }
 
         $itemCategory->delete();
