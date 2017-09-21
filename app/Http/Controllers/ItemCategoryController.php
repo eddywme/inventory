@@ -126,7 +126,7 @@ class ItemCategoryController extends Controller
 
         $itemCategory->delete();
 
-        return redirect('items-categories.items-categories-index')->with('status', 'The Item Category and Its related data were deleted successfully ');
+        return redirect(route('item-categories.index'))->with('status', 'The Item Category and Its related data were deleted successfully ');
     }
 
     public function showCategoryItems($slug){
