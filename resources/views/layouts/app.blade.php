@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE +>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -21,6 +21,8 @@
     <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    <link rel="icon" href="{{ asset('assets/images/logos/inventory.svg') }}">
 
 
 
@@ -83,7 +85,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('assets/images/logos/invt.png') }}" style="width: 80px; height: 60px">
+                        <img src="{{ asset('assets/images/logos/inventory.svg') }}" style="width: 80px; height: 60px">
                         {{ config('app.name') }}
                     </a>
                 </div>
