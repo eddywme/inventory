@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AccessoryRequested;
 use App\Http\Controllers\Auth\LoginController;
 use App\Item;
 use App\ItemAccessory;
@@ -10,11 +11,13 @@ use App\Log;
 use App\Mail\ItemRequestAccepted;
 use App\Mail\ItemRequestAcceptedMD;
 use App\User;
+use App\Utility\AccessoryStatus;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ItemRequestController extends Controller
@@ -29,10 +32,12 @@ class ItemRequestController extends Controller
             return redirect()->back()->with('error-status', 'That Item is not available');
         }
 
-        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all(); // Current item related acccessories
+        $accessories = ItemAccessory::all(); // All accessories , ability to select standalone accessories
         return view('items-requests.request-index',[
             'item' => $item,
-            'itemAccessories' => $itemAccessories
+            'itemAccessories' => $itemAccessories,
+            'accessories' => $accessories
         ]);
     }
 
@@ -54,12 +59,23 @@ class ItemRequestController extends Controller
         if ($user === null){
             return redirect()->back()->with('error-status', 'That User does not exist in the system');
         }
-        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+
+        $AccessoriesRequestedPivot = AccessoryRequested::all()->where('request_id', $itemRequest->id)->all();
+
+        $AccessoriesRequestedIds = array_map((function ($e) {
+            return $e['accessory_id'];
+        }), $AccessoriesRequestedPivot);
+
+        $accessoriesRequested = [];
+        foreach ($AccessoriesRequestedIds as $accessoriesRequestedId) {
+            $accessoriesRequested [] = ItemAccessory::all()->where('id', $accessoriesRequestedId)->first();
+        }
+
         return view('items-requests.request-show',[
             'item' => $item,
             'user' => $user,
             'itemRequest' => $itemRequest,
-            'itemAccessories' => $itemAccessories,
+            'accessoriesRequested' => $accessoriesRequested
         ]);
 
     }
@@ -80,6 +96,8 @@ class ItemRequestController extends Controller
             return redirect()->back()->with('error-status', 'That Item is not available');
         }
 
+
+
         $item->status = ItemStatus::$ITEM_RESERVED;
         $item->save();
 
@@ -89,6 +107,28 @@ class ItemRequestController extends Controller
         $item_request->item_id = $item->id;
         $item_request->pickup_time = $request->get('pickup_date');
         $item_request->save();
+
+        $selectedAccessoriesIds = $request->get('accessories');
+
+        if ($selectedAccessoriesIds) {
+
+            foreach ($selectedAccessoriesIds as $accessoryId) {
+
+                $accessoryRequested = new AccessoryRequested();
+                $accessoryRequested->request_id  = $item_request->id;
+                $accessoryRequested->accessory_id = $accessoryId;
+
+                $accessoryRequested->save();
+
+                $accessory = Utils::findAccessoryById($accessoryId);
+                $accessory->status = AccessoryStatus::$ACCESSORY_RESERVED;
+                $accessory->save();
+
+
+
+            }
+
+        }
 
         return redirect(route('items.index'))->with('success-status', 'Your request was sent successfully');
 

@@ -2,6 +2,7 @@
 @section('title', 'Item Request')
 @section('styles')
     <link href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
@@ -140,6 +141,26 @@
                                 </p>
 
                                 <div class="form-group">
+                                    <label for="custom_accessories_selection">Accessory Selection</label>
+                                    <div>
+                                        <p class="bg-info" style="padding: 10px;">
+                                            Select the desired accessories.
+                                        </p>
+                                    </div>
+                                    <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
+                                        @foreach($accessories as $accessory)
+
+                                            @if($accessory->status === \App\Utility\AccessoryStatus::$ACCESSORY_AVAILABLE)
+
+                                            <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
+
+                                            @endif
+
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="item_date_acquired" >Pick Up Date </label>
 
                                     <div class='input-group date' id='pickup_date'>
@@ -189,6 +210,8 @@
 @section('scripts')
     <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -200,8 +223,11 @@
             });
 
 
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#custom_accessories_selection").select2();
         });
+
 
     </script>
 @endsection

@@ -28,6 +28,34 @@ class ItemAccessoriesTableSeeder extends Seeder
 
                 ],
 
+                [
+                    'name' =>"Flash",
+                    'slug' => str_slug("Flash Lens for SONY 4K"),
+                    'item_id' => 1
+
+                ],
+
+                [
+                    'name' =>"Chest Belt",
+                    'slug' => str_slug("X-Ray Lens for SONY 4K"),
+                    'item_id' => 1
+
+                ],
+
+                [
+                    'name' =>"Generic Lens",
+                    'slug' => str_slug("Generic Lens for any camera"),
+                    'item_id' => null
+
+                ],
+
+                [
+                    'name' =>"Micro USB charger",
+                    'slug' => str_slug("Micro USB charger any device"),
+                    'item_id' => null
+
+                ],
+
 
 
             ]

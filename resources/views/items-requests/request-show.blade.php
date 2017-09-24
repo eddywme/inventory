@@ -81,15 +81,18 @@
                                         </tbody>
                                     </table>
 
-                                    @if(isset($itemAccessories))
+                                    @if(isset($accessoriesRequested))
 
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-item-heading list-group-item-info">
-                                                <span class="badge">{{  count( $itemAccessories) }}</span>
-                                                Number of Acccessories
+                                                <span class="badge">{{  count( $accessoriesRequested) }}</span>
+                                                Number of Accessories Requested
                                             </li>
-                                            @foreach($itemAccessories as $itemAccessory)
-                                                <li class="list-group-item">{{ $itemAccessory->name }}</li>
+                                            @foreach($accessoriesRequested as $itemAccessory)
+                                                <li class="list-group-item">
+                                                    {{ $itemAccessory->name }}
+                                                    <div class="badge">{{ isset($itemAccessory->item_id)? \App\Utility\Utils::findItemById($itemAccessory->item_id)->name : 'Standalone'  }}</div>
+                                                </li>
                                             @endforeach
                                         </ul>
 

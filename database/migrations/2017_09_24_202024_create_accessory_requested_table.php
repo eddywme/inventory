@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccessoriesAssignedTable extends Migration
+class CreateAccessoryRequestedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateAccessoriesAssignedTable extends Migration
      */
     public function up()
     {
-        Schema::create('accessories_assigned', function (Blueprint $table) {
+        Schema::create('accessories_requested', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('assignment_id'); // The id of the related item assignment
+            $table->integer('request_id'); // The id of the related item request
             $table->integer('accessory_id'); // The id of the related  accessory
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateAccessoriesAssignedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accessories_assigned');
+        Schema::dropIfExists('accessories_requested');
     }
 }

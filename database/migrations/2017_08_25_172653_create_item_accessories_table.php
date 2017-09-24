@@ -20,6 +20,10 @@ class CreateItemAccessoriesTable extends Migration
             $table->string('photo_url')->nullable();
             $table->integer('item_id')->nullable();
             $table->string('slug')->unique();
+
+            /* ItemAccessory status : 0 = Taken, 1 = Reserved, 2 = Available*/
+            $table->tinyInteger('status')->default(2);
+
             $table->timestamps();
         });
     }

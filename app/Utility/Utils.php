@@ -12,6 +12,7 @@ Description : Code written for ........
 namespace App\Utility;
 
 use App\Item;
+use App\ItemAccessory;
 use App\ItemCategory;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +103,11 @@ class Utils
         return Item::all()->where('slug', $slug)->first();
     }
 
+    public static function findItemById($itemId)
+    {
+        return Item::all()->where('id', $itemId)->first();
+    }
+
     public static function findUserById($id)
     {
         return User::all()->where('id', $id)->first();
@@ -118,6 +124,11 @@ class Utils
 
     public static function getAuthName () {
         return Auth::user()->getName();
+    }
+
+    public static function findAccessoryById($accessoryId)
+    {
+        return ItemAccessory::all()->where('id', $accessoryId)->first();
     }
 
 
