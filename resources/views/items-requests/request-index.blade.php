@@ -149,7 +149,11 @@
                                         <span class="fa fa-calendar"></span>
                                     </span>
                                     </div>
-                                    <div class="help-block">Specify the date & time you will take the item</div>
+                                    <div class="help-block">Specify the date & time you will take the item.
+                                        <button class="btn btn-info" data-toggle="tooltip" title="The return date is deducted by time span period of the item">
+                                            <i class="fa fa-info"></i>
+                                        </button>
+                                    </div>
                                     @if ($errors->has('pickup_date'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('pickup_date') }}</strong>
@@ -195,6 +199,8 @@
                 showClear: true
             });
 
+
+            $('[data-toggle="tooltip"]').tooltip()
         });
 
     </script>

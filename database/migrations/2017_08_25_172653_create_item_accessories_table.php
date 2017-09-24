@@ -18,7 +18,7 @@ class CreateItemAccessoriesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('photo_url')->nullable();
-            $table->integer('item_id');
+            $table->integer('item_id')->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
         });

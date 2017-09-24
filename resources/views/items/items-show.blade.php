@@ -219,7 +219,9 @@
 
                                                 @if($itemReq->is_accepted)
                                                     <th>
-                                                        <a href="{{ route('assign-to-reserved.index', [$item->slug, \App\Utility\Utils::getUserSlugFromId($itemReq->user_id)]) }}"  class="btn btn-info"><strong><span class="fa fa-user"> </span>&nbsp
+                                                        <a href="{{ route('assign-to-reserved.index', [$item->slug, \App\Utility\Utils::getUserSlugFromId($itemReq->user_id)]) }}"  class="btn btn-info"
+                                                           >
+                                                            <strong><span class="fa fa-user"> </span>&nbsp
                                                                 ASSIGN ITEM
                                                             </strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -285,7 +287,9 @@
 
 
                                                 <th>
-                                                    <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success"><strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
+                                                    <a href="{{ route('item-accessories.create', $item->slug) }}" class="btn btn-success"
+                                                       data-toggle="tooltip" title="Add an accessory for this item">
+                                                        <strong><span class="fa fa-plus"> </span>&nbsp;ADD ACCESSORY</strong></a>
 
                                                 </th>
                                                 <th>
@@ -293,19 +297,23 @@
                                                 </th>
 
                                                 <th>
-                                                    {{--<a href="{{ route('items.destroy', $item->slug) }}" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                                                    <form  action="{{ route('items.destroy', $item->slug) }}" method="POST">
+
+
+                                                    <form  action="{{ route('items.destroy', $item->slug) }}" method="POST" style="display: table-cell" id="delete-form">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         {{ csrf_field() }}
+
                                                         <button class="btn btn-danger"
                                                                 data-toggle="confirm"
                                                                 data-title="Item deletion"
                                                                 data-message="Do you really want to delete the Item? <br>
-                                                 Once the Item is deleted all its data are deleted and the action cannot be reverted back."
-                                                                data-type="danger">
+                                                                 Once the Item is deleted all its data are deleted and the action cannot be reverted back."
+                                                                data-type="danger"
+                                                        >
                                                             <span class="fa fa-trash"></span>
                                                             REMOVE
                                                         </button>
+
                                                     </form>
                                                 </th>
 
@@ -341,5 +349,12 @@
 @section('scripts')
     <script src="{{ asset('assets/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.confirm.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        });
+    </script>
 @endsection
 

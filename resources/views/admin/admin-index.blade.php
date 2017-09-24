@@ -64,13 +64,13 @@
 
             <ul class="nav navbar-top-links navbar-right">
 
-                <!-- /.dropdown -->
-                <li>
-                    <a  href="#">
-                        <i class="fa fa-server fa-fw"></i>  {{ strtoupper(Auth::user()->role->name) }}
-                    </a>
 
-                    <!-- /.dropdown-user -->
+                <li>
+                    <a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a>
+                </li>
+
+                <li>
+                    <a href="{{ route("request.list") }}"><i class="fa fa-envelope-o"></i> Requested Items</a>
                 </li>
                 <!-- /.dropdown -->
             </ul>
@@ -95,7 +95,7 @@
 
                         @if(App\Utility\Utils::isSuperAdmin())
                             <li>
-                                <a href="{{ route("assignToken.get") }}"><i class="fa fa-key fa-fw"></i> Assign API Token</a>
+                                <a href="{{ route("assignToken.get") }}" data-toggle="tooltip" title="Provide API Keys to enable other systems to use built-in capabilities of the application"><i class="fa fa-key fa-fw"></i> Assign API Token</a>
                             </li>
                         @endif
 
@@ -107,6 +107,12 @@
                         <li>
                             <a href="{{ route('item-categories.create') }}"><i class="fa fa-plus-circle fa-fw"></i> Add Category</a>
                         </li>
+
+
+                        <li>
+                            <a href="" data-toggle="tooltip" title="Add a standalone accessory"><i class="fa fa-plus fa-fw"></i> Add Accessory</a>
+                        </li>
+
 
 
                     </ul>
@@ -313,7 +319,7 @@
 
                                 @endif
 
-                                @if( isset($lastItemAssignment->created_at))
+                                @if( isset($lastItemAssignment->assigned_at))
                                 <a href="{{ route('assign.list') }}" class="list-group-item">
                                     <i class="fa fa-ticket fa-fw"></i> Last Item Was Assigned
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAssignment->assigned_at) )->diffForHumans() }}</em>
@@ -321,7 +327,7 @@
                                 </a>
                                 @endif
 
-                                @if( isset($lastItemAssignment->created_at))
+                                @if( isset($lastItem->created_at))
                                 <a href="{{ route('items.show', $lastItem->slug) }}" class="list-group-item">
                                     <i class="fa fa-phone fa-fw"></i> New Item Was Added
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItem->created_at) )->diffForHumans() }}</em>
@@ -369,5 +375,16 @@
 @section('scripts')
     <script src="{{ asset('assets/js/admin.min.js') }}"></script>
     <script src="{{ asset('assets/js/metisMenu.min.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        });
+
+
+    </script>
 
 @endsection
