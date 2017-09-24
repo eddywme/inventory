@@ -33,7 +33,9 @@ class ItemRequestController extends Controller
         }
 
         $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all(); // Current item related acccessories
-        $accessories = ItemAccessory::all(); // All accessories , ability to select standalone accessories
+        $accessories = ItemAccessory::all()->filter(function($accessory) {
+            return $accessory->status === AccessoryStatus::$ACCESSORY_AVAILABLE;
+        }); // All available accessories , ability to select standalone accessories
         return view('items-requests.request-index',[
             'item' => $item,
             'itemAccessories' => $itemAccessories,

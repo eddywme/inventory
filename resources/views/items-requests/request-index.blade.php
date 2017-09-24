@@ -85,19 +85,7 @@
                                         </tbody>
                                     </table>
 
-                                    @if(isset($itemAccessories))
 
-                                        <ul class="list-group">
-                                            <li class="list-group-item list-group-item-heading list-group-item-info">
-                                                <span class="badge">{{  count( $itemAccessories) }}</span>
-                                                Number of Acccessories
-                                            </li>
-                                            @foreach($itemAccessories as $itemAccessory)
-                                                <li class="list-group-item">{{ $itemAccessory->name }}</li>
-                                            @endforeach
-                                        </ul>
-
-                                    @endif
                             </div> <!--table responsive-->
 
                         </div>
@@ -134,10 +122,7 @@
                             <div class="panel-body">
 
                                 <p class="bg-info" style="padding: 15px; margin-bottom: 50px">
-                                    You have accepted terms and rights stuffs  bla bla Responsive design is a method for taking all of the existing content that is on the page
-                                    and optimizing it for the device that is viewing it. For example, the desktop not only
-                                    gets the normal version of the website, but it might also get a widescreen layout, opti‐
-                                    mized for the larger displays that many people have attached to their computers. Tablets
+                                    You have accepted terms and rights . Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aut debitis eligendi eos ex iste itaque optio quaerat qui rem reprehenderit repudiandae soluta totam veritatis voluptas voluptate, voluptatibus voluptatum.
                                 </p>
 
                                 <div class="form-group">
@@ -145,17 +130,14 @@
                                     <div>
                                         <p class="bg-info" style="padding: 10px;">
                                             Select the desired accessories.
+                                            <span class="btn btn-info" data-toggle="tooltip" title="Among the list of the current available accessories">
+                                            <i class="fa fa-info"></i>
+                                        </span>
                                         </p>
                                     </div>
                                     <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
                                         @foreach($accessories as $accessory)
-
-                                            @if($accessory->status === \App\Utility\AccessoryStatus::$ACCESSORY_AVAILABLE)
-
                                             <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
-
-                                            @endif
-
                                         @endforeach
                                     </select>
                                 </div>
@@ -171,9 +153,9 @@
                                     </span>
                                     </div>
                                     <div class="help-block">Specify the date & time you will take the item.
-                                        <button class="btn btn-info" data-toggle="tooltip" title="The return date is deducted by time span period of the item">
+                                        <span class="btn btn-info" data-toggle="tooltip" title="The return date is deducted by time span period of the item">
                                             <i class="fa fa-info"></i>
-                                        </button>
+                                        </span>
                                     </div>
                                     @if ($errors->has('pickup_date'))
                                         <span class="help-block">
