@@ -102,6 +102,11 @@ class Utils
         return Item::all()->where('slug', $slug)->first();
     }
 
+    public static function findUserById($id)
+    {
+        return User::all()->where('id', $id)->first();
+    }
+
     public static function findUserBySlug($slug)
     {
         return User::all()->where('slug', $slug)->first();

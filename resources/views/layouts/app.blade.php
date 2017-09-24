@@ -103,39 +103,6 @@
 
                         <li><a href="{{ route("items.index") }}"><i class="fa fa-ticket"></i> Items</a></li>
 
-                        {{--<li class="dropdown">--}}
-                            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">--}}
-                                {{--<i class="fa fa-filter"> </i>  Categories <span class="caret"></span>--}}
-                            {{--</a>--}}
-                            {{--<ul class="dropdown-menu" role="menu">--}}
-                                {{--<li>--}}
-                                    {{--<a href="">PHONE</a>--}}
-
-                                {{--</li>--}}
-
-                                {{--<li>--}}
-                                    {{--<a href="">CAMERA</a>--}}
-
-                                {{--</li>--}}
-
-                                {{--<li>--}}
-                                    {{--<a href="">TABLETS</a>--}}
-
-                                {{--</li>--}}
-
-                                {{--<li>--}}
-                                    {{--<a href="">CAMERA</a>--}}
-
-                                {{--</li>--}}
-
-
-
-
-                            {{--</ul>--}}
-                        {{--</li>--}}
-
-
-
                         @if (Auth::guest())
 
 
@@ -150,8 +117,14 @@
 
 
 
+                                <li><a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a></li>
 
-                                    <li class="dropdown">
+                                <li><a href="{{ route("request.list") }}"><i class="fa fa-envelope-o"></i> Requested Items</a></li>
+
+
+
+
+                                <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                             <i class="fa fa-user-circle"> </i>  {{ Auth::user()->getName() }} <span class="caret"></span>
                                         </a>
@@ -168,12 +141,6 @@
                                                     <i class="fa fa-server"></i>  Dashboard
                                                 </a>
                                             </li>
-
-                                            <li class="divider"></li>
-
-                                            <li><a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a></li>
-
-                                            <li><a href="{{ route("request.list") }}"><i class="fa fa-envelope-o"></i> Requested Items</a></li>
 
                                             <li class="divider"></li>
 

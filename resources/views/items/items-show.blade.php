@@ -52,7 +52,10 @@
                             </a>
 
                             @if($item->is_available())
-                                <a href="{{ route('request.index', $item->slug) }}" class="btn btn-default btn-request">REQUEST</a>
+                                <a href="{{ route('request.index', $item->slug) }}" class="btn btn-primary btn-request">
+                                    <i class="fa fa-bookmark"></i>
+                                    REQUEST ITEM
+                                </a>
                             @else
                                 <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                             @endif

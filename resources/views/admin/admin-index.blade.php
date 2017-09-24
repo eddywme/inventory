@@ -304,34 +304,48 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                @if( isset($lastItemAssignment->assigned_at) && isset($lastItem->created_at)  && isset( $lastUser->created_at) && isset($lastItemAccessory->created_at))
+                                @if( $lastItemRequest )
+                                <a href="{{ route('request.list') }}" class="list-group-item">
+                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Requested  <span class="label label-info">{{  \App\Utility\Utils::findUserById($lastItemRequest->user_id)->getName() }}</span>
+                                    <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemRequest->created_at) )->diffForHumans() }}</em>
+                                    </span>
+                                </a>
+
+                                @endif
+
+                                @if( isset($lastItemAssignment->created_at))
                                 <a href="{{ route('assign.list') }}" class="list-group-item">
                                     <i class="fa fa-ticket fa-fw"></i> Last Item Was Assigned
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAssignment->assigned_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
+                                @endif
+
+                                @if( isset($lastItemAssignment->created_at))
                                 <a href="{{ route('items.show', $lastItem->slug) }}" class="list-group-item">
                                     <i class="fa fa-phone fa-fw"></i> New Item Was Added
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItem->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
+                                @endif
+
+                                @if( isset($lastUser->created_at))
                                 <a href="#" class="list-group-item">
                                     <i class="fa fa-user fa-fw"></i> New User Was Registered
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastUser->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
+                                @endif
+
+                                @if( isset($lastItemAccessory->created_at))
                                 <a href="{{ route('item-accessories.show', $lastItemAccessory->slug) }}" class="list-group-item">
                                     <i class="fa fa-tablet fa-fw"></i> Last Item Accessory Was Registered
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAccessory->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
-                                @else
-                                    <a href="" class="list-group-item">
-                                        <i class="fa fa-tablet fa-fw"></i> No Notifications
-                                        <span class="pull-right text-muted small"><em></em>
-                                    </span>
-                                    </a>
                                 @endif
+
+
 
                             </div>
 

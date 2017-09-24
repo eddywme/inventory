@@ -34,8 +34,9 @@ class AdminController extends Controller
         $lastItemAccessory = ItemAccessory::all()->sortBy('created_at')->last();
         $lastUser = User::all()->sortBy('created_at')->last();
         $lastItemAssignment = ItemAssignment::all()->sortBy('assigned_at')->last();
+        $lastItemRequest = ItemRequest::all()->sortBy('created_at')->last();
 
-
+//        dd($lastItemRequest);
 
 //        dd(Carbon::now()->subHours(2)->diffForHumans());
 
@@ -53,7 +54,8 @@ class AdminController extends Controller
             'lastItem' => $lastItem,
             'lastUser' => $lastUser,
             'lastItemAccessory' => $lastItemAccessory,
-            'lastItemAssignment' => $lastItemAssignment
+            'lastItemAssignment' => $lastItemAssignment,
+            'lastItemRequest' => $lastItemRequest
 
 
         ]);
