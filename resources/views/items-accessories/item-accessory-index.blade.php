@@ -30,9 +30,7 @@
                     </div>
                 @endif
 
-                {{--<a class="btn btn-primary" href="{{ route('item-categories.create') }}" style="margin: 10px;">--}}
-                    {{--<i class="fa fa-plus-circle"></i> Add Item Accessory--}}
-                {{--</a>--}}
+
 
                 <div class="table-responsive">
 
@@ -52,8 +50,12 @@
                             </td>
 
                             <td>
-                               Item Name : {{ $itemAccessory->item->name }} <br>
+                                @if($itemAccessory->item)
+                                Item Name : {{ $itemAccessory->item->name }} <br>
                                 Item Serial Number : {{ $itemAccessory->item->serial_number }}
+                                @else
+                                    <h5>STANDALONE ACCESSORY</h5>
+                                @endif
                             </td>
 
                             <td width="30%">

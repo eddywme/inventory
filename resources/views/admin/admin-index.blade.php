@@ -110,7 +110,7 @@
 
 
                         <li>
-                            <a href="" data-toggle="tooltip" title="Add a standalone accessory"><i class="fa fa-plus fa-fw"></i> Add Accessory</a>
+                            <a href="{{ route('item-accessories.create', null) }}" data-toggle="tooltip" title="Add an accessory"><i class="fa fa-plus fa-fw"></i> Add Accessory</a>
                         </li>
 
 

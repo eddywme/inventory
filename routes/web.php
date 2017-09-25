@@ -105,10 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
 				Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')
 					->name('item-accessories.update');
 
-				Route::post('items/{itemSlug}/accessories/', 'ItemAccessoryController@store')
+				Route::post('items/accessories/', 'ItemAccessoryController@store')
 					->name('item-accessories.store');
 
-				Route::get('items/{itemSlug}/accessories/create', 'ItemAccessoryController@create')
+				Route::get('items/accessories/create', 'ItemAccessoryController@create')
 					->name('item-accessories.create');
 
 				Route::get('items/accessories/{itemAccessorySlug}/edit', 'ItemAccessoryController@edit')

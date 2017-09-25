@@ -130,7 +130,7 @@
                                     <div>
                                         <p class="bg-info" style="padding: 10px;">
                                             Select the desired accessories.
-                                            <span class="btn btn-info" data-toggle="tooltip" title="Among the list of the current available accessories">
+                                            <span class="btn btn-info" data-toggle="tooltip" title="Select accessories  from the list of the currently available">
                                             <i class="fa fa-info"></i>
                                         </span>
                                         </p>
@@ -143,7 +143,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="item_date_acquired" >Pick Up Date </label>
+                                    <label for="pickup_date" >Pick Up Date </label>
 
                                     <div class='input-group date' id='pickup_date'>
                                         <input type='text' class="form-control" id="pickup_date" name="pickup_date"

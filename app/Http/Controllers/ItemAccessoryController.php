@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemAccessory;
+use App\Utility\Utils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,6 +18,10 @@ class ItemAccessoryController extends Controller
      */
     public function index()
     {
+        if(!Utils::isAdmin()) {
+            return redirect('/');
+        }
+
         $itemAccessories = ItemAccessory::all();
 
         return view('items-accessories.item-accessory-index', [
@@ -28,12 +34,11 @@ class ItemAccessoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($itemSlug)
+    public function create()
     {
-        $item = $this->findItemBySlug($itemSlug);
-
+        $items = Item::all();
         return view('items-accessories.item-accessory-form', [
-            'item' => $item
+            'items' => $items
         ]);
     }
 
@@ -43,18 +48,15 @@ class ItemAccessoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $itemSlug)
+    public function store(Request $request)
     {
-        $item = $this->findItemBySlug($itemSlug);
-        if(!$item){
-            return redirect('/');
-        }
-
         $this->validate($request, [
             'name' => 'required|string',
             'description' => 'required',
+            'item' => 'nullable|numeric',
             'photo_url' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
 
         $pathToImage = null;
 
@@ -73,13 +75,13 @@ class ItemAccessoryController extends Controller
         $itemAccessory->name = $request->input('name');
         $itemAccessory->description = $request->input('description');
         $itemAccessory->photo_url = $pathToImage;
-        $itemAccessory->slug = str_slug( $request->input('name')." ".$item->serial_number);
-        $itemAccessory->item_id = $item->id;
+        $itemAccessory->slug = str_slug( $request->input('name')."-".Carbon::now()->timestamp);
+        $itemAccessory->item_id = $request->input('item');;
 
 
         $itemAccessory->save();
 
-        return redirect()->back()->with('status', 'A new Item Accessory has been created for the item '.$item->name);
+        return redirect()->back()->with('status', 'A new Item Accessory has been created successfully');
     }
 
     /**
@@ -106,16 +108,19 @@ class ItemAccessoryController extends Controller
     public function edit($slug)
     {
         $itemAccessory = $this->findItemAccessoryBySlug($slug);
+
         if(!$itemAccessory){
             return redirect('/');
         }
-        $item = $itemAccessory->item;
-        if(!$item){
-            return redirect('/');
-        }
+        $itemRelated = $itemAccessory->item;
+
+
+        $items = Item::all();
+
         return view('items-accessories.item-accessory-form', [
             'itemAccessory' => $itemAccessory,
-            'item' => $item
+            'itemRelated' => $itemRelated,
+            'items' => $items
            ]);
     }
 
@@ -135,14 +140,12 @@ class ItemAccessoryController extends Controller
             return redirect('/');
         }
 
-        $item = $itemAccessory->item;
-        if(!$item){
-            return redirect()->back()->with('error-status', 'Could not find the item of this accessory !');
-        }
+
 
         $this->validate($request, [
         'name' => 'required|string',
         'description' => 'required',
+        'item' => 'nullable|numeric',
         'photo_url' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -175,6 +178,7 @@ class ItemAccessoryController extends Controller
 
         $itemAccessory->name = $request->input('name');
         $itemAccessory->description = $request->input('description');
+        $itemAccessory->item_id = $request->input('item');
         $itemAccessory->save();
 
         return redirect(route('item-accessories'))->with('status', 'The  Accessory has been updated successfully !');

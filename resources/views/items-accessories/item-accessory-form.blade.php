@@ -1,10 +1,9 @@
 @extends('layouts.app')
 @section('title')
-    {{ isset($item)? 'Edit Item Accessory' : 'Registering an Item Accessory' }}
+    {{ isset($itemAccessory)? 'Edit Item Accessory' : 'Registering an Item Accessory' }}
 @endsection
 @section('styles')
-    <link href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/simplemde.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet">
     <style>
         .register-panel{
             margin-top: 40px;
@@ -39,12 +38,7 @@
 
                     <div class="col-md-8 col-md-offset-2">
 
-                        <p>
-                            You are {{ isset($itemAccessory)? 'editing' : 'adding' }} an accessory for the item :[ <strong>
-                                <a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a> </strong>  |  Serial Number: <strong>{{ $item->serial_number }}</strong> ]
-                        </p>
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($itemAccessory)? route('item-accessories.update', $itemAccessory->slug) : route('item-accessories.store', $item->slug) }}" id="item_accessory_registration_form"
+                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($itemAccessory)? route('item-accessories.update', $itemAccessory->slug) : route('item-accessories.store') }}" id="item_accessory_registration_form"
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
 
@@ -64,6 +58,31 @@
                                     </span>
                                 @endif
 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="item_selection">Item Selection</label>
+                            <div>
+                                <p class="bg-info" style="padding: 10px;">
+                                    Select the related item.
+                                    <span class="btn btn-info" data-toggle="tooltip" title="If an item is selected, the accessory will be bound to that item, otherwise it will be a standalone accessory">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                </p>
+                            </div>
+                            <select name="item" id="item_selection"  class="form-control">
+
+                                @if(isset($itemRelated))
+                                    <option value="{{ $itemRelated->id }}" selected>{{ $itemRelated->name }}</option>
+                                    <option value="">Standalone Accessory</option>
+                                @else
+                                    <option value="" selected>Standalone Accessory</option>
+                                @endif
+
+                                @foreach($items as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group{{ $errors->has('photo_url') ? ' has-error' : '' }}">
@@ -110,9 +129,13 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
 
+            $("#item_selection").select2();
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             /*Jquery  Form Validations rules*/
             $("#item_accessory_registration_form").validate({

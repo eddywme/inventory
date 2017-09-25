@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('title', 'Item Assignment')
 @section('styles')
-    <link href="{{ asset('assets/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <style>
         .main-content{
             background: #fff;
         }
         footer{
-            margin-top: 0px;
+            margin-top: 0;
         }
     </style>
 @endsection
