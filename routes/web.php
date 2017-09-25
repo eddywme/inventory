@@ -105,6 +105,9 @@ Route::group(['middleware' => ['auth']], function () {
 				Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')
 					->name('item-accessories.update');
 
+                Route::delete('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@destroy')
+                ->name('item-accessories.destroy');
+
 				Route::post('items/accessories/', 'ItemAccessoryController@store')
 					->name('item-accessories.store');
 

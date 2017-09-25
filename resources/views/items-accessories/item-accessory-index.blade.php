@@ -70,7 +70,7 @@
 
 
                             <td>
-                                <form  action="{{ route('item-categories.destroy', $itemAccessory->slug) }}" method="POST">
+                                <form  action="{{ route('item-accessories.destroy', $itemAccessory->slug) }}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
                                     <button class="btn btn-default"

@@ -46,7 +46,7 @@ class Item extends Model
 
 
     public function is_available(){
-        return $this->status === 2;
+        return $this->status === ItemStatus::$ITEM_AVAILABLE;
     }
 
     public function showStatusName(){

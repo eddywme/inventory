@@ -191,9 +191,21 @@ class ItemAccessoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $itemAccessory = $this->findItemAccessoryBySlug($slug);
+
+
+
+        if(!$itemAccessory->is_available()){
+            return redirect()->back();
+        }
+
+        Storage::delete($itemAccessory->photo_url);
+
+        $itemAccessory->delete();
+
+        return redirect(route('item-accessories'))->with('success-status', 'You have successfully deleted the Accessory');
     }
 
     /**

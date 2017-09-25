@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utility\AccessoryStatus;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,5 +34,9 @@ class ItemAccessory extends Model
     public function item()
     {
         return $this->belongsTo('App\Item', 'item_id');
+    }
+
+    public function is_available(){
+        return $this->status === AccessoryStatus::$ACCESSORY_AVAILABLE;
     }
 }
