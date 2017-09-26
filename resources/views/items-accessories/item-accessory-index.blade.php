@@ -37,7 +37,7 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Accessory Name</th><th>From Item</th><th>Description</th><th>Edit</th><th>Delete</th>
+                        <th>Accessory Name</th><th>From Item</th> <th>Status</th> <th>Description</th><th>Edit</th><th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,6 +55,17 @@
                                 Item Serial Number : {{ $itemAccessory->item->serial_number }}
                                 @else
                                     <h5>STANDALONE ACCESSORY</h5>
+                                @endif
+                            </td>
+
+                            <td>
+
+                                @if($itemAccessory->status === \App\Utility\AccessoryStatus::$ACCESSORY_TAKEN)
+                                    <span class="label label-danger"> {{  $itemAccessory->showStatusName() }}</span>
+                                @elseif($itemAccessory->status === \App\Utility\AccessoryStatus::$ACCESSORY_RESERVED)
+                                    <span class="label label-warning"> {{  $itemAccessory->showStatusName() }}</span>
+                                @elseif($itemAccessory->status === \App\Utility\AccessoryStatus::$ACCESSORY_AVAILABLE)
+                                    <span class="label label-success"> {{  $itemAccessory->showStatusName() }}</span>
                                 @endif
                             </td>
 

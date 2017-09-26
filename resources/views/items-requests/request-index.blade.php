@@ -83,7 +83,23 @@
 
 
                                         </tbody>
+
+
                                     </table>
+
+                                    @if(isset($itemAccessories))
+
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-heading list-group-item-info">
+                                                <span class="badge">{{  count( $itemAccessories) }}</span>
+                                                Item Accessories
+                                            </li>
+                                            @foreach($itemAccessories as $itemAccessory)
+                                                <li class="list-group-item">{{ $itemAccessory->name }}</li>
+                                            @endforeach
+                                        </ul>
+
+                                    @endif
 
 
                             </div> <!--table responsive-->

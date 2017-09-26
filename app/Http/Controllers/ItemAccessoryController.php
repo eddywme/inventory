@@ -219,7 +219,7 @@ class ItemAccessoryController extends Controller
 
     /**
      * @param $slug
-     * @return mixed
+     * @return ItemAccessory
      */
     protected function findItemAccessoryBySlug($slug)
     {

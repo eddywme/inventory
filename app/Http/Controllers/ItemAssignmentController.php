@@ -9,6 +9,7 @@ use App\ItemCondition;
 use App\Mail\MailToAssignedMD;
 use App\Mail\MailToAssignedUser;
 use App\User;
+use App\Utility\AccessoryStatus;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
 use Carbon\Carbon;
@@ -31,16 +32,22 @@ class ItemAssignmentController extends Controller
             return redirect()->back()->with('error-status', 'That Item does not exist in the system');
         }
 
-        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all();
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id);
 
+
+        $standaloneAccessories = ItemAccessory::all()->filter(function ($accessory) {
+            return $accessory->status === AccessoryStatus::$ACCESSORY_AVAILABLE && $accessory->item_id == null;
+        });
+        $accessories = $itemAccessories->merge($standaloneAccessories) ; // All available accessories , ability to select standalone accessories and dependent accessories
 
         return view('items-assignment.assignment-index',[
             'item' => $item,
-            'itemAccessories' => $itemAccessories
+            'itemAccessories' => $itemAccessories,
+            'accessories' => $accessories
         ]);
     }
 
-    /* Assign process when the item was reserved by the user */
+    /* Assign process when the item was reserved by a user */
     public function assignIndexToReserved ($itemSlug, $userSlug) {
 //        dd($itemSlug, $userSlug);
         $item = Utils::findItemBySlug($itemSlug);
@@ -88,7 +95,6 @@ class ItemAssignmentController extends Controller
 
 
 
-
         /* Change the status state of the item */
         $item->status = ItemStatus::$ITEM_TAKEN;
         $item->save();
@@ -113,12 +119,18 @@ class ItemAssignmentController extends Controller
 
         if ($selectedAccessoriesIds) {
             foreach ($selectedAccessoriesIds as $accessoryId) {
+                $accessory = Utils::findAccessoryById($accessoryId);
+                $accessory->status = AccessoryStatus::$ACCESSORY_TAKEN; // Change the accessory status
+                $accessory->save();
                 DB::table('accessories_assigned')->insert([
                     [
                         'assignment_id' => $itemAssignment->id,
                         'accessory_id' => $accessoryId
                     ]
                 ]);
+
+
+
             }
 
         }

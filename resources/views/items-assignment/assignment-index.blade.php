@@ -90,7 +90,7 @@
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-item-heading list-group-item-info">
                                                 <span class="badge">{{  count( $itemAccessories) }}</span>
-                                                Number of Acccessories
+                                                Item Accessories
                                             </li>
                                             @foreach($itemAccessories as $itemAccessory)
                                                 <li class="list-group-item">{{ $itemAccessory->name }}</li>
@@ -107,10 +107,7 @@
                                 <div class="panel-heading">TERMS AND CONDITIONS FOR ITEM ASSIGNMENT</div>
                                 <div class="panel-body">
                                     <p class="bg-info" style="padding: 15px;">
-                                        User has accepted terms and rights stuffs  bla bla Responsive design is a method for taking all of the existing content that is on the page
-                                        and optimizing it for the device that is viewing it. For example, the desktop not only
-                                        gets the normal version of the website, but it might also get a widescreen layout, opti‐
-                                        mized for the larger displays that many people have attached to their computers. Tablets
+                                        User has accepted terms and rights ...
                                     </p>
                                 </div>
                             </div>
@@ -182,7 +179,7 @@
                                                 </p>
                                             </div>
                                             <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
-                                                @foreach($itemAccessories as $accessory)
+                                                @foreach($accessories as $accessory)
                                                     <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
                                                 @endforeach
                                             </select>

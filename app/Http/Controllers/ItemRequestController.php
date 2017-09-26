@@ -32,10 +32,11 @@ class ItemRequestController extends Controller
             return redirect()->back()->with('error-status', 'That Item is not available');
         }
 
-        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id)->all(); // Current item related acccessories
-        $accessories = ItemAccessory::all()->filter(function($accessory) {
-            return $accessory->status === AccessoryStatus::$ACCESSORY_AVAILABLE;
-        }); // All available accessories , ability to select standalone accessories
+        $itemAccessories = ItemAccessory::all()->where('item_id', $item->id); // Current item related accessories
+        $standaloneAccessories = ItemAccessory::all()->filter(function ($accessory) {
+            return $accessory->status === AccessoryStatus::$ACCESSORY_AVAILABLE && $accessory->item_id == null;
+        });
+        $accessories = $itemAccessories->merge($standaloneAccessories) ; // All available accessories , ability to select standalone accessories and dependent accessories
         return view('items-requests.request-index',[
             'item' => $item,
             'itemAccessories' => $itemAccessories,
@@ -116,12 +117,16 @@ class ItemRequestController extends Controller
 
             foreach ($selectedAccessoriesIds as $accessoryId) {
 
+                /*
+                 * Populate the pivot table (Requests & Accessories)
+                 * */
                 $accessoryRequested = new AccessoryRequested();
                 $accessoryRequested->request_id  = $item_request->id;
                 $accessoryRequested->accessory_id = $accessoryId;
 
                 $accessoryRequested->save();
 
+                /* Mutate the accessory status */
                 $accessory = Utils::findAccessoryById($accessoryId);
                 $accessory->status = AccessoryStatus::$ACCESSORY_RESERVED;
                 $accessory->save();

@@ -39,4 +39,16 @@ class ItemAccessory extends Model
     public function is_available(){
         return $this->status === AccessoryStatus::$ACCESSORY_AVAILABLE;
     }
+
+    public function showStatusName(){
+        if($this->status === AccessoryStatus::$ACCESSORY_RESERVED){
+            return "RESERVED";
+        }elseif ($this->status === AccessoryStatus::$ACCESSORY_TAKEN){
+            return "TAKEN";
+        }elseif ($this->status === AccessoryStatus::$ACCESSORY_AVAILABLE){
+            return "AVAILABLE";
+        }
+
+        return null;
+    }
 }
