@@ -15,6 +15,7 @@ use App\Utility\AccessoryStatus;
 use App\Utility\ItemStatus;
 use App\Utility\Utils;
 use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -182,15 +183,35 @@ class ItemRequestController extends Controller
 
     }
 
-    public function releaseItem($itemSlug){
-        $item = Utils::findItemBySlug($itemSlug);
-        if ($item === null){
-            return redirect()->back()->with('error-status', 'That Item does not exist in the system');
+    public function rejectRequest($itemRequestId){
+
+        /* Mutate the accessory status */
+        /*$accessory = Utils::findAccessoryById($accessoryId);
+        $accessory->status = AccessoryStatus::$ACCESSORY_RESERVED;
+        $accessory->save();*/
+
+        $itemRequest  = ItemRequest::all()->where('id', $itemRequestId)->first();
+
+
+
+        $AccessoriesRequestedPivot = AccessoryRequested::all()->where('request_id', $itemRequest->id)->all();
+        $AccessoriesRequestedIds = array_map((function ($e) {
+            return $e['accessory_id'];
+        }), $AccessoriesRequestedPivot);
+
+
+        $accessoriesRequested = [];
+        foreach ($AccessoriesRequestedIds as $accessoriesRequestedId) {
+            /* Mutate the accessory status */
+            $accessory = Utils::findAccessoryById($accessoriesRequestedId);
+            $accessory->status = AccessoryStatus::$ACCESSORY_AVAILABLE;
+            $accessory->save();
         }
 
-        $itemRequest  = ItemRequest::all()->where('item_id', $item->id)->last();
+        $item = Utils::findItemById($itemRequest->item_id);
         $itemRequest->delete();
 
+        /* Mutate the item status */
         $item->status = ItemStatus::$ITEM_AVAILABLE;
         $item->save();
 
@@ -201,7 +222,7 @@ class ItemRequestController extends Controller
         Item Name: $item->name ($item->serial_number)";
         $log->save();
 
-        return redirect(route('request.list'))->with('success-status', 'The item was released successfully');
+        return redirect(route('request.list'))->with('success-status', 'The request was rejected successfully');
 
     }
 

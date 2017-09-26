@@ -235,7 +235,7 @@
                                                     </th>
 
                                                     <th>
-                                                        <a class="btn btn-warning" href="{{ route('item.release', $item->slug) }}">
+                                                        <a class="btn btn-warning" href="{{ route('request.reject', $item->slug) }}">
                                                             <i class="fa fa-unlock"></i>
                                                             REJECT REQUEST
                                                         </a>

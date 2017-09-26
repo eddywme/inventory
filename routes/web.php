@@ -86,8 +86,8 @@ Route::group(['middleware' => ['auth']], function () {
 			->name('request.post');
 
 		/* Make the item available */
-		Route::get('/items/{itemSlug}/release', 'ItemRequestController@releaseItem')
-			->name('item.release');
+		Route::get('/requests/{itemRequestId}/reject', 'ItemRequestController@rejectRequest')
+			->name('request.reject');
 
 		/* Users related routes */
 		Route::resource('users', 'UserController');

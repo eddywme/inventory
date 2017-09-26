@@ -85,7 +85,7 @@
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-item-heading list-group-item-info">
                                                 <span class="badge">{{  count( $accessoriesRequested) }}</span>
-                                                Number of Accessories Requested
+                                                Accessories Requested
                                             </li>
                                             @foreach($accessoriesRequested as $itemAccessory)
                                                 <li class="list-group-item">
@@ -157,7 +157,7 @@
 
                                         <a
                                                 class="btn btn-warning pull-right"
-                                                href="{{ route('item.release', $item->slug) }}"
+                                                href="{{ route('request.reject', $itemRequest->id) }}"
                                               >
                                             <i class="fa fa-arrow-circle-down"></i>
                                             REJECT THE REQUEST
