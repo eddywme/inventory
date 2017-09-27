@@ -311,8 +311,8 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 @if( $lastItemRequest )
-                                <a href="{{ route('request.list') }}" class="list-group-item">
-                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Requested  <span class="label label-info">{{  \App\Utility\Utils::findUserById($lastItemRequest->user_id)->getName() }}</span>
+                                <a href="{{ route('request.show', $lastItemRequest->id) }}" class="list-group-item">
+                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Requested By <span class="label label-info"> <i class="fa fa-user-circle-o" aria-hidden="true"> </i> {{  \App\Utility\Utils::findUserById($lastItemRequest->user_id)->getName() }}</span>
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemRequest->created_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>
@@ -321,7 +321,7 @@
 
                                 @if( isset($lastItemAssignment->assigned_at))
                                 <a href="{{ route('assign.list') }}" class="list-group-item">
-                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Assigned
+                                    <i class="fa fa-ticket fa-fw"></i> Last Item Was Assigned To <span class="label label-info"> <i class="fa fa-user-circle-o" aria-hidden="true"> </i> {{  \App\Utility\Utils::findUserById($lastItemAssignment->user_id)->getName() }}</span>
                                     <span class="pull-right text-muted small"><em>{{ (new \Carbon\Carbon($lastItemAssignment->assigned_at) )->diffForHumans() }}</em>
                                     </span>
                                 </a>

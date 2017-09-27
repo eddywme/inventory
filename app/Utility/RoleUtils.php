@@ -34,11 +34,11 @@ class RoleUtils
     }
 
     public static function isManager(){
-        return  self::authHasRole("account-user");
+        return  self::authHasRole("manager-user");
     }
 
     public static function isSysAdmin(){
-        return  self::authHasRole("account-user");
+        return  self::authHasRole("sys-admin-user");
     }
 
 

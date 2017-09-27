@@ -127,7 +127,7 @@
 
                             </div>
                             <div class="panel-footer">
-                                @if( !$itemRequest->is_accepted)
+                                @if( !$itemRequest->is_accepted && !$itemRequest->is_rejected)
 
                                     <ul class="list-group">
                                         <li class="list-group-item"> Request Sent On :
@@ -167,7 +167,11 @@
 
                                     <div class="help-block" style="padding: 10px;">
                                     </div>
-                                @else
+                                @elseif($itemRequest->is_rejected)
+
+                                <h4 class="label label-warning">This request was rejected</h4>
+
+                                @elseif($itemRequest->is_accepted)
                                     <ul class="list-group">
                                         <li class="list-group-item"> Approved By :
                                             <strong>

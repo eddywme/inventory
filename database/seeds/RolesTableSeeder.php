@@ -14,27 +14,27 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->insert(
             [
                 [
-                    'name' => 'simple-user',
-                    'description' => 'simple-user',
-                    'slug' => str_slug('simple-user'),
+                    'name' => 'registered-user',
+                    'description' => 'registered-user',
+                    'slug' => str_slug('registered-user'),
                 ],
 
                 [
-                    'name' => 'admin',
-                    'description' => 'admin',
-                    'slug' => str_slug('admin'),
+                    'name' => 'account-user',
+                    'description' => 'account-user',
+                    'slug' => str_slug('account-user'),
                 ],
 
                 [
-                    'name' => 'super-admin',
-                    'description' => 'super-admin',
-                    'slug' => str_slug('super-admin'),
+                    'name' => 'manager-user',
+                    'description' => 'manager-user',
+                    'slug' => str_slug('manager-user'),
                 ],
 
                 [
-                    'name' => 'api-user',
-                    'description' => 'api-user',
-                    'slug' => str_slug('api-user'),
+                    'name' => 'sys-admin-user',
+                    'description' => 'sys-admin-user',
+                    'slug' => str_slug('sys-admin-user'),
                 ]
 
 
