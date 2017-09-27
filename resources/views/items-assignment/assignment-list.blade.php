@@ -36,7 +36,7 @@
                 <table class="table table-striped" id="assigned_items_table">
                     <thead>
                     <tr>
-                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th><th>State</th>
+                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th> <th>State</th> <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -100,7 +100,7 @@
                                     Assigned On :
                                     <strong style="color: #2ab27b">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->assigned_at)  }} </strong><br>
 
-                                    Suppoed Returned On:<br>
+                                    Supposed Returned On:<br>
                                     <strong style="color: #985f0d">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->supposed_returned_at)  }}</strong>
                                     <br>
 
@@ -114,6 +114,17 @@
                                     Phone: <strong>{{ $assigner->phone_number }}</strong>  <br>
 
                                     E-mail : <strong>{{ $assigner->email }}</strong>  <br>
+                                </td>
+
+
+
+                                <td>
+
+                                    @if($itemAssignment->supposed_returned_at < \Carbon\Carbon::now()->toDateTimeString())
+                                        <span class="label label-warning">OVERDUE</span>
+                                    @else
+                                        <span class="label label-success">NOT OVERDUE</span>
+                                    @endif
                                 </td>
 
                                 <td>

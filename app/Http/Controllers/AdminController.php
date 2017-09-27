@@ -27,7 +27,11 @@ class AdminController extends Controller
         $numberOfItemCategories = ItemCategory::all()->count();
         $numberOfItemAccessories = ItemAccessory::all()->count();
         $numberOfItemAssigned = ItemAssignment::all()->count();
-        $numberOfItemRequests = ItemRequest::all()->count();
+        $numberOfItemRequests = ItemRequest::all()->filter(function ($req) {
+            return $req->is_rejected == false;
+        })->count();
+
+
         $numberOfApiSubscriptions = ApiSubscription::all()->count();
 
         $lastItem = Item::all()->sortBy('created_at')->last();

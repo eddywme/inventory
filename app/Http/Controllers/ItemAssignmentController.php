@@ -147,7 +147,7 @@ class ItemAssignmentController extends Controller
     public function assignmentList(){
 
         $itemAssignments = DB::table('item_assignments')->get();
-
+        //dd($itemAssignments);
         return view('items-assignment.assignment-list', [
             'itemAssignments' => $itemAssignments
         ]);

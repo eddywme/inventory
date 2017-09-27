@@ -33,7 +33,7 @@
             <div class="col-md-12">
                 @include('layouts.search-box-partial')
                 <div class="col-md-8">
-                    <h2 class="page-header">
+                    <h4 class="page-header">
                         @if($items->count() < 1)
                             Not Result(s) found for <span class="search-key">{{ $search_key }}</span>
                             @if($itemCategory !== null)
@@ -47,7 +47,7 @@
                             @endif
                         @endif
 
-                    </h2>
+                    </h4>
                     @foreach($items as $item)
 
                         <div class="row  item-element">
