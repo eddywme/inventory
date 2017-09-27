@@ -156,17 +156,16 @@
 
 
                                         <a
-                                                class="btn btn-warning pull-right"
-                                                href="{{ route('request.reject', $itemRequest->id) }}"
-                                              >
+                                        class="btn btn-warning pull-right"
+                                        href="{{ route('request.reject', $itemRequest->id) }}"
+                                        data-toggle="tooltip" title="The request will be revoked and the related item and accessories will be made available again"
+                                        >
                                             <i class="fa fa-arrow-circle-down"></i>
                                             REJECT THE REQUEST
                                         </a>
 
 
                                     <div class="help-block" style="padding: 10px;">
-                                        An e-mail will be sent to the user, announcing that his request was approved if "APPROVE THE REQUEST" is clicked.<br>
-                                        The item will re-appear available if the "REJECT THE REQUEST" is clicked.
                                     </div>
                                 @else
                                     <ul class="list-group">
@@ -211,7 +210,9 @@
 
                                             </div>
                                             <div class="panel-footer">
-                                                <a class="btn btn-warning" href="{{ route('item.release', $item->slug) }}">
+                                                <a class="btn btn-warning" href="{{ route('item.release', $item->slug) }}"
+                                                   data-toggle="tooltip" title=""
+                                                >
                                                     <i class="fa fa-unlock"></i>
                                                     Release The Item
                                                 </a>
@@ -243,6 +244,8 @@
 @section('scripts')
        <script>
         $(document).ready(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             var $buttonApproved = $('#buttonApproved');
 

@@ -72,8 +72,12 @@
                                                 <small>{{ $accessory->name }}</small>  <br>
                                             @endforeach
                                         </div>
-
+                                    @else
+                                        <br>
+                                        <span class="label label-info">No Accessory</span>
+                                        <br>
                                     @endif
+
                                 </td>
 
                                 <td>

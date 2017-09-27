@@ -169,16 +169,16 @@
                                     @endif
 
 
-                                    @if(count($itemAccessories) > 0)
+                                    @if(count($accessories) > 0)
 
                                         <div class="form-group">
-                                            <label for="custom_accessories_selection">Custom Accessory Selection</label>
+                                            <label for="custom_accessories_selection">Accessory Selection</label>
                                             <div>
                                                 <p class="bg-info" style="padding: 10px;">
                                                     Select the desired accessories.
                                                 </p>
                                             </div>
-                                            <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
+                                            <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control">
                                                 @foreach($accessories as $accessory)
                                                     <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
                                                 @endforeach
