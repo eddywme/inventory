@@ -32,6 +32,9 @@ class Utils
         return User::all()->where('id', $id)->first()->slug;
     }
 
+    /* @param string
+     * @return boolean
+     * */
     private static function authHasRole($role_name){
         return Auth::user()->role->name === $role_name;
     }
