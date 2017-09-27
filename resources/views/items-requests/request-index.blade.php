@@ -151,7 +151,7 @@
                                         </span>
                                         </p>
                                     </div>
-                                    <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control" required>
+                                    <select name="accessories[]" id="custom_accessories_selection" multiple="multiple" class="form-control">
                                         @foreach($accessories as $accessory)
                                             <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
                                         @endforeach

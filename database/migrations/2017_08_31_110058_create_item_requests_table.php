@@ -20,8 +20,12 @@ class CreateItemRequestsTable extends Migration
             $table->dateTime('pickup_time');
             $table->integer('approved_by')->nullable();
             $table->dateTime('approved_on')->nullable();
-            $table->boolean('is_accepted')->default(0); // Whether the admin has accepted the request If not accepted = It is  pending
+            $table->boolean('is_accepted')->default(false); // Whether the admin has accepted the request If not accepted = It is  pending
             $table->boolean('is_concluded')->default(0); // Whether The User Has Taken The Item
+
+            $table->boolean('is_rejected')->default(false);
+            $table->integer('rejected_by')->nullable();
+            $table->dateTime('rejected_on')->nullable();
             $table->timestamps();
         });
     }

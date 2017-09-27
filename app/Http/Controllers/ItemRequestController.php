@@ -209,7 +209,11 @@ class ItemRequestController extends Controller
         }
 
         $item = Utils::findItemById($itemRequest->item_id);
-        $itemRequest->delete();
+        $itemRequest->is_rejected = true;
+        $itemRequest->rejected_on = Carbon::now()->toDateTimeString();
+        $itemRequest->rejected_by = \Auth::user()->id;
+
+        $itemRequest->save();
 
         /* Mutate the item status */
         $item->status = ItemStatus::$ITEM_AVAILABLE;

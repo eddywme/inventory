@@ -41,6 +41,7 @@
                     </thead>
                     <tbody>
                         @foreach($itemRequests as $itemRequest)
+                            @if(!$itemRequest->is_rejected)
                             @php
                                 $item = \App\Item::where('id', $itemRequest->item_id)->first();
                                 $user = \App\User::where('id', $itemRequest->user_id)->first();
@@ -82,7 +83,7 @@
 
 
                             </tr>
-
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
