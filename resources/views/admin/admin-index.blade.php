@@ -58,7 +58,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/admin') }}">ADMIN PANEL</a>
+                <a class="navbar-brand" href="{{ url('/admin') }}">ADMIN PANEL ({{ strtoupper(\App\Utility\Utils::getAuthRoleName())   }})</a>
+
             </div>
             <!-- /.navbar-header -->
 
@@ -93,7 +94,7 @@
                             <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories <span class="badge pull-right">{{ $numberOfItemAccessories }}</span> </a>
                         </li>
 
-                        @if(App\Utility\Utils::isSuperAdmin())
+                        @if(App\Utility\RoleUtils::isSysAdmin())
                             <li>
                                 <a href="{{ route("assignToken.get") }}" data-toggle="tooltip" title="Provide API Keys to enable other systems to use built-in capabilities of the application"><i class="fa fa-key fa-fw"></i> Assign API Token</a>
                             </li>
@@ -270,7 +271,7 @@
                     </div>
                 </div>
 
-                @if(\App\Utility\Utils::isSuperAdmin())
+                @if(\App\Utility\RoleUtils::isSysAdmin())
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-sky-blue">
                             <div class="panel-heading">

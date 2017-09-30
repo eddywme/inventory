@@ -100,7 +100,7 @@
 
                             @if(\Illuminate\Support\Facades\Auth::check())
 
-                                @if(\App\Utility\Utils::isAdmin())
+                                @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>

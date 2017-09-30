@@ -63,7 +63,7 @@
                                 <h3><a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a></h3> <h4>Item Serial Number : {{ $item->serial_number }}</h4>
                                 <h5>
                                     @if(Auth::check())
-                                        @if(\App\Utility\Utils::isAdmin())
+                                        @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                             Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>
                                         @endif
                                     @endif

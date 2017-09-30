@@ -113,7 +113,7 @@
                         @else
 
 
-                                @if(\App\Utility\Utils::isAdmin())
+                                @if(\App\Utility\RoleUtils::isSystemPersonnel())
 
 
 
@@ -155,7 +155,7 @@
                                     </li>
 
 
-                                @elseif(\App\Utility\Utils::isSimpleUser())
+                                @elseif(\App\Utility\RoleUtils::isRegisteredUser())
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         <i class="fa fa-user-circle"> </i>  {{ Auth::user()->getName() }} <span class="caret"></span>

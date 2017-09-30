@@ -84,20 +84,43 @@
                                     Name:
                                         <strong>{{ $user->getName() }} </strong>
                                     <br>
-                                    Phone:
+                                    @if(\App\Utility\RoleUtils::isSysAdminOrManager())
+                                        Phone:
                                         <strong>
-                                            <a href="{{ route('assign.sms.get', $itemAssignment->id) }}">{{ $user->phone_number }}</a>
-                                        </strong>   <br>
+                                            <a href="{{ route('assign.sms.get', $itemAssignment->id) }}">
+                                                {{ $user->phone_number }}
+                                            </a>
+                                        </strong>
+                                        <br>
 
-                                     E-mail :
+                                        E-mail :
                                         <strong>
                                             <a href="{{ route('assign.email.get', $itemAssignment->id) }}">{{ $user->email }}</a>
-                                        </strong>  <br>
+                                        </strong>
+                                        <br>
+                                    @else
+
+                                        Phone:
+                                        <strong>
+                                            {{ $user->phone_number }}
+                                        </strong>
+                                        <br>
+
+                                        E-mail :
+                                        <strong>
+                                           {{ $user->email }}
+                                        </strong>
+                                        <br>
+
+
+                                    @endif
+
+
                                     {{--E-mail : <a href="mailto:{{ $user->email }}">{{ $user->email }} </a>  <br>--}}
                                 </td>
 
                                 <td>
-                                    Assigned On :
+                                    Assigned On :<br>
                                     <strong style="color: #2ab27b">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->assigned_at)  }} </strong><br>
 
                                     Supposed Returned On:<br>

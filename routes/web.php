@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('assign.role.post');
 
 
-    Route::group(['middleware' => ['admin']], function () {
+    Route::group(['middleware' => ['sys.personnel']], function () {
 
 				/* Item accessories*/
 				Route::put('items/accessories/{itemAccessorySlug}', 'ItemAccessoryController@update')

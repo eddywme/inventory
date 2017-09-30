@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemAccessory;
+use App\Utility\RoleUtils;
 use App\Utility\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ItemAccessoryController extends Controller
      */
     public function index()
     {
-        if(!Utils::isAdmin()) {
+        if(! RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
 

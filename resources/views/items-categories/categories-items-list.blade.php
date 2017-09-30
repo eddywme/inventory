@@ -49,7 +49,7 @@
                                 <h3><a href="{{ route('items.show', $item->slug) }}">{{ $item->name }}</a></h3> <h4>Item Serial Number : {{ $item->serial_number }}</h4>
 
                                 @if(Auth::check())
-                                    @if(\App\Utility\Utils::isAdmin())
+                                    @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                         Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>
                                     @endif
                                 @endif
@@ -60,7 +60,7 @@
                                     {{ substr($item->description,0,400) }} ...
                                 </p>
                                 @if($item->is_available())
-                                    <a class="btn btn-default btn-request">REQUEST THIS ITEM</a>
+                                    <a href="{{ route('request.index', $item->slug) }}" class="btn btn-default btn-request">REQUEST THIS ITEM</a>
                                     @else
                                     <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                                 @endif

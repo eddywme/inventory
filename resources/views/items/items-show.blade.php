@@ -83,7 +83,7 @@
                             @endif
 
                             @if(\Illuminate\Support\Facades\Auth::check())
-                                @if(\App\Utility\Utils::isAdmin())
+                                @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                         @if($item->status === \App\Utility\ItemStatus::$ITEM_RESERVED)
                                             @php
                                                 $itemReq = \App\ItemRequest::all()->where('item_id', $item->id)->last();
@@ -130,7 +130,7 @@
                                         <td> IDENTIFIER TAG</td> <td class="item_value_column">{{ $item->identifier }}</td>
                                     </tr>
                                     @if(\Illuminate\Support\Facades\Auth::check())
-                                    @if(\App\Utility\Utils::isAdmin())
+                                    @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                     <tr>
                                         <td> PRICE</td> <td class="item_value_column">{{ "USD ".number_format( $item->price,2,'.',',') }}</td>
                                     </tr>
@@ -171,7 +171,7 @@
 
                                     @if(\Illuminate\Support\Facades\Auth::check())
 
-                                       @if(\App\Utility\Utils::isAdmin())
+                                       @if(\App\Utility\RoleUtils::isSystemPersonnel())
 
                                         <tr>
                                             <td>ITEM OWNED BY</td>
@@ -204,7 +204,7 @@
 
                             @if(\Illuminate\Support\Facades\Auth::check())
 
-                                @if(\App\Utility\Utils::isAdmin())
+                                @if(\App\Utility\RoleUtils::isSystemPersonnel())
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>

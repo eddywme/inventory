@@ -24,7 +24,7 @@ class ItemsTableSeeder extends Seeder {
 					'date_acquired' => \Carbon\Carbon::now(),
 					'recorded_by'   => 1,
 					'owned_by'      => 1,
-					'category_id'   => 1,
+					'category_id'   => 3,
 					'condition_id'  => 1,
 				],
 				[
@@ -40,7 +40,7 @@ class ItemsTableSeeder extends Seeder {
 					'date_acquired' => \Carbon\Carbon::now(),
 					'recorded_by'   => 1,
 					'owned_by'      => 1,
-					'category_id'   => 1,
+					'category_id'   => 4,
 					'condition_id'  => 1,
 				]
 

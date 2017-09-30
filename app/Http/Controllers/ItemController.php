@@ -8,6 +8,7 @@ use App\ItemCategory;
 use App\ItemCondition;
 use App\Log;
 use App\User;
+use App\Utility\RoleUtils;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class ItemController extends Controller
 
     public function adminIndex()
     {
-        if(!Utils::isAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $items = Item::where('time_span', '>', 0)
@@ -58,7 +59,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        if(!Utils::isAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $categories = ItemCategory::all();
@@ -79,7 +80,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Utils::isAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $this->validate($request, [
@@ -185,7 +186,7 @@ class ItemController extends Controller
      */
     public function edit($slug)
     {
-        if(!Utils::isAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $item = $this->findItemBySlug($slug);
@@ -214,7 +215,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        if(!Utils::isAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $item = $this->findItemBySlug($slug);
@@ -317,7 +318,8 @@ class ItemController extends Controller
      */
     public function destroy($slug)
     {
-        if(!Utils::isAdmin()) {
+
+        if(!RoleUtils::isSysAdmin()) {
             return redirect('/');
         }
         $item = $this->findItemBySlug($slug);

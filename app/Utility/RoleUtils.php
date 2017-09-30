@@ -6,14 +6,14 @@
  * Time: 11:59 PM
  */
 
-namespace app\Utility;
+namespace App\Utility;
 
 
 use Illuminate\Support\Facades\Auth;
 
 class RoleUtils
 {
-    /* @param string
+    /* @param $roleName
      * @return boolean
      * */
     private static function authHasRole($roleName){
@@ -29,6 +29,10 @@ class RoleUtils
             self::authHasRole("sys-admin-user");
     }
 
+    public static function isRegisteredUser(){
+        return  self::authHasRole("registered-user");
+    }
+
     public static function isAccountant(){
         return  self::authHasRole("account-user");
     }
@@ -39,6 +43,10 @@ class RoleUtils
 
     public static function isSysAdmin(){
         return  self::authHasRole("sys-admin-user");
+    }
+
+    public static function isSysAdminOrManager(){
+        return  self::authHasRole("sys-admin-user") || self::authHasRole("manager-user");
     }
 
 

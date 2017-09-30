@@ -17,11 +17,6 @@ use App\Utility\Utils;
 class AdminController extends Controller
 {
     public function index(){
-
-        if(!Utils::isAdmin()){
-            return redirect('/');
-        }
-
         $numberOfUsers = User::all()->count();
         $numberOfItems = Item::all()->count();
         $numberOfItemCategories = ItemCategory::all()->count();

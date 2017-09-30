@@ -24,7 +24,7 @@
 
                 <h1 class="page-header"> <strong>REGISTERED USERS</strong> </h1>
 
-                @if(App\Utility\Utils::isSuperAdmin())
+                @if(App\Utility\RoleUtils::isSysAdmin())
                     <a href="{{ route('manage.roles.index') }}" class="btn btn-primary" style="margin-bottom: 20px">
                         <i class="fa fa-users"></i>
                         Manage Roles
@@ -32,9 +32,17 @@
                 @endif
 
                 <table class="table table-striped" id="organizers_table">
-                    <thead>
+                    <thead style="
+                    font-size: 14px;
+                    font-weight: 200;
+                    color: #4A4A4A;
+                    text-transform: uppercase;
+                    ">
                     <tr>
-                        <th>Names</th><th>E-mail</th><th>Phone</th> <th>Role</th> <th>Delete</th>
+                        <th>Names</th><th>E-mail</th><th>Phone</th> <th>Role</th>
+                        @if(App\Utility\RoleUtils::isSysAdmin())
+                            <th>Delete</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -57,22 +65,24 @@
                                 {{ strtoupper($user->role->name)  }}
                             </td>
 
-
-
-                            <td>
-                                <form  action="{{ route('users.destroy', $user->slug) }}" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    {{ csrf_field() }}
-                                    <button class="btn btn-default"
-                                            data-toggle="confirm"
-                                            data-title="User deletion"
-                                            data-message="Do you really want to delete the User? <br>
+                            @if(App\Utility\RoleUtils::isSysAdmin())
+                                <td>
+                                    <form  action="{{ route('users.destroy', $user->slug) }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-default"
+                                                data-toggle="confirm"
+                                                data-title="User deletion"
+                                                data-message="Do you really want to delete the User? <br>
                                                  Once the User is deleted all his data are deleted and the action cannot be reverted back."
-                                            data-type="danger">
-                                        <span class="fa fa-trash"></span>
-                                    </button>
-                                </form>
-                            </td>
+                                                data-type="danger">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            @endif
+
+
 
 
 

@@ -6,6 +6,7 @@ use App\Item;
 
 use App\Role;
 use App\User;
+use App\Utility\RoleUtils;
 use App\Utility\Utils;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class UserController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		if (!Utils::isAdmin()) {
+		if (!RoleUtils::isSystemPersonnel()) {
 			return redirect('/');
 		}
 
@@ -86,7 +87,7 @@ class UserController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($slug) {
-		if (!Utils::isSuperAdmin()) {
+		if (!RoleUtils::isSysAdmin()) {
 			return redirect('/')->with('status', 'Cannot delete ! Not Allowed ');
 		}
 
@@ -106,7 +107,7 @@ class UserController extends Controller {
 	}
 
 	public function manageRolesIndex () {
-        if (!Utils::isSuperAdmin()) {
+        if (!RoleUtils::isSysAdmin()) {
             return redirect('/')->with('status', 'Not Allowed ');
         }
         $users = User::all();
@@ -120,7 +121,7 @@ class UserController extends Controller {
     }
 
     public function assignRole (Request $request) {
-        if (!Utils::isSuperAdmin()) {
+        if (!RoleUtils::isSysAdmin()) {
             return redirect('/')->with('status', 'Not Allowed ');
         }
 

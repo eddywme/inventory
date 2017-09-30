@@ -41,7 +41,7 @@ class Utils
 
 
 
-    public static function isAdmin(){
+/*    public static function isAdmin(){
         return self::authHasRole("admin") || self::authHasRole("super-admin");
     }
 
@@ -51,7 +51,7 @@ class Utils
 
     public static function isSimpleUser(){
         return  self::authHasRole("simple-user");
-    }
+    }*/
 
     public static function canUpdateUser($user){
         return Auth::user()->id === $user->id;
@@ -127,6 +127,10 @@ class Utils
 
     public static function getAuthName () {
         return Auth::user()->getName();
+    }
+
+    public static function getAuthRoleName () {
+        return Auth::user()->role->name;
     }
 
     public static function findAccessoryById($accessoryId)
