@@ -36,7 +36,11 @@
                 <table class="table table-striped" id="assigned_items_table">
                     <thead>
                     <tr>
-                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th> <th>State</th> <th>Action</th>
+                        <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th> <th>State</th>
+                        @if(\App\Utility\RoleUtils::isSysAdminOrManager())
+                            <th>Action</th>
+                        @endif
+
                     </tr>
                     </thead>
                     <tbody>
@@ -151,13 +155,16 @@
                                 </td>
 
                                 <td>
-                                    @if(!isset($itemAssignment->returned_at))
-                                        <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
-                                            <i class="fa fa-repeat"></i>
-                                            Mark Returned
-                                        </a>
+                                    @if(\App\Utility\RoleUtils::isSysAdminOrManager())
+                                        @if(!isset($itemAssignment->returned_at))
+                                            <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
+                                                <i class="fa fa-repeat"></i>
+                                                Mark Returned
+                                            </a>
                                         @else
-                                        <span class="label label-success">RETURNED</span>
+                                            <span class="label label-success">RETURNED</span>
+                                        @endif
+
                                     @endif
 
 

@@ -7,10 +7,10 @@ use App\ItemAccessory;
 use App\ItemAssignment;
 use App\ItemCondition;
 use App\Mail\MailToAssignedMD;
-use App\Mail\MailToAssignedUser;
 use App\User;
 use App\Utility\AccessoryStatus;
 use App\Utility\ItemStatus;
+use App\Utility\RoleUtils;
 use App\Utility\Utils;
 use Carbon\Carbon;
 use Faker\Provider\DateTime;
@@ -228,6 +228,10 @@ class ItemAssignmentController extends Controller
 
     public function sendMailToAssignedGet($assignmentId){
 
+        if(!RoleUtils::isSysAdminOrManager()) {
+            return redirect('/');
+        }
+
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
         if($itemAssignment == null) {
             return redirect()->back()->with('error-status', 'An error occurred !');
@@ -253,6 +257,11 @@ class ItemAssignmentController extends Controller
     }
 
     public function sendMailToAssignedPost(Request $request, $assignmentId){
+
+        if(!RoleUtils::isSysAdminOrManager()) {
+            return redirect('/');
+        }
+
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
 
         if($itemAssignment == null) {
@@ -288,6 +297,10 @@ class ItemAssignmentController extends Controller
 
     public function sendSMSToAssignedGet($assignmentId){
 
+        if(!RoleUtils::isSysAdminOrManager()) {
+            return redirect('/');
+        }
+
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
         if($itemAssignment == null) {
             return redirect()->back()->with('error-status', 'An error occurred !');
@@ -314,7 +327,9 @@ class ItemAssignmentController extends Controller
 
     public function sendSMSToAssignedPost(Request $request, $assignmentId){
 
-
+        if(!RoleUtils::isSysAdminOrManager()) {
+            return redirect('/');
+        }
 
         $itemAssignment = $this->findAssignmentFromId($assignmentId);
 
