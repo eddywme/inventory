@@ -107,12 +107,20 @@ class UserController extends Controller {
 	}
 
 	public function manageRolesIndex () {
-        if (!RoleUtils::isSysAdmin()) {
+        if (!RoleUtils::isSysAdminOrManager()) {
             return redirect('/')->with('status', 'Not Allowed ');
         }
         $users = User::all();
 
         $roles = Role::all();
+
+        if(RoleUtils::isManager()) {
+            /* Managers can only assign managerial roles and below  */
+            $roles = Role::all()->filter(function ($role) {
+                return $role->name !== "sys-admin-user";
+            });
+        }
+
 
         return view("users.manage-roles-index", [
             "users" => $users,
@@ -151,4 +159,5 @@ class UserController extends Controller {
 
 
     }
+
 }

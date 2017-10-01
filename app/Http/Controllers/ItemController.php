@@ -319,7 +319,7 @@ class ItemController extends Controller
     public function destroy($slug)
     {
 
-        if(!RoleUtils::isSysAdmin()) {
+        if(!RoleUtils::isSystemPersonnel()) {
             return redirect('/');
         }
         $item = $this->findItemBySlug($slug);

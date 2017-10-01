@@ -24,7 +24,7 @@
 
                 <h1 class="page-header"> <strong>REGISTERED USERS</strong> </h1>
 
-                @if(App\Utility\RoleUtils::isSysAdmin())
+                @if(App\Utility\RoleUtils::isSysAdminOrManager())
                     <a href="{{ route('manage.roles.index') }}" class="btn btn-primary" style="margin-bottom: 20px">
                         <i class="fa fa-users"></i>
                         Manage Roles

@@ -33,7 +33,7 @@
 
                 <div class="table-responsive">
 
-                <table class="table table-striped" id="assigned_items_table">
+                <table class="table table-striped" id="assigned_items_table" style="font-size: 13px">
                     <thead>
                     <tr>
                         <th>Item Info</th><th>Assigned To</th><th>Time Info</th><th>Assigned By</th> <th>State</th>
@@ -123,7 +123,7 @@
                                     {{--E-mail : <a href="mailto:{{ $user->email }}">{{ $user->email }} </a>  <br>--}}
                                 </td>
 
-                                <td>
+                                <td width="20%">
                                     Assigned On :<br>
                                     <strong style="color: #2ab27b">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->assigned_at)  }} </strong><br>
 
@@ -131,7 +131,7 @@
                                     <strong style="color: #985f0d">{{ \App\Utility\Utils::getReadableDateTime($itemAssignment->supposed_returned_at)  }}</strong>
                                     <br>
 
-                                    Returned On:  <strong style="color: #0a7ef4">{{ $itemAssignment->returned_at ?  \App\Utility\Utils::getReadableDateTime($itemAssignment->returned_at) : 'Not Yet'}}</strong>  <br>
+                                    Returned On: <br>  <strong style="color: #0a7ef4">{{ $itemAssignment->returned_at ?  \App\Utility\Utils::getReadableDateTime($itemAssignment->returned_at) : 'Not Yet'}}</strong>  <br>
 
                                 </td>
 
@@ -147,29 +147,49 @@
 
                                 <td>
 
-                                    @if($itemAssignment->supposed_returned_at < \Carbon\Carbon::now()->toDateTimeString())
-                                        <span class="label label-warning">OVERDUE</span>
-                                    @else
-                                        <span class="label label-success">NOT OVERDUE</span>
-                                    @endif
-                                </td>
-
-                                <td>
-                                    @if(\App\Utility\RoleUtils::isSysAdminOrManager())
-                                        @if(!isset($itemAssignment->returned_at))
-                                            <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
-                                                <i class="fa fa-repeat"></i>
-                                                Mark Returned
-                                            </a>
+                                    @if(isset($itemAssignment->returned_at))
+                                        @if($itemAssignment->supposed_returned_at < \Carbon\Carbon::now()->toDateTimeString())
+                                            <span class="">WAS RETURNED <span class="badge">Late</span> </span>
+                                            <br>
                                         @else
-                                            <span class="label label-success">RETURNED</span>
-                                        @endif
+                                            <span class="">WAS RETURNED <span class="badge">OnTime</span> </span>
+                                            <br>
 
+
+                                        @endif
+                                    @else
+                                        @if($itemAssignment->supposed_returned_at < \Carbon\Carbon::now()->toDateTimeString())
+                                            <span class="">NOT YET RETURNED <span class="badge">Overdue</span></span>
+
+
+                                        @else
+                                            <span class="">NOT YET RETURNED <span class="badge">Not Overdue</span></span>
+
+                                        @endif
                                     @endif
 
 
 
+
                                 </td>
+
+
+                                @if(\App\Utility\RoleUtils::isSysAdminOrManager())
+                                <td>
+                                    @if(!isset($itemAssignment->returned_at))
+                                        <a class="btn btn-success" href="{{ route('assign.return.get',[$itemAssignment->id])}}">
+                                            <i class="fa fa-repeat"></i>
+                                            Mark Returned
+                                        </a>
+                                    @else
+                                        <span class="label label-success">RETURNED</span>
+                                    @endif
+
+                                </td>
+                                @endif
+
+
+
 
                             </tr>
 

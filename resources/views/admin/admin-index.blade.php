@@ -58,7 +58,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/admin') }}">ADMIN PANEL ({{ strtoupper(\App\Utility\Utils::getAuthRoleName())   }})</a>
+                <a class="navbar-brand" href="{{ url('/admin') }}">{{ strtoupper(\App\Utility\Utils::getAuthRoleName())   }} PANEL </a>
 
             </div>
             <!-- /.navbar-header -->
@@ -113,6 +113,11 @@
                         <li>
                             <a href="{{ route('item-accessories.create', null) }}" data-toggle="tooltip" title="Add an accessory"><i class="fa fa-plus fa-fw"></i> Add Accessory</a>
                         </li>
+
+
+                        {{--<li>--}}
+                            {{--<a href="{{ route('users.create') }}" > <i class="fa fa-user-plus" aria-hidden="true"></i> Add User</a>--}}
+                        {{--</li>--}}
 
 
 
@@ -378,14 +383,10 @@
     <script src="{{ asset('assets/js/metisMenu.min.js') }}"></script>
 
     <script>
-
         $(document).ready(function () {
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
         });
-
-
     </script>
-
 @endsection
