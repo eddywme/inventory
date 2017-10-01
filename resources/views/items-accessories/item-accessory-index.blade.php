@@ -24,11 +24,25 @@
 
                 <h1 class="page-header"> <strong>REGISTERED ITEM ACCESSORIES</strong> </h1>
 
-                @if (session('status'))
+                @if (session('error-status'))
                     <div class="alert alert-success">
-                        <h5>{{ session('status') }}</h5>
+                        <h5>{{ session('error-status') }}</h5>
                     </div>
                 @endif
+
+                @if (session('success-status'))
+                    <div class="alert alert-success">
+                        <h5>{{ session('success-status') }}</h5>
+                    </div>
+                @endif
+
+
+                <a href="{{ route('item-accessories.create', null) }}" class="btn btn-primary"
+                   style="margin-bottom: 20px">
+                    <i class="fa fa-plus fa-fw"></i>
+                    Add Accessory
+                </a>
+
 
 
 

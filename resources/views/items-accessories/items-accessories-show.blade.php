@@ -112,7 +112,20 @@
                                                     <a href="{{ route('item-accessories.edit', $itemAccessory->slug) }}" class="btn btn-info"><strong><span class="fa fa-edit"> </span>&nbsp;EDIT ACCESSORY</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </th>
                                                 <th>
-                                                    <a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    {{--<a href="" class="btn btn-danger "><strong><span class="fa fa-remove"> </span>&nbsp;REMOVE</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;--}}
+
+                                                    <form  action="{{ route('item-accessories.destroy', $itemAccessory->slug) }}" method="POST" style="display: table-cell;">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        {{ csrf_field() }}
+                                                        <button class="btn btn-danger"
+                                                                data-toggle="confirm"
+                                                                data-title="Item Accessory deletion"
+                                                                data-message="Do you really want to delete the Item Accessory ? <br>
+                                                 Once the Item Accessory is deleted all its related data are deleted and the action cannot be reverted back.<br>"
+                                                                data-type="danger">REMOVE
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
                                                 </th>
                                             @endif
 

@@ -67,12 +67,15 @@
                                             Price : <strong class="label label-success">{{ "USD ".number_format( $item->price,2,'.',',') }}</strong>
                                         @endif
                                     @endif
-                                    Condition : {{ $item->itemCondition->name }}</h5>
+                                Condition : {{ $item->itemCondition->name }}
+                                </h5>
+                                <h5>Category : <a href="{{ route('item-categories.showCategoryItems', $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
+
                                 <p class="">
                                     {{ substr($item->description,0,400) }} ...
                                 </p>
                                 @if($item->is_available())
-                                    <a class="btn btn-default btn-request" href="{{ route('request.index', $item->slug) }}">REQUEST THIS ITEM</a>
+                                    <a class="btn btn-primary btn-request" href="{{ route('request.index', $item->slug) }}">REQUEST THIS ITEM</a>
                                     @else
                                     <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                                 @endif

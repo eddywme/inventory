@@ -69,7 +69,8 @@
                                         @endif
                                     @endif
 
-                                    Condition : <strong class="label label-info"> {{ $item->itemCondition->name }} </strong></h5>
+                                Condition : <strong class="label label-info"> {{ $item->itemCondition->name }} </strong>
+                                </h5>
                                 <h5>Category : <a href="{{ route('item-categories.showCategoryItems', $item->itemCategory->slug) }}">{{ $item->itemCategory->name }}</a> </h5>
                                 <p class="">
                                     {{ substr($item->description,0,400) }} ...

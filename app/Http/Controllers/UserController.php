@@ -129,7 +129,7 @@ class UserController extends Controller {
     }
 
     public function assignRole (Request $request) {
-        if (!RoleUtils::isSysAdmin()) {
+        if (!RoleUtils::isSysAdminOrManager()) {
             return redirect('/')->with('status', 'Not Allowed ');
         }
 
@@ -150,6 +150,11 @@ class UserController extends Controller {
 
         if($role === null) {
             return redirect()->back()->with('error-status', 'The Role does not exist in the System !');
+        }
+
+        /* When user tries ID tricks to submits roles abilities he's not allowed to assign // Redirect Back */
+        if(RoleUtils::isManager() && $role->name == "sys-admin-user") {
+           return redirect()->back()->with("error-status", "Not Allowed");
         }
 
 

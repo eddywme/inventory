@@ -22,11 +22,11 @@
                     </div>
                 @endif
 
-                    @if (session('success-status'))
-                        <div class="alert alert-success">
-                            <h5>{{ session('success-status') }}</h5>
-                        </div>
-                    @endif
+                @if (session('success-status'))
+                    <div class="alert alert-success">
+                        <h5>{{ session('success-status') }}</h5>
+                    </div>
+                @endif
 
                 <h1 class="page-header text-center"> <strong>MANAGE USERS ROLES</strong> </h1>
 

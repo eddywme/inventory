@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemAccessory;
+use App\Role;
 use App\Utility\RoleUtils;
 use App\Utility\Utils;
 use Carbon\Carbon;
@@ -194,6 +195,9 @@ class ItemAccessoryController extends Controller
      */
     public function destroy($slug)
     {
+        if (!RoleUtils::isSystemPersonnel()) {
+            return redirect()->back();
+        }
         $itemAccessory = $this->findItemAccessoryBySlug($slug);
 
 
