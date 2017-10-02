@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\ItemCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemCategoryController extends Controller
 {
@@ -104,7 +105,7 @@ class ItemCategoryController extends Controller
         $itemCategory->description = $request->input('description');
 //        $itemCategory->slug = str_slug( $request->input('name'));
         $itemCategory->save();
-        return redirect('item-categories')->with('status', 'The Item Category has been updated .');
+        return redirect(route('item-categories.index'))->with('status', 'The Item Category has been updated .');
     }
 
     /**

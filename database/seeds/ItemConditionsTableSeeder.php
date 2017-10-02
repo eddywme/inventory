@@ -20,6 +20,12 @@ class ItemConditionsTableSeeder extends Seeder
                 ],
 
                 [
+                    'name' => 'Not Bad',
+                    'description' => 'Not Bad',
+                    'slug' => str_slug('Not Bad'),
+                ],
+
+                [
                     'name' => 'Bad',
                     'description' => 'bad',
                     'slug' => str_slug('bad'),

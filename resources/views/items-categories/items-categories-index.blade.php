@@ -36,7 +36,10 @@
                 <table class="table table-striped" id="organizers_table">
                     <thead>
                     <tr>
-                        <th>Names</th><th>No Of Items</th><th>Description</th><th>Added On</th><th>Delete</th>
+                        <th>Names</th><th>No Of Items</th><th>Description</th><th>Added On</th> <th>Edit</th>
+                        @if(\App\Utility\RoleUtils::isSysAdmin())
+                        <th>Delete</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -62,21 +65,30 @@
                                 {{   date("F jS, Y H:i:s",strtotime( $itemCategory->created_at)) }}
                             </td>
 
-
                             <td>
-                                <form  action="{{ route('item-categories.destroy', $itemCategory->slug) }}" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    {{ csrf_field() }}
-                                    <button class="btn btn-warning"
-                                            data-toggle="confirm"
-                                            data-title="Item Category deletion"
-                                            data-message="Do you really want to delete the Item Category ? <br>
-                                                 Once the Item Category is deleted all its related data are deleted and the action cannot be reverted back.<br>"
-                                            data-type="danger">
-                                        <span class="fa fa-trash"></span>
-                                    </button>
-                                </form>
+                                <a href="{{ route("item-categories.edit", $itemCategory->slug) }}">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </a>
+
                             </td>
+
+                            @if(\App\Utility\RoleUtils::isSysAdmin())
+                                <td>
+                                    <form  action="{{ route('item-categories.destroy', $itemCategory->slug) }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-warning"
+                                                data-toggle="confirm"
+                                                data-title="Item Category deletion"
+                                                data-message="Do you really want to delete the Item Category ? <br>
+                                                 Once the Item Category is deleted all its related data are deleted and the action cannot be reverted back.<br>"
+                                                data-type="danger">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            @endif
+
 
 
                         </tr>

@@ -5,7 +5,7 @@
             $(window).scroll(function () {
 
                 // distance user needs to scroll before .top-line start fadeIn
-                if ($(this).scrollTop() > 50) {
+                if ($(this).scrollTop() > 150) {
                     $('.top-line').fadeOut(250);
                 } else {
                     $('.top-line').fadeIn(250);

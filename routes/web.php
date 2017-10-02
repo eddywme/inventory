@@ -33,6 +33,7 @@ Route::get('search_data', [
 
 Route::resource('items', 'ItemController');
 
+
 Route::get('item-categories/{slug}/items', 'ItemCategoryController@showCategoryItems')
 	->name('item-categories.showCategoryItems');
 
@@ -191,7 +192,11 @@ Route::group(['middleware' => ['auth']], function () {
 						Route::post('/token-assignment', 'ApiSubscriptionController@sendTokenPost')
 							->name('sendToken.post');
 
-					});
+
+                        Route::resource('item-conditions', 'ItemConditionController');
+
+
+                });
 			});
 
 	});

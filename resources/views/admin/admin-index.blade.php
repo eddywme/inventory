@@ -94,6 +94,12 @@
                             <a href="{{ route('item-accessories') }}"><i class="fa fa-suitcase"> </i> Items Accessories <span class="badge pull-right">{{ $numberOfItemAccessories }}</span> </a>
                         </li>
 
+                        @if(App\Utility\RoleUtils::isSysAdminOrManager())
+                        <li>
+                            <a href="{{ route('item-conditions.index') }}"> <i class="fa fa-star-half-empty" aria-hidden="true"></i> Items Conditions <span class="badge pull-right"></span> </a>
+                        </li>
+                        @endif
+
                         @if(App\Utility\RoleUtils::isSysAdmin())
                             <li>
                                 <a href="{{ route("assignToken.get") }}" data-toggle="tooltip" title="Provide API Keys to enable other systems to use built-in capabilities of the application"><i class="fa fa-key fa-fw"></i> Assign API Token</a>
