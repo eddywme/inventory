@@ -375,6 +375,19 @@ class ItemAssignmentController extends Controller
 
     }
 
+    public function getListOfOverdue () {
+        $itemsAssignments = ItemAssignment::all();
+
+        $overdueAssignments = $itemsAssignments->filter(function($itemAssignment){
+            return $itemAssignment->supposed_returned_at < \Carbon\Carbon::now()->toDateTimeString();
+        });
+
+        return view('items-assignment.overdue-assignment-list', [
+            'overdueAssignments' => $overdueAssignments
+        ]);
+
+    }
+
 
 
 

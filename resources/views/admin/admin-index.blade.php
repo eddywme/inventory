@@ -65,6 +65,9 @@
 
             <ul class="nav navbar-top-links navbar-right">
 
+                <li>
+                    <a href="{{ route("assign.overdue") }}"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> List Of Overdue</a>
+                </li>
 
                 <li>
                     <a href="{{ route("assign.list") }}"><i class="fa fa-bookmark-o"></i> Assigned Items</a>

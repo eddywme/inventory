@@ -196,6 +196,10 @@ Route::group(['middleware' => ['auth']], function () {
                         Route::resource('item-conditions', 'ItemConditionController');
 
 
+                        /* Get List Of Overdue */
+                        Route::get('/overdue-items-assignment', 'ItemAssignmentController@getListOfOverdue')->name('assign.overdue');
+
+
                 });
 			});
 
