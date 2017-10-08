@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('title', 'Item Request')
 @section('styles')
@@ -131,7 +132,8 @@
                                 ITEM REQUEST DETAILS
                             </div>
 
-                            <form action="{{ route('request.post', $item->slug) }}" class="form" method="post">
+                            {{--<form action="{{ route('request.post', $item->slug) }}" class="form" method="post">--}}
+                            <form  action="{{ route('request.post', $item->slug) }}" method="POST">
 
                                 {{ csrf_field() }}
 
@@ -184,13 +186,29 @@
 
 
                             </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fa fa-ticket"></i>
+                            {{--<div class="panel-footer">--}}
+                                {{--<button class="btn btn-primary" type="submit">--}}
+                                    {{--<i class="fa fa-ticket"></i>--}}
+                                    {{--REQUEST ITEM--}}
+                                {{--</button>--}}
+                            {{--</div>--}}
+                            {{--</form>--}}
+                                <div class="panel-footer">
+
+                                {{ csrf_field() }}
+                                <button class="btn btn-primary"
+                                        data-toggle="confirm"
+                                        data-title="Item Request"
+                                        data-message="You are about to request the Item<br>
+                                                     {{ $item->name }} with the configurations you just
+                                                      Selected below !"
+                                        data-type="success">
+                                    <i class="fa fa-key" aria-hidden="true"></i>
                                     REQUEST ITEM
                                 </button>
-                            </div>
+                                </div>
                             </form>
+
                         </div>
                     </div>
 
@@ -209,6 +227,7 @@
     <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.confirm.js') }}"></script>
 
 
     <script>

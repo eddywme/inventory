@@ -51,14 +51,7 @@
                                         class="img-thumbnail item-img-show example-image" alt="{{ $item->name }}" />
                             </a>
 
-                            @if($item->is_available())
-                                <a href="{{ route('request.index', $item->slug) }}" class="btn btn-primary btn-request">
-                                    <i class="fa fa-bookmark"></i>
-                                    REQUEST ITEM
-                                </a>
-                            @else
-                                <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
-                            @endif
+
 
                             @if($itemAccessories)
                                 <h4>Accessories <div class="badge">{{ $itemAccessories->count() }}</div></h4>
@@ -80,6 +73,16 @@
                                         @endforeach
                                     </div>
                                 @endforeach
+                            @endif
+
+
+                            @if($item->is_available())
+                                <a href="{{ route('request.index', $item->slug) }}" class="btn btn-primary btn-request">
+                                    <i class="fa fa-bookmark"></i>
+                                    INTERESTED IN THE ITEM
+                                </a>
+                            @else
+                                <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                             @endif
 
                             @if(\Illuminate\Support\Facades\Auth::check())

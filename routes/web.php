@@ -197,7 +197,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
                         /* Get List Of Overdue */
-                        Route::get('/overdue-items-assignment', 'ItemAssignmentController@getListOfOverdue')->name('assign.overdue');
+                        Route::get('/overdue-items-assignment', 'ItemAssignmentController@getListOfOverdue')
+                            ->name('assign.overdue');
 
 
                 });
