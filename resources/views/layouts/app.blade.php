@@ -117,6 +117,11 @@
 
 
 
+                                <li>
+                                    <a href="{{ url('/admin') }}">
+                                        <i class="fa fa-server"></i>  Dashboard
+                                    </a>
+                                </li>
 
 
 
@@ -131,13 +136,6 @@
 
                                             </li>
 
-                                            <li class="divider"></li>
-
-                                            <li>
-                                                <a href="{{ url('/admin') }}">
-                                                    <i class="fa fa-server"></i>  Dashboard
-                                                </a>
-                                            </li>
 
                                             <li class="divider"></li>
 
@@ -153,6 +151,7 @@
 
                                         </ul>
                                     </li>
+
 
 
                                 @elseif(\App\Utility\RoleUtils::isRegisteredUser())
