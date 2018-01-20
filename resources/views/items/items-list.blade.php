@@ -76,7 +76,9 @@
                                     {{ substr($item->description,0,400) }} ...
                                 </p>
                                 @if($item->is_available())
-                                    <a href="{{ route('request.index', $item->slug) }}" class="btn btn-primary btn-request">REQUEST THIS ITEM</a>
+                                    <a class="btn btn-primary " href="{{ route("items.show", $item->slug) }}">Read more ... </a>
+
+                                    <a href="{{ route('request.index', $item->slug) }}" class="btn btn-primary">REQUEST THIS ITEM</a>
                                 @else
                                     <a class="btn btn-default btn-request disabled">SORRY NOT AVAILABLE</a>
                                 @endif
